@@ -1,0 +1,1788 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NerdBank.Tools</name>
+    </assembly>
+    <members>
+        <member name="T:NerdBank.Tools.Exslt.ExsltDatesAndTimes">
+            <summary>
+            This class implements the EXSLT functions in the http://exslt.org/dates-and-times namespace.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.datetime">
+            <summary>
+            Implements the following function
+              string date:date-time()
+            </summary>
+            <returns>The current time</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.datetime(System.String)">
+            <summary>
+            Implements the following function
+              string date:date-time()
+            </summary>
+            <returns>The current date and time or the empty string if the 
+            date is invalid </returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.date">
+            <summary>
+            Implements the following function
+              string date:date()
+            </summary>
+            <returns>The current date</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.date(System.String)">
+            <summary>
+            Implements the following function
+              string date:date(string)
+            </summary>
+            <returns>The date part of the specified date or the empty string if the 
+            date is invalid</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.time">
+            <summary>
+            Implements the following function
+              string date:time()
+            </summary>
+            <returns>The current time</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.time(System.String)">
+            <summary>
+            Implements the following function
+              string date:time(string)
+            </summary>
+            <returns>The time part of the specified date or the empty string if the 
+            date is invalid</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.year">
+            <summary>
+            Implements the following function
+              number date:year()
+            </summary>
+            <returns>The current year</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.year(System.String)">
+            <summary>
+            Implements the following function
+              number date:year(string)
+            </summary>
+            <returns>The year part of the specified date or the empty string if the 
+            date is invalid</returns>
+            <remarks>Does not support dates in the format of the xs:yearMonth or 
+            xs:gYear types</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.IsLeapYear(System.Int32)">
+            <summary>
+            Helper method for calculating whether a year is a leap year. Algorithm 
+            obtained from http://mindprod.com/jglossleapyear.html
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.leapyear">
+            <summary>
+            Implements the following function
+              boolean date:leap-year()
+            </summary>
+            <returns>True if the current year is a leap year</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.leapyear(System.String)">
+            <summary>
+            Implements the following function
+              boolean date:leap-year(string)
+            </summary>
+            <returns>True if the specified year is a leap year</returns>
+            <remarks>Does not support dates in the format of the xs:yearMonth or 
+            xs:gYear types</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.monthinyear">
+            <summary>
+            Implements the following function
+              number date:month-in-year()
+            </summary>
+            <returns>The current month</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.monthinyear(System.String)">
+            <summary>
+            Implements the following function
+              number date:month-in-year(string)
+            </summary>
+            <returns>The month part of the specified date or the empty string if the 
+            date is invalid</returns>
+            <remarks>Does not support dates in the format of the xs:yearMonth or 
+            xs:gYear types</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.weekinyear(System.DateTime)">
+            <summary>
+            Helper method uses local culture information. 
+            </summary>
+            <param name="d"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.weekinyear">
+            <summary>
+            Implements the following function
+              number date:week-in-year()
+            </summary>
+            <returns>The current week. This method uses the Calendar.GetWeekOfYear() method 
+            with the CalendarWeekRule and FirstDayOfWeek of the current culture.
+            THE RESULTS OF CALLING THIS FUNCTION VARIES ACROSS CULTURES</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.weekinyear(System.String)">
+            <summary>
+            Implements the following function
+              number date:week-in-year(string)
+            </summary>
+            <returns>The week part of the specified date or the empty string if the 
+            date is invalid</returns>
+            <remarks>Does not support dates in the format of the xs:yearMonth or 
+            xs:gYear types. This method uses the Calendar.GetWeekOfYear() method 
+            with the CalendarWeekRule and FirstDayOfWeek of the current culture.
+            THE RESULTS OF CALLING THIS FUNCTION VARIES ACROSS CULTURES</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayinyear">
+            <summary>
+            Implements the following function
+              number date:day-in-year()
+            </summary>
+            <returns>The current day. </returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayinyear(System.String)">
+            <summary>
+            Implements the following function
+              number date:day-in-year(string)
+            </summary>
+            <returns>The day part of the specified date or the empty string if the 
+            date is invalid</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayinweek">
+            <summary>
+            Implements the following function
+              number date:day-in-week()
+            </summary>
+            <returns>The current day in the week. 1=Sunday, 2=Monday,...,7=Saturday</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayinweek(System.String)">
+            <summary>
+            Implements the following function
+              number date:day-in-week(string)
+            </summary>
+            <returns>The day in the week of the specified date or the empty string if the 
+            date is invalid. 
+            The current day in the week. 1=Sunday, 2=Monday,...,7=Saturday
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayinmonth">
+            <summary>
+            Implements the following function
+              number date:day-in-month()
+            </summary>
+            <returns>The current day. </returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayinmonth(System.String)">
+            <summary>
+            Implements the following function
+              number date:day-in-month(string)
+            </summary>
+            <returns>The day part of the specified date or the empty string if the 
+            date is invalid</returns>
+            <remarks>Does not support dates in the format of the xs:MonthDay or 
+            xs:gDay types</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayofweekinmonth(System.Int32)">
+            <summary>
+            Helper method.
+            </summary>
+            <param name="day"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayofweekinmonth">
+            <summary>
+            Implements the following function
+              number date:day-of-week-in-month()
+            </summary>
+            <returns>The current day of week in the month as a number. For instance 
+            the third Tuesday of the month returns 3</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayofweekinmonth(System.String)">
+            <summary>
+            Implements the following function
+              number date:day-of-week-in-month(string)
+            </summary>
+            <returns>The day part of the specified date or the empty string if the 
+            date is invalid</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.hourinday">
+            <summary>
+            Implements the following function
+              number date:hour-in-day()
+            </summary>
+            <returns>The current hour of the day as a number.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.hourinday(System.String)">
+            <summary>
+            Implements the following function
+              number date:hour-in-day(string)
+            </summary>
+            <returns>The current hour of the specified time or the empty string if the 
+            date is invalid</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.minuteinhour">
+            <summary>
+            Implements the following function
+              number date:minute-in-hour()
+            </summary>
+            <returns>The minute of the current hour as a number. </returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.minuteinhour(System.String)">
+            <summary>
+            Implements the following function
+              number date:minute-in-hour(string)
+            </summary>
+            <returns>The minute of the hour of the specified time or the empty string if the 
+            date is invalid</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.secondinminute">
+            <summary>
+            Implements the following function
+              number date:second-in-minute()
+            </summary>
+            <returns>The seconds of the current minute as a number. </returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.secondinminute(System.String)">
+            <summary>
+            Implements the following function
+              number date:second-in-minute(string)
+            </summary>
+            <returns>The seconds of the minute of the specified time or the empty string if the 
+            date is invalid</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayname">
+            <summary>
+            Implements the following function
+              string date:day-name()
+            </summary>
+            <returns>The name of the current day</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayname(System.String)">
+            <summary>
+            Implements the following function
+              string date:day-name(string)
+            </summary>
+            <returns>The name of the day of the specified date or the empty string if the 
+            date is invalid</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayabbreviation">
+            <summary>
+            Implements the following function
+              string date:day-abbreviation()
+            </summary>
+            <returns>The abbreviated name of the current day</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.dayabbreviation(System.String)">
+            <summary>
+            Implements the following function
+              string date:day-abbreviation(string)
+            </summary>
+            <returns>The abbreviated name of the day of the specified date or the empty string if the 
+            date is invalid</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.monthname">
+            <summary>
+            Implements the following function
+              string date:month-name()
+            </summary>
+            <returns>The name of the current month</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.monthname(System.String)">
+            <summary>
+            Implements the following function
+              string date:month-name(string)
+            </summary>
+            <returns>The name of the month of the specified date or the empty string if the 
+            date is invalid</returns>
+            <remarks>Does not support dates in the format of the xs:yearMonth or 
+            xs:gYear types</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.monthabbreviation">
+            <summary>
+            Implements the following function
+              string date:month-abbreviation()
+            </summary>
+            <returns>The abbreviated name of the current month</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.monthabbreviation(System.String)">
+            <summary>
+            Implements the following function
+              string date:month-abbreviation(string)
+            </summary>
+            <returns>The abbreviated name of the month of the specified date or the empty string if the 
+            date is invalid</returns>
+            <remarks>Does not support dates in the format of the xs:yearMonth or 
+            xs:gYear types</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.formatdate(System.String,System.String)">
+            <summary>
+            Implements the following function
+              string date:format-date(string, string)
+            </summary>
+            <param name="d">The date to format</param>
+            <param name="format">One of the format strings understood by the 
+            DateTime.ToString(string) method.</param>
+            <returns>The formated date</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.parsedate(System.String,System.String)">
+            <summary>
+            Implements the following function
+              string date:parse-date(string, string)
+            </summary>
+            <param name="d">The date to parse</param>
+            <param name="format">One of the format strings understood by the 
+            DateTime.ToString(string) method.</param>
+            <returns>The parsed date</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.difference(System.String,System.String)">
+            <summary>
+            Implements the following function 
+               string:date:difference(string, string)
+            </summary>
+            <param name="start">The start date</param>
+            <param name="end">The end date</param>
+            <returns>A positive difference if start is before end otherwise a negative
+            difference. The difference is in the format [-][d.]hh:mm:ss[.ff]</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.add(System.String,System.String)">
+            <summary>
+            Implements the following function
+               string:date:add(string, string)
+            </summary>
+            <param name="datetime">A date/time</param>
+            <param name="duration">the duration to add</param>
+            <returns>The new time</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.addduration(System.String,System.String)">
+            <summary>
+            Implements the following function
+               string:date:add-duration(string, string)
+            </summary>
+            <param name="duration1">initial duration</param>
+            <param name="duration2">the duration to add</param>
+            <returns>The new time</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.seconds">
+            <summary>
+            Implements the following function
+            	number date:seconds()
+            </summary>
+            <returns>The amount of seconds since the epoch (1970-01-01T00:00:00Z)</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.seconds(System.String)">
+            <summary>
+            Implements the following function
+            	number date:seconds(string)
+            </summary>
+            <returns>The amount of seconds between the specified date and the 
+            epoch (1970-01-01T00:00:00Z)</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.sum(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+            	string date:sum(node-set)
+            </summary>
+            <param name="iterator">The nodeset</param>
+            <returns>The sum of the values within the node set treated as </returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.duration(System.Double)">
+            <summary>
+            Implements the following function 
+               string date:duration(number)
+            </summary>
+            <param name="seconds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.avg(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               string date:avg(node-set)
+            </summary>
+            <param name="iterator"></param>
+            <returns></returns>
+            <remarks>THIS FUNCTION IS NOT PART OF EXSLT!!!</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.min(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               string date:min(node-set)
+            </summary>
+            <param name="iterator"></param>
+            <returns></returns>
+            <remarks>THIS FUNCTION IS NOT PART OF EXSLT!!!</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltDatesAndTimes.max(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               string date:max(node-set)
+            </summary>
+            <param name="iterator"></param>
+            <returns></returns>
+            <remarks>THIS FUNCTION IS NOT PART OF EXSLT!!!</remarks>
+        </member>
+        <member name="T:NerdBank.Tools.WebDirectAttribute">
+            <summary>
+            A custom method attribute used to authorize any method
+            to be called from the web directly through an Embed class.
+            A WebDirect method:
+             x Must be declared public static
+             x May return a Stream object with data for the browser
+             x May have an "out string contentType" argument to set the type of streaming data
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.WebDirectAttribute.#ctor">
+            <summary>
+            Constructs the WebDirect attribute object.
+            </summary>
+        </member>
+        <member name="T:NerdBank.Tools.XmlUtilities">
+            <summary>
+            A collection of utilities to help with XML handling.
+            </summary>
+        </member>
+        <member name="T:NerdBank.Tools.StringUtilities">
+            <summary>
+            Summary description for StringUtils.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.GenerateUniqueStrings(System.Int32,System.String[],System.Int32,System.Boolean)">
+            <summary>
+            Generates random character combinations that include letters and numbers
+            to form random strings.
+            </summary>
+            <param name="Count">
+            The number of strings to generate.
+            </param>
+            <param name="UniqueFrom">
+            Optional. An array of existing strings from which the newly generated strings will
+            be guaranteed to be unique.
+            </param>
+            <param name="StrLength">
+            The length of each random string.
+            </param>
+            <param name="IncludeLookAlikes">
+            Whether to include characters/numbers in the random generated strings
+            that look similar to the human eye using the common fonts.  If false, 
+            then characters like 1 (one) and I (eye) are never used.
+            </param>
+            <returns>
+            An array of randomly generated strings of the specified length.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.GenerateUniqueStrings(System.Int32,System.String[],System.Int32)">
+            <summary>
+            Generates random character combinations that include letters and numbers
+            to form random strings.
+            </summary>
+            <param name="Count">
+            The number of strings to generate.
+            </param>
+            <param name="UniqueFrom">
+            Optional. An array of existing strings from which the newly generated strings will
+            be guaranteed to be unique.
+            </param>
+            <param name="StrLength">
+            The length of each random string.
+            </param>
+            <returns>
+            An array of randomly generated strings of the specified length.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.HashString(System.String,NerdBank.Tools.StringUtilities.HashAlgorithm)">
+            <summary>
+            Returns a hashed version of any unicode string.
+            </summary>
+            <param name="StringToHash">The string to hash.</param>
+            <param name="algorithm">Which hash algorithm of MD5 or SHA1 to use, or SHA1 if not 
+            specified.</param>
+            <returns>A 40 character hash version of the string.  All characters are hexadecimal.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.HashString(System.String)">
+            <summary>
+            Returns a hashed version of any unicode string.
+            </summary>
+            <param name="StringToHash">The string to hash.</param>
+            <returns>A 40 character hash version of the string.  All characters are hexadecimal.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.IsHashed(System.String)">
+            <summary>
+            Detects whether a string is a hash.
+            </summary>
+            <param name="str">
+            The string that may or may not be a hash.
+            </param>
+            <returns>
+            True if the provided string is a hash.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.IsHashed(System.String,NerdBank.Tools.StringUtilities.HashAlgorithm)">
+            <summary>
+            Detects whether a string is a hash.
+            </summary>
+            <param name="str">
+            The string that may or may not be a hash.
+            </param>
+            <param name="algorithm">
+            The hashing algorithm to check for.  Optional.  Default to SHA-1.
+            </param>
+            <returns>
+            True if the provided string is a hash.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.SwapVarsForValues(System.String,System.String,System.String)">
+            <summary>
+            Replace all references to a keyword/variable in some string with the given value.
+            </summary>
+            <param name="sInput">
+            The string to be changed.
+            </param>
+            <param name="sMatch">
+            The name of the variable.  This can start and/or end with some non-alphanumeric character
+            to prevent surrounding whitespace from being required.
+            </param>
+            <param name="sValue">
+            The string to substitute in for each match.
+            </param>
+            <returns>
+            The new string.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.SwapVarsForValues(System.String,System.Collections.Specialized.StringDictionary)">
+            <summary>
+            Replace all references to a keyword/variable in some string with the given value.
+            </summary>
+            <param name="input">
+            The string to be changed.
+            </param>
+            <param name="varsAndValues">
+            A map of string keys and string values that represent the variables and values respectively.
+            </param>
+            <returns>
+            The new string.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.Tokenize(System.String,System.Char[])">
+            <summary>
+            Tokenize a string into an array of strings.
+            </summary>
+            <param name="str">
+            The string to split.
+            </param>
+            <param name="delimiters">
+            The delimiters to split the string on.  Or null to tokenize on whitespace.
+            </param>
+            <returns>
+            An array of tokenized strings.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.Tokenize(System.String)">
+            <summary>
+            Tokenize a string into an array of strings, splitting at whitespace.
+            </summary>
+            <param name="str">
+            The string to split.
+            </param>
+            <returns>
+            An array of tokenized strings.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.QuoteXPathString(System.String)">
+            <summary>
+            Quotes a string for passing into an XPath expression.
+            </summary>
+            <param name="str">
+            The string to quote.
+            </param>
+            <returns>
+            The string to quote, surrounded with either single or double quotes.
+            </returns>
+            <remarks>
+            Single quotes are used to quote the supplied string if no single quotes are found
+            in the supplied string.  Double quotes are used in single quotes exist but double quotes
+            do not.
+            </remarks>
+            <exception cref="T:System.ArgumentException">
+            Thrown when the supplied string contains both single and double quotes.
+            </exception>
+        </member>
+        <member name="M:NerdBank.Tools.StringUtilities.OccurrencesOf(System.String,System.String)">
+            <summary>
+            Counts the number of times that one string occurs within another.
+            </summary>
+            <param name="str">
+            The string to search for.
+            </param>
+            <param name="instr">
+            The string to search within.
+            </param>
+            <returns>
+            The number of times str occurs in instr.
+            </returns>
+        </member>
+        <member name="T:NerdBank.Tools.StringUtilities.HashAlgorithm">
+            <summary>
+            The hashing algorithm for the hash functions in this class to use
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.StringUtilities.HashAlgorithm.MD5">
+            <summary>
+            The MD5 hash algorithm
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.StringUtilities.HashAlgorithm.SHA1">
+            <summary>
+            The SHA-1 hash algorithm
+            </summary>
+        </member>
+        <member name="T:NerdBank.Tools.InProjectResolver">
+            <summary>
+            A special XML resolver so that XSLTs that reference other XSLT files 
+            that are actually embedded in the assembly can retrieve those files.
+            </summary>
+        </member>
+        <member name="T:NerdBank.Tools.EmbeddedResources">
+            <summary>
+            Summary description for EmbeddedFile.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.EmbeddedResources.LoadFileFromAssemblyWithNamespace(System.String,System.String,System.Reflection.Assembly)">
+            <summary>
+            Use to conveniently load files that are built into the assembly.
+            </summary>
+            <param name="filename">
+            The filename of the embedded file.  This filename should 
+            include the path within the project of the file, and start with a forward slash.
+            </param>
+            <param name="namespacePrefix">
+            The namespace of the file.  This is either the default namespace of the project,
+            or the namespace set under that file's Properties under "Custom Tool Namespace".
+            </param>
+            <param name="assembly">
+            The assembly in which to look for the embedded file.  
+            If null, the calling assembly is assumed.
+            </param>
+            <returns>
+            A string with the contents of the file.
+            </returns>
+            <example>
+            <code>
+            [C#]
+            Project.LoadFileFromAssemblyWithNamespace("/mypath/myembeddedfile.xslt", "MyProject");
+            [VB]
+            Project.LoadFileFromAssemblyWithNamespace("/mypath/myembeddedfile.xslt", "")
+            </code>
+            </example>
+            <remarks>
+            Note that in VB.NET projects, embedded resources are stored only by their
+            own file names.  In C# embedded resources are filed by a combination of 
+            their path within the project and their file names.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.EmbeddedResources.LoadFileFromAssemblyWithNamespace(System.String,System.String)">
+            <summary>
+            Use to conveniently load files that are built into the assembly.
+            </summary>
+            <param name="filename">
+            The filename of the embedded file.  This filename should 
+            include the path within the project of the file, and start with a forward slash.
+            </param>
+            <param name="namespacePrefix">
+            The namespace of the file.  This is either the default namespace of the project,
+            or the namespace set under that file's Properties under "Custom Tool Namespace".
+            </param>
+            <returns>
+            A string with the contents of the file.
+            </returns>
+            <example>
+            [C#]
+            Project.LoadFileFromAssemblyWithNamespace("/mypath/myembeddedfile.xslt", "MyProject");
+            [VB]
+            Project.LoadFileFromAssemblyWithNamespace("/mypath/myembeddedfile.xslt", "")
+            </example>
+            <remarks>
+            Note that in VB.NET projects, embedded resources are stored only by their
+            own file names.  In C# embedded resources are filed by a combination of 
+            their path within the project and their file names.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.EmbeddedResources.LoadFileFromAssembly(System.String,System.String,System.Reflection.Assembly)">
+            <summary>
+            Use to conveniently load files that are built into the assembly.
+            In c#, the syntax for calling this function is:
+            Project.LoadFileFromAssembly("/mypath/myembeddedfile.xslt", "", this.GetType().Assembly);
+            In VB, the syntax is:
+            Project.LoadFileFromAssembly("/myembeddedfile.xslt", "", Me.GetType.Assembly)
+            </summary>
+            <param name="filename">
+            The filename of the embedded file.  This filename should 
+            include the path within the project of the file, and start with a forward slash.
+            </param>
+            <param name="namespacePrefix">
+            If your assembly has some special prefix that is attached even before the 
+            assembly name in its embedded resources, specify it here.
+            </param>
+            <param name="assembly">
+            The calling assembly.  The assembly in which to look for
+            the embedded file.
+            </param>
+            <returns>
+            A string with the contents of the file.
+            </returns>
+            <remarks>
+            Note that in VB.NET projects, embedded resources are stored only by their
+            own file names.  In C# embedded resources are filed by a combination of 
+            their path within the project and their file names.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.EmbeddedResources.LoadFileFromAssembly(System.String,System.String)">
+            <summary>
+            Use to conveniently load files that are built into the assembly.
+            In c#, the syntax for calling this function is:
+            Project.LoadFileFromAssembly("/mypath/myembeddedfile.xslt", "", this.GetType().Assembly);
+            In VB, the syntax is:
+            Project.LoadFileFromAssembly("/myembeddedfile.xslt", "", Me.GetType.Assembly)
+            </summary>
+            <param name="filename">
+            The filename of the embedded file.  This filename should 
+            include the path within the project of the file, and start with a forward slash.</param>
+            <param name="namespacePrefix">
+            If your assembly has some special prefix that is attached even before the 
+            assembly name in its embedded resources, specify it here.
+            </param>
+            <returns>
+            A string with the contents of the file.
+            </returns>
+            <remarks>
+            Note that in VB.NET projects, embedded resources are stored only by their
+            own file names.  In C# embedded resources are filed by a combination of 
+            their path within the project and their file names.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.EmbeddedResources.LoadFileFromAssembly(System.String)">
+            <summary>
+            Use to conveniently load files that are built into the assembly.
+            In c#, the syntax for calling this function is:
+            Project.LoadFileFromAssembly("/mypath/myembeddedfile.xslt", "", this.GetType().Assembly);
+            In VB, the syntax is:
+            Project.LoadFileFromAssembly("/myembeddedfile.xslt", "", Me.GetType.Assembly)
+            </summary>
+            <param name="filename">
+            The filename of the embedded file.  This filename should 
+            include the path within the project of the file, and start with a forward slash.
+            </param>
+            <returns>
+            A string with the contents of the file.
+            </returns>
+            <remarks>
+            Note that in VB.NET projects, embedded resources are stored only by their
+            own file names.  In C# embedded resources are filed by a combination of 
+            their path within the project and their file names.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.EmbeddedResources.GetFileStreamFromAssembly(System.String,System.Reflection.Assembly)">
+            <summary>
+            Conveniently loads files that are built into the assembly.
+            </summary>
+            <param name="manifestName">
+            The filename of the embedded file.  This filename should 
+            include the path within the project of the file, and start with a forward slash.
+            </param>
+            <param name="assembly">
+            The calling assembly.  The assembly in which to look for
+            the embedded file.
+            </param>
+            <returns>
+            A stream with the contents of the file.
+            </returns>
+            <remarks>
+            Note that in VB.NET projects, embedded resources are stored only by their
+            own file names.  In C# embedded resources are filed by a combination of 
+            their path within the project and their file names.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.EmbeddedResources.GetFileStreamFromAssembly(System.String)">
+            <summary>
+            Conveniently loads files that are built into the assembly.
+            </summary>
+            <param name="manifestName">
+            The filename of the embedded file.  This filename should 
+            include the path within the project of the file, and start with a forward slash.
+            </param>
+            <returns>
+            A stream with the contents of the file.
+            </returns>
+            <remarks>
+            Note that in VB.NET projects, embedded resources are stored only by their
+            own file names.  In C# embedded resources are filed by a combination of 
+            their path within the project and their file names.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.EmbeddedResources.GetFileStreamFromAssembly(System.String,System.String,System.Reflection.Assembly)">
+            <summary>
+            Conveniently loads files that are built into the assembly.
+            </summary>
+            <param name="filename">
+            The filename of the embedded file.  This filename should 
+            include the path within the project of the file, and start with a forward slash.
+            </param>
+            <param name="namespacePrefix">
+            The namespace of the file.  This is either the default namespace of the project,
+            or the namespace set under that file's Properties under "Custom Tool Namespace".
+            </param>
+            <param name="assembly">
+            The assembly the load the embedded file from.
+            </param>
+            <returns>
+            A stream with the contents of the file.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.EmbeddedResources.GetFileStreamFromAssembly(System.String,System.String)">
+            <summary>
+            Conveniently loads files that are built into the assembly.
+            </summary>
+            <param name="filename">
+            The filename of the embedded file.  This filename should 
+            include the path within the project of the file, and start with a forward slash.
+            </param>
+            <param name="namespacePrefix">
+            The namespace of the file.  This is either the default namespace of the project,
+            or the namespace set under that file's Properties under "Custom Tool Namespace".
+            </param>
+            <returns>
+            A stream with the contents of the file.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.EmbeddedResources.ManifestNameFromFileNameAndNamespace(System.String,System.String)">
+            <summary>
+            Converts the name of a file embedded within an assembly into its manifest name.  
+            </summary>
+            <param name="filename">
+            The full path to the file as it appears in the project.  Should start with a forward slash
+            signifying the root of the project.
+            </param>
+            <param name="namespacePrefix">
+            The namespace of the file.  This is either the default namespace of the project,
+            or the namespace set under that file's Properties under "Custom Tool Namespace".
+            </param>
+            <returns>
+            The manifest filename that can be used to retrieve the resource from the assembly.
+            </returns>
+        </member>
+        <member name="T:NerdBank.Tools.CultureAssist">
+            <summary>
+            Summary description for CultureAssist.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.CultureAssist.GetCulturizedDataInDB(System.Data.SqlClient.SqlConnection,System.String,System.String,System.String,System.String,System.Int32)">
+            <returns>The object pulled from the database, or null if the culturized data could not be found.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.CultureAssist.GetRelevantCultures(System.Globalization.CultureInfo)">
+            <summary>
+            Gets the list of cultures, in precedence order, that should be checked through
+            when parsing the arrays of culture-specific attributes in this class.
+            </summary>
+            <param name="lastResort">The culture to use if none of the current thread cultures match.</param>
+        </member>
+        <member name="M:NerdBank.Tools.CultureAssist.GetMostRelevantLocalResource``1(System.Collections.Generic.IDictionary{System.Globalization.CultureInfo,``0},System.Globalization.CultureInfo[])">
+            <summary>
+            Gets the most relevant localized resource from a dictionary of
+            culture-specific resources.
+            </summary>
+            <typeparam name="T">The type of resource being sought.</typeparam>
+            <param name="dictionary">The dictionary to search.</param>
+            <param name="cultures">The list of cultures to check for resource information on.</param>
+            <returns>The relevant resource, or default(T) if none found.</returns>
+        </member>
+        <member name="P:NerdBank.Tools.CultureAssist.ApplicableSpecificCultures">
+            <summary>
+            Assembles an array of ISO standard culture names
+            that apply to the current thread.
+            </summary>
+            <returns>
+            A string array of cultures to search for that are applicable.
+            The strength of the applicability decreases as you search through the array.
+            </returns>
+        </member>
+        <member name="P:NerdBank.Tools.CultureAssist.ApplicableCultures">
+            <summary>
+            Assembles an array of ISO standard culture names
+            that apply to the current thread, plus the english standard.
+            </summary>
+            <returns>
+            A string array of cultures to search for that are applicable.
+            The strength of the applicability decreases as you search through the array.
+            </returns>
+            <remarks>
+            Used to help assemble a SQL query that will return the culturally
+            applicable rows from somewhere.
+            </remarks>
+        </member>
+        <member name="T:NerdBank.Tools.Exslt.ExsltRegularExpressions">
+            <summary>
+            This class implements the EXSLT functions in the http://exslt.org/regular-expressions namespace.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltRegularExpressions.test(System.String,System.String)">
+            <summary>
+            Implements the following function 
+            	boolean test(string, string)
+            </summary>
+            <param name="str"></param>
+            <param name="regexp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltRegularExpressions.test(System.String,System.String,System.String)">
+            <summary>
+            Implements the following function 
+            	boolean test(string, string, string)
+            </summary>
+            <param name="str"></param>
+            <param name="regexp"></param>
+            <param name="flags">One of 'i', 'g' or 'm'</param>
+            <returns></returns>
+            <remarks>Supports the string 'm' as a flag which indicates multiline mode</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltRegularExpressions.tokenize(System.String,System.String)">
+            <summary>
+            Implements the following function 
+            	node-set tokenize(string, string)
+            </summary>
+            <param name="str"></param>
+            <param name="regexp"></param>
+            <returns>This function breaks the input string into a sequence of strings, 
+            treating any substring that matches the regexp as a separator. 
+            The separators themselves are not returned. 
+            The matching strings are returned as a set of 'match' elements.</returns>
+            <remarks>THIS FUNCTION IS NOT PART OF EXSLT!!!</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltRegularExpressions.tokenize(System.String,System.String,System.String)">
+            <summary>
+            Implements the following function 
+            	node-set tokenize(string, string, string)
+            </summary>
+            <param name="str"></param>
+            <param name="regexp"></param>		
+            <param name="flags"></param>
+            <returns>This function breaks the input string into a sequence of strings, 
+            treating any substring that matches the regexp as a separator. 
+            The separators themselves are not returned. 
+            The matching strings are returned as a set of 'match' elements.</returns>
+            <remarks>THIS FUNCTION IS NOT PART OF EXSLT!!!</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltRegularExpressions.match(System.String,System.String)">
+            <summary>
+            Implements the following function 
+            	node-set match(string, string)
+            </summary>
+            <param name="str"></param>
+            <param name="regexp"></param>
+            <returns> The matching strings are returned as a set of 'match' elements.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltRegularExpressions.match(System.String,System.String,System.String)">
+            <summary>
+            Implements the following function 
+            	node-set match(string, string, string)
+            </summary>
+            <param name="str"></param>
+            <param name="regexp"></param>
+            <param name="flags"></param>
+            <returns> The matching strings are returned as a set of 'match' elements.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltRegularExpressions.replace(System.String,System.String,System.String,System.String)">
+            <summary>
+            Implements the following function 
+            	string replace(string, string, string, string)
+            </summary>
+            <param name="input"></param>
+            <param name="regexp"></param>
+            <param name="flags"></param>
+            <param name="replacement"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NerdBank.Tools.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:NerdBank.Tools.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:NerdBank.Tools.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:NerdBank.Tools.Exslt.ExsltMath">
+            <summary>
+            This class implements the EXSLT functions in the http://exslt.org/math namespace.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.min(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               number min(node-set)
+            </summary>
+            <param name="iterator"></param>
+            <returns></returns>		
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.max(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               number max(node-set)
+            </summary>
+            <param name="iterator"></param>
+            <returns></returns>		
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.highest(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               node-set highest(node-set)
+            </summary>
+            <param name="iterator">The input nodeset</param>
+            <returns>All the nodes that contain the max value in the nodeset</returns>		
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.lowest(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               node-set lowest(node-set)
+            </summary>
+            <param name="iterator">The input nodeset</param>
+            <returns>All the nodes that contain the min value in the nodeset</returns>		
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.abs(System.Double)">
+            <summary>
+             Implements the following function 
+                number abs(number)
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.sqrt(System.Double)">
+            <summary>
+             Implements the following function 
+                number sqrt(number)
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.power(System.Double,System.Double)">
+            <summary>
+             Implements the following function 
+                number power(number, number)
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.log(System.Double)">
+            <summary>
+             Implements the following function 
+                number log(number)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.constant(System.String,System.Double)">
+            <summary>
+             Implements the following function 
+                number constant(string, number)
+            </summary>
+            <returns>The specified constant or NaN</returns>
+            <remarks>This method only supports the constants 
+            E and PI. Also the precision parameter is ignored.</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.random">
+            <summary>
+             Implements the following function 
+                number random()
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.sin(System.Double)">
+            <summary>
+             Implements the following function 
+                number sin(number)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.asin(System.Double)">
+            <summary>
+             Implements the following function 
+                number asin(number)
+            </summary>
+            <param name="x"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.cos(System.Double)">
+            <summary>
+             Implements the following function 
+                number cos(number)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.acos(System.Double)">
+            <summary>
+             Implements the following function 
+                number acos(number)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.tan(System.Double)">
+            <summary>
+             Implements the following function 
+                number tan(number)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.atan(System.Double)">
+            <summary>
+             Implements the following function 
+                number atan(number)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.atan2(System.Double,System.Double)">
+            <summary>
+             Implements the following function 
+                number atan2(number, number)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.exp(System.Double)">
+            <summary>
+             Implements the following function 
+                number exp(number)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.avg(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               number avg(node-set)
+            </summary>
+            <returns>The average of all the value of all the nodes in the 
+            node set</returns>
+            <remarks>THIS FUNCTION IS NOT PART OF EXSLT!!!</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltMath.avgNonNegatives(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               number avg(node-set)
+            </summary>
+            <returns>The average of all the non-negative values of the nodes in the 
+            node set</returns>
+            <remarks>THIS FUNCTION IS NOT PART OF EXSLT!!!</remarks>
+        </member>
+        <member name="T:NerdBank.Tools.Exslt.ExsltNodeList">
+            <summary>
+            A list that holds XPathNavigator objects
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.Exslt.ExsltNodeList.innerList">
+            <summary>
+            The inner arraylist used by this class. 
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.#ctor(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Initializes the ExsltNodeList with the specified XPathNodeIterator. All nodes 
+            in the iterator are placed in the list. 
+            </summary>
+            <param name="iterator">The iterator to load the nodelist from</param>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.#ctor(System.Xml.XPath.XPathNodeIterator,System.Boolean)">
+            <summary>
+            Initializes the ExsltNodeList with the specified XPathNodeIterator. All nodes 
+            in the iterator are placed in the list. 
+            </summary>
+            <param name="iterator">The iterator to load the nodelist from</param>
+            <param name="removeDuplicates">A flag that indicates whether duplicate nodes 
+            should be loaded into the nodelist or only node with unique identity should 
+            be added</param>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.GetEnumerator">
+            <summary>
+            Returns an enumerator for the entire list.
+            </summary>
+            <returns>An enumerator for the entire list</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.Add(System.Xml.XPath.XPathNavigator)">
+            <summary>
+            Adds an item to the list
+            </summary>
+            <param name="nav">The item to add</param>
+            <returns>The position into which the new element was inserted</returns>		
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.Clear">
+            <summary>
+            Removes all items from the list. 
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.Contains(System.Xml.XPath.XPathNavigator)">
+            <summary>
+            Determines whether the list contains a navigator positioned at the same 
+            location as the specified XPathNavigator. This 
+            method relies on the IsSamePositon() method of the XPathNavightor. 
+            </summary>
+            <param name="value">The object to locate in the list.</param>
+            <returns>true if the object is found in the list; otherwise, false.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.ContainsValue(System.String)">
+            <summary>
+            Determines whether the list contains a navigator whose Value property matches
+            the target value
+            </summary>
+            <param name="value">The value to locate in the list.</param>
+            <returns>true if the value is found in the list; otherwise, false.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.IndexOf(System.Object)">
+            <summary>
+            Determines the index of a specific item in the list.
+            </summary>
+            <param name="value">The object to locate in the list</param>
+            <returns>The index of value if found in the list; otherwise, -1.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.Insert(System.Int32,System.Xml.XPath.XPathNavigator)">
+            <summary>
+            Inserts an item to the list at the specified position.
+            </summary>
+            <param name="index">The zero-based index at which value should be inserted. </param>
+            <param name="value">The object to insert into the list</param>		
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.Remove(System.Xml.XPath.XPathNavigator)">
+            <summary>
+            Removes the first occurrence of a specific object from the list.
+            </summary>
+            <param name="value">The object to remove from the list.</param>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltNodeList.RemoveAt(System.Int32)">
+            <summary>
+            Removes the list item at the specified index.
+            </summary>
+            <param name="index">The zero-based index of the item to remove.</param>
+        </member>
+        <member name="P:NerdBank.Tools.Exslt.ExsltNodeList.Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index
+            </summary>
+        </member>
+        <member name="P:NerdBank.Tools.Exslt.ExsltNodeList.Count">
+            <summary>
+            Gets the number of items in the list
+            </summary>
+        </member>
+        <member name="T:NerdBank.Tools.Exslt.ExsltStrings">
+            <summary>
+            Implements the functions in the http://exslt.org/strings namespace 
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.tokenize(System.String,System.String)">
+            <summary>
+            Implements the following function 
+            	node-set tokenize(string, string)
+            </summary>
+            <returns>This function breaks the input string into a sequence of strings, 
+            treating any character in the list of delimiters as a separator. 
+            The separators themselves are not returned. 
+            The tokens are returned as a set of 'token' elements.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.tokenize(System.String)">
+            <summary>
+            Implements the following function 
+            	node-set tokenize(string)
+            </summary>
+            <returns>This function breaks the input string into a sequence of strings, 
+            using the whitespace characters as a delimiter. 
+            The separators themselves are not returned. 
+            The tokens are returned as a set of 'token' elements.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.replace(System.String,System.String,System.String)">
+            <summary>
+            Implements the following function 
+            	string replace(string, string, string) 
+            </summary>
+            <remarks>This function has completely diffeerent semantics from the EXSLT function. 
+            The description of the EXSLT function is confusing and furthermore no one has implemented
+            the described semantics which implies that others find the method problematic. Instead
+            this function is straightforward, it replaces all occurrences of oldValue with 
+            newValue</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.escapeQuotes(System.String)">
+            <summary>
+            Provides for JavaScript code that must have escaped double or single quotes.
+            </summary>
+            <param name="str">The string to modify</param>
+            <returns>The string passed in, with all single and double quotes preceded by a backslash
+            character.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.padding(System.Int32)">
+            <summary>
+            Implements the following function 
+            	string padding(number)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.padding(System.Int32,System.String)">
+            <summary>
+            Implements the following function 
+            	string padding(number, string)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.uppercase(System.String)">
+            <summary>
+            Implements the following function 
+            	string uppercase(string)
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+            <remarks>THIS FUNCTION IS NOT IN EXSLT!!!</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.lowercase(System.String)">
+            <summary>
+            Implements the following function 
+            	string lowercase(string)
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+            <remarks>THIS FUNCTION IS NOT IN EXSLT!!!</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.split(System.String)">
+            <summary>
+            Implements the following function 
+            	node-set split(string)
+            </summary>
+            <param name="str"></param>
+            <remarks>This function breaks the input string into a sequence of strings, 
+            using the space character as a delimiter. 
+            The space character itself is never returned not even when there are 
+            adjacent space characters. 
+            </remarks>
+            <returns>The tokens are returned as a set of 'token' elements</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.split(System.String,System.String)">
+            <summary>
+            Implements the following function 
+            	node-set split(string, string)
+            </summary>
+            <param name="str"></param>
+            <param name="delimiter"></param>
+            <remarks>This function breaks the input string into a sequence of strings, 
+            using the space character as a delimiter. 
+            The space character itself is never returned not even when there are 
+            adjacent space characters. 
+            </remarks>
+            <returns>The tokens are returned as a set of 'token' elements</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltStrings.concat(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+            	string concat(node-set)
+            </summary>
+            <param name="nodeset"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NerdBank.Tools.StreamUtilities">
+            <summary>
+            Summary description for StreamUtilities.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.StreamUtilities.Save(System.IO.Stream,System.String)">
+            <summary>
+            Converts a stream to a persisted file.
+            </summary>
+            <param name="stream">
+            The stream to convert to a file.
+            </param>
+            <param name="filename">
+            The path and filename to save the new file as.
+            </param>
+            <remarks>
+            When the end of the stream is reached, it is closed.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.StreamUtilities.Save(System.IO.Stream)">
+            <summary>
+            Saves the stream to a temporary file.
+            </summary>
+            <param name="stream">
+            The stream to persist to disk.
+            </param>
+            <returns>
+            The name of the temporary file used.
+            </returns>
+            <remarks>
+            The temporary file is NOT automatically removed.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.StreamUtilities.SaveTemporary(System.IO.Stream,System.String)">
+            <summary>
+            Saves the stream to a temporary file.
+            </summary>
+            <param name="stream">
+            The stream to persist to disk.
+            </param>
+            <param name="fileExtension">
+            The extension of the temporary file to be created.
+            </param>
+            <returns>
+            The name of the temporary file used.
+            </returns>
+            <remarks>
+            The temporary file is NOT automatically removed.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.StreamUtilities.ConvertFileToStreamAndDelete(System.String)">
+            <summary>
+            Sends the contents of a file down a stream and deletes the temporary file.
+            </summary>
+            <param name="filename">
+            The name of the temporary file.
+            </param>
+            <returns>
+            The stream that contains the last copy of the file's contents.
+            </returns>
+        </member>
+        <member name="T:NerdBank.Tools.AccessoryLoader">
+            <summary>
+            An <see cref="T:System.AppDomain"/> for hosting one or many assemblies
+            each with at least one recognized accessory.
+            </summary>
+        </member>
+        <member name="T:NerdBank.Tools.AccessoryLoader.AccessoryFinder">
+            <summary>
+            Finds and loads types implementing some interface into an assembly 
+            loaded in a remote <see cref="T:System.AppDomain"/>.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.AccessoryLoader.AccessoryFinder.#ctor">
+            <summary>
+            Creates an instance of the <see cref="T:NerdBank.Tools.AccessoryLoader.AccessoryFinder"/> class.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.AccessoryLoader.AccessoryFinder.LoadPluginsInAssembly(System.Type,System.Reflection.AssemblyName,System.Collections.Generic.IList{System.String})">
+            <summary>
+            Finds and loads plugins in an assembly loaded in a remote <see cref="T:System.AppDomain"/>.
+            </summary>
+            <param name="assemblyRef">
+            The assembly to search for plugins.
+            </param>
+            <returns>
+            The list of loaded plugins.
+            </returns>
+        </member>
+        <member name="T:NerdBank.Tools.WebDirect">
+            <summary>
+            Summary description for WebDirect.
+            </summary>
+            <example>
+            An example URL for this call
+            Assembly: NAssess
+            Fully-qualified class name: NAssess.Engines.Reporting.Graphs.GraphWindow
+            Method name: Render
+            Arguments: (string sFirstName, out outputType)
+            http://uri.byu.edu/WebDirect.aspx/nassess/NAssess.Engines.Reporting.Graphs.GraphWindow/Render?sFirstName=Andrew
+            </example>
+        </member>
+        <member name="T:NerdBank.Tools.Exslt.ExsltSets">
+            <summary>
+              This class implements the EXSLT functions in the http://exslt.org/sets namespace.
+            </summary>		
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltSets.subset(System.Xml.XPath.XPathNodeIterator,System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               node-set subset(node-set, node-set) 
+            </summary>
+            <param name="nodeset1">An input nodeset</param>
+            <param name="nodeset2">Another input nodeset</param>
+            <returns>True if all the nodes in the first nodeset are contained 
+            in the second nodeset</returns>
+            <remarks>THIS FUNCTION IS NOT PART OF EXSLT!!!</remarks>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltSets.difference(System.Xml.XPath.XPathNodeIterator,System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               node-set difference(node-set, node-set) 
+            </summary>
+            <param name="nodeset1">An input nodeset</param>
+            <param name="nodeset2">Another input nodeset</param>
+            <returns>The those nodes that are in the node set 
+            passed as the first argument that are not in the node set 
+            passed as the second argument.</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltSets.distinct(System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+               node-set distinct(node-set)
+            </summary>
+            <param name="nodeset">The input nodeset</param>
+            <returns>Returns the nodes in the nodeset whose string value is 
+            distinct</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltSets.hassamenode(System.Xml.XPath.XPathNodeIterator,System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements 
+               boolean hassamenode(node-set, node-set)
+            </summary>
+            <returns>true if both nodeset contain at least one of the same node</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltSets.intersection(System.Xml.XPath.XPathNodeIterator,System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+              node-set intersection(node-set, node-set)
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltSets.leading(System.Xml.XPath.XPathNodeIterator,System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+            	node-set leading(node-set, node-set)
+            </summary>
+            <returns>returns the nodes in the node set passed as the 
+            first argument that precede, in document order, the first node 
+            in the node set passed as the second argument</returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltSets.trailing(System.Xml.XPath.XPathNodeIterator,System.Xml.XPath.XPathNodeIterator)">
+            <summary>
+            Implements the following function 
+            	node-set trailing(node-set, node-set)
+            </summary>
+            <returns>returns the nodes in the node set passed as the 
+            first argument that follow, in document order, the first node 
+            in the node set passed as the second argument</returns>
+        </member>
+        <member name="T:NerdBank.Tools.Exslt.ExsltCommon">
+            <summary>
+            This class implements the EXSLT functions in the http://exslt.org/common namespace.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltCommon.objecttype(System.Object)">
+            <summary>
+            Implements the following function
+             string exsl:objecttype(object) 
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltCommon.ExsltNodeListToXPathNodeIterator(NerdBank.Tools.Exslt.ExsltNodeList)">
+            <summary>
+            This method converts an ExsltNodeList to an XPathNodeIterator over the nodes in the list.
+            </summary>
+            <param name="list">The list to convert</param>
+            <returns>An XPathNodeIterator over the nodes in the original list</returns>
+            <remarks>Known Issues: A node list containing multiple instances of an attribute 
+            with the same namespace name and local name will cause an error.</remarks>
+        </member>
+        <member name="T:NerdBank.Tools.ProjectXmlResolver">
+            <summary>
+            A special XML resolver so that XSLTs that reference other XSLT files 
+            that are actually embedded in the assembly can retrieve those files.
+            </summary>
+        </member>
+        <member name="T:NerdBank.Tools.Exslt.ExsltFunctionNamespace">
+            <summary>
+            Enumeration used to indicate an EXSLT function namespace. 
+            </summary>
+        </member>
+        <member name="T:NerdBank.Tools.Exslt.ExsltTransform">
+            <summary>
+            Transforms XML data using an XSLT stylesheet. Supports a number of EXSLT as 
+            defined at http://www.exslt.org
+            </summary>
+            <remarks>
+            XslTransform supports the XSLT 1.0 syntax. The XSLT stylesheet must use the 
+            namespace http://www.w3.org/1999/XSL/Transform. Additional arguments can also be 
+            added to the stylesheet using the XsltArgumentList class. 
+            This class contains input parameters for the stylesheet and extension objects which can be called from the stylesheet.
+            This class also recognizes functions from the following namespaces 
+            * http://exslt.org/common
+            * http://exslt.org/dates-and-times
+            * http://exslt.org/math
+            * http://exslt.org/regular-expressions
+            * http://exslt.org/sets
+            * http://exslt.org/strings
+            </remarks>
+        </member>
+        <member name="F:NerdBank.Tools.Exslt.ExsltTransform.xslTransform">
+            <summary>
+            The XslTransform object wrapped by this class. 
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.Exslt.ExsltTransform._supportedFunctions">
+            <summary>
+            Bitwise enumeration used to specify which EXSLT functions should be accessible to 
+            the ExsltTransform object. The default value is ExsltFunctionNamespace.All 
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.Exslt.ExsltTransform.argList">
+            <summary>
+            The XSLT argument list passed to the internal XslTransform object which contains
+            the objects that implement the EXSLT functions. 
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.Exslt.ExsltTransform.exsltCommon">
+            <summary>
+            Extension object which implements the functions in the http://exslt.org/common namespace
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.Exslt.ExsltTransform.exsltMath">
+            <summary>
+            Extension object which implements the functions in the http://exslt.org/math namespace
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.Exslt.ExsltTransform.exsltDatesAndTimes">
+            <summary>
+            Extension object which implements the functions in the http://exslt.org/dates-and-times namespace
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.Exslt.ExsltTransform.exsltRegularExpressions">
+            <summary>
+            Extension object which implements the functions in the http://exslt.org/regular-expressions namespace
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.Exslt.ExsltTransform.exsltStrings">
+            <summary>
+            Extension object which implements the functions in the http://exslt.org/strings namespace
+            </summary>
+        </member>
+        <member name="F:NerdBank.Tools.Exslt.ExsltTransform.exsltSets">
+            <summary>
+            Extension object which implements the functions in the http://exslt.org/sets namespace
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.#ctor">
+            <summary>
+            Constructor initializes class. 
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Load(System.Xml.XPath.IXPathNavigable)">
+            <summary> Loads the XSLT stylesheet contained in the IXPathNavigable</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Load(System.String)">
+            <summary> Loads the XSLT stylesheet specified by a URL</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Load(System.Xml.XmlReader)">
+            <summary> Loads the XSLT stylesheet contained in the XmlReader</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Load(System.Xml.XPath.XPathNavigator)">
+            <summary> Loads the XSLT stylesheet contained in the XPathNavigator</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Load(System.Xml.XPath.IXPathNavigable,System.Xml.XmlResolver)">
+            <summary> Loads the XSLT stylesheet contained in the IXPathNavigable</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Load(System.String,System.Xml.XmlResolver)">
+            <summary> Loads the XSLT stylesheet specified by a URL</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Load(System.Xml.XmlReader,System.Xml.XmlResolver)">
+            <summary> Loads the XSLT stylesheet contained in the XmlReader</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Load(System.Xml.XPath.XPathNavigator,System.Xml.XmlResolver)">
+            <summary> Loads the XSLT stylesheet contained in the XPathNavigator</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Transform(System.Xml.XPath.IXPathNavigable,System.Xml.Xsl.XsltArgumentList)">
+            <summary> Transforms the XML data in the IXPathNavigable using the specified args and outputs the result to an XmlReader</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Transform(System.String,System.String)">
+            <summary> Transforms the XML data in the input file and outputs the result to an output file</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Transform(System.Xml.XPath.XPathNavigator,System.Xml.Xsl.XsltArgumentList)">
+            <summary> Transforms the XML data in the XPathNavigator using the specified args and outputs the result to an XmlReader</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Transform(System.Xml.XPath.IXPathNavigable,System.Xml.Xsl.XsltArgumentList,System.IO.Stream)">
+            <summary> Transforms the XML data in the IXPathNavigable using the specified args and outputs the result to a Stream</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Transform(System.Xml.XPath.IXPathNavigable,System.Xml.Xsl.XsltArgumentList,System.IO.TextWriter)">
+            <summary> Transforms the XML data in the IXPathNavigable using the specified args and outputs the result to a TextWriter</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Transform(System.Xml.XPath.IXPathNavigable,System.Xml.Xsl.XsltArgumentList,System.Xml.XmlWriter)">
+            <summary> Transforms the XML data in the IXPathNavigable using the specified args and outputs the result to an XmlWriter</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Transform(System.Xml.XPath.XPathNavigator,System.Xml.Xsl.XsltArgumentList,System.IO.Stream)">
+            <summary> Transforms the XML data in the XPathNavigator using the specified args and outputs the result to a Stream</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Transform(System.Xml.XPath.XPathNavigator,System.Xml.Xsl.XsltArgumentList,System.IO.TextWriter)">
+            <summary> Transforms the XML data in the XPathNavigator using the specified args and outputs the result to a TextWriter</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.Transform(System.Xml.XPath.XPathNavigator,System.Xml.Xsl.XsltArgumentList,System.Xml.XmlWriter)">
+            <summary> Transforms the XML data in the XPathNavigator using the specified args and outputs the result to an XmlWriter</summary>
+        </member>
+        <member name="M:NerdBank.Tools.Exslt.ExsltTransform.AddExsltExtensionObjects(System.Xml.Xsl.XsltArgumentList)">
+            <summary>
+            Adds the objects that implement the EXSLT extensions to the provided argument 
+            list. The extension objects added depend on the value of the SupportedFunctions
+            property.
+            </summary>
+            <param name="list">The argument list</param>
+            <returns>An XsltArgumentList containing the contents of the list passed in 
+            and objects that implement the EXSLT. </returns>
+            <remarks>If null is passed in then a new XsltArgumentList is constructed. </remarks>
+        </member>
+        <member name="P:NerdBank.Tools.Exslt.ExsltTransform.XmlResolver">
+            <summary>
+            Sets the XmlResolver used to resolve external resources when the 
+            Transform method is called.
+            </summary>
+        </member>
+        <member name="P:NerdBank.Tools.Exslt.ExsltTransform.SupportedFunctions">
+            <summary>
+            Bitwise enumeration used to specify which EXSLT functions should be accessible to 
+            the ExsltTransform object. The default value is ExsltFunctionNamespace.All 
+            </summary>
+        </member>
+        <member name="T:NerdBank.Tools.WebUtilities">
+            <summary>
+            Summary description for Web.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.WebUtilities.StreamToBrowser(System.IO.Stream,System.String,System.String)">
+            <summary>
+            Sends the contents of a stream to the HttpResponse object and ends the connection.
+            </summary>
+            <param name="stream">
+            The stream to send to the browser.
+            </param>
+            <param name="contentType">
+            The MIME type that a browser would recognize, so it can properly deal
+            with the incoming stream.
+            </param>
+            <param name="filename">
+            If the file should be downloaded and "open or save as" should pop up 
+            on the web client computer, specify a filename to suggest to the user.
+            A full path should NOT be specified here -- just a filename.  Optional.
+            </param>
+            <remarks>
+            The stream is closed after being read to the end.
+            </remarks>
+        </member>
+        <member name="M:NerdBank.Tools.WebUtilities.LoadFromCache(System.String)">
+            <summary>
+            Loads an object with a given key from the web cache, if available.
+            </summary>
+            <param name="key">
+            The key that the cached item would have been stored under.
+            </param>
+            <returns>
+            The value for that key, if one was found.
+            </returns>
+        </member>
+        <member name="M:NerdBank.Tools.WebUtilities.SaveInCache(System.String,System.Object)">
+            <summary>
+            Saves an object under a given key in the web cache.
+            </summary>
+        </member>
+        <member name="M:NerdBank.Tools.WebUtilities.SaveInCache(System.String,System.Object,System.String)">
+            <summary>
+            Saves an object under a given key in the web cache.
+            </summary>
+            <remarks>
+            If no web context is available, the object is NOT saved in the cache,
+            and no error is returned.
+            </remarks>
+        </member>
+        <member name="P:NerdBank.Tools.WebUtilities.CurrentSiteUrl">
+            <summary>
+            Gets the URL to the site currently within a web request.
+            Guaranteed to end with a slash.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown when called not within a web context.
+            </exception>
+        </member>
+    </members>
+</doc>

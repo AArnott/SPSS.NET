@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.3" Name="SPSS.NET FxCop Project">
+ <ProjectOptions>
+  <SharedProject>False</SharedProject>
+  <Stylesheet Apply="False">c:\program files\microsoft fxcop 1.30\Xml\FxCopReport.Xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="False" />
+  <PermitAnalysis>True</PermitAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>100</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>10</RuleExceptionsThreshold>
+  <Spelling Locale="en-us" />
+ </ProjectOptions>
+ <Targets>
+  <Target Name="C:\Sandbox\Tools\SPSS.NET\SPSS.NET\bin\Release\SPSS.net.dll" Analyze="True" AnalyzeAllChildren="False">
+   <Modules AnalyzeAllChildren="False">
+    <Module Name="spss.net.dll" Analyze="True" AnalyzeAllChildren="False">
+     <Namespaces AnalyzeAllChildren="False">
+      <Namespace Name="SpssDotNet" Analyze="True" AnalyzeAllChildren="False">
+       <Classes AnalyzeAllChildren="False">
+        <Class Name="SpssCase" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssCasesCollection" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssConvert" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssDataDocument" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssDateVariable" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssException" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssNumericVariable" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssNumericVariableValueLabelsCollection" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssStringVariable" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssStringVariableValueLabelsCollection" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssVariable" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssVariableNameConflictException" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssVariablesCollection" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="SpssVariableValueLabelsCollection" Analyze="True" AnalyzeAllChildren="True" />
+        <Class Name="VarMetaData" Analyze="True" AnalyzeAllChildren="True" />
+       </Classes>
+       <Delegates AnalyzeAllChildren="True" />
+       <Enums AnalyzeAllChildren="False">
+        <Enum Name="SpssFileAccess" Analyze="True" AnalyzeAllChildren="True" />
+       </Enums>
+      </Namespace>
+     </Namespaces>
+     <Resources AnalyzeAllChildren="True" />
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\ComRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="False" AllRulesEnabled="False" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.3" LastAnalysis="2005-01-03 23:35:09Z">
+  <Targets>
+   <Target Name="C:\Sandbox\Tools\SPSS.NET\SPSS.NET\bin\Release\SPSS.net.dll">
+    <Modules>
+     <Module Name="spss.net.dll">
+      <Namespaces>
+       <Namespace Name="SpssDotNet">
+        <Classes>
+         <Class Name="SpssStringVariableValueLabelsCollection">
+          <Properties>
+           <Property Name="Item[System.String]">
+            <Methods>
+             <Method Name="set_Item(System.String,System.String):System.Void">
+              <Messages>
+               <Message Status="Excluded" Created="2005-01-03 22:51:14Z">
+                <Rule TypeName="ParameterNamesDifferByMoreThanCase" />
+                <Issues>
+                 <Issue Certainty="99" Level="Error">
+                  <Resolution>
+                   <Data>
+                    <Items>
+                     <Item>'Value' and 'value'</Item>
+                    </Items>
+                   </Data>
+                  </Resolution>
+                 </Issue>
+                </Issues>
+                <Notes>
+                 <User Name="andrew">
+                  <Note ID="1" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Method>
+            </Methods>
+           </Property>
+          </Properties>
+         </Class>
+         <Class Name="SpssVariable">
+          <Properties>
+           <Property Name="Name">
+            <Methods>
+             <Method Name="set_Name(System.String):System.Void">
+              <Messages>
+               <Message Status="Active" Created="2005-01-03 22:18:21Z">
+                <Rule TypeName="CallArgumentExceptionWithCorrectArguments" />
+                <Issues>
+                 <Issue Certainty="99" Level="CriticalError">
+                  <Resolution>
+                   <Data>
+                    <Id>OneArgumentShouldBeParameterName</Id>
+                    <Items>
+                     <Item>System.ArgumentNullException</Item>
+                     <Item>ArgumentNullException..ctor(String paramName)</Item>
+                     <Item>Name</Item>
+                    </Items>
+                   </Data>
+                  </Resolution>
+                 </Issue>
+                </Issues>
+               </Message>
+              </Messages>
+             </Method>
+            </Methods>
+           </Property>
+          </Properties>
+         </Class>
+         <Class Name="SpssNumericVariableValueLabelsCollection">
+          <Properties>
+           <Property Name="Item[System.Double]">
+            <Messages>
+             <Message Status="Excluded" Created="2005-01-03 22:51:14Z">
+              <Rule TypeName="OnlyIntegralValuesOrStringsShouldBeUsedForIndexers" />
+              <Issues>
+               <Issue Certainty="95" Level="Error">
+                <Resolution>
+                 <Data>
+                  <Items>
+                   <Item>SpssNumericVariableValueLabelsCollection.get_Item(Double Value)</Item>
+                  </Items>
+                 </Data>
+                </Resolution>
+               </Issue>
+              </Issues>
+              <Notes>
+               <User Name="andrew">
+                <Note ID="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+            <Methods>
+             <Method Name="set_Item(System.Double,System.String):System.Void">
+              <Messages>
+               <Message Status="Excluded" Created="2005-01-03 22:51:14Z">
+                <Rule TypeName="ParameterNamesDifferByMoreThanCase" />
+                <Issues>
+                 <Issue Certainty="99" Level="Error">
+                  <Resolution>
+                   <Data>
+                    <Items>
+                     <Item>'Value' and 'value'</Item>
+                    </Items>
+                   </Data>
+                  </Resolution>
+                 </Issue>
+                </Issues>
+                <Notes>
+                 <User Name="andrew">
+                  <Note ID="3" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Method>
+            </Methods>
+           </Property>
+          </Properties>
+         </Class>
+         <Class Name="SpssVariableValueLabelsCollection">
+          <Properties>
+           <Property Name="Item[System.Object]">
+            <Methods>
+             <Method Name="set_Item(System.Object,System.String):System.Void">
+              <Messages>
+               <Message Status="Excluded" Created="2005-01-03 22:50:44Z">
+                <Rule TypeName="ParameterNamesDifferByMoreThanCase" />
+                <Issues>
+                 <Issue Certainty="99" Level="Error">
+                  <Resolution>
+                   <Data>
+                    <Items>
+                     <Item>'Value' and 'value'</Item>
+                    </Items>
+                   </Data>
+                  </Resolution>
+                 </Issue>
+                </Issues>
+                <Notes>
+                 <User Name="andrew">
+                  <Note ID="0" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Method>
+            </Methods>
+           </Property>
+          </Properties>
+         </Class>
+        </Classes>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Notes>
+   <User Name="andrew">
+    <Note ID="0" Modified="2005-01-03 23:10:18Z">C# controls value, an implied parameter name.</Note>
+    <Note ID="1" Modified="2005-01-03 22:51:47Z">C# calls it value, but SPSS has Values, so the conflict is unavoidable.</Note>
+    <Note ID="2" Modified="2005-01-03 22:53:02Z">Doubles are what SPSS uses natively.  And they will probably always be used as integers anyway.</Note>
+    <Note ID="3" Modified="2005-01-03 22:53:18Z">C# calls it value, but SPSS has Values, so the conflict is unavoidable.</Note>
+   </User>
+  </Notes>
+  <Rules>
+   <Rule TypeName="CallArgumentExceptionWithCorrectArguments">
+    <Name>Call ArgumentException with correct arguments</Name>
+    <Description>String arguments passed to constructors of ArgumentException and its derived types should be correct.</Description>
+    <LongDescription>Types derived from ArgumentException have inconsistent constructor overloads with respect to the message and paramName parameters as compared to ArgumentException.</LongDescription>
+    <GroupOwner>MS FxCopDev</GroupOwner>
+    <DevOwner />
+    <Url>http://www.gotdotnet.com/team/fxcop/docs/rules/UsageRules/CallArgumentExceptionWithCorrectArguments.html</Url>
+    <Email>askfxcop@microsoft.com</Email>
+    <MessageLevel Certainty="99">CriticalError</MessageLevel>
+    <File Name="UsageRules.dll" Version="1.30.0.0" />
+   </Rule>
+   <Rule TypeName="OnlyIntegralValuesOrStringsShouldBeUsedForIndexers">
+    <Name>Only integral values or strings should be used for indexers</Name>
+    <Description>Indexers (indexed properties) should use either integer or string types for indexing values. These types are easy to use and commonly used for indexing data structures; using other types can significantly reduce the usability of the library.</Description>
+    <LongDescription>For example, public char this [int index] is the C# signature for the String type's indexer.</LongDescription>
+    <GroupOwner>MS FxCopDev</GroupOwner>
+    <DevOwner />
+    <Url>http://www.gotdotnet.com/team/fxcop/docs/rules/DesignRules/OnlyIntegralValuesOrStrings.html</Url>
+    <Email>askfxcop@microsoft.com</Email>
+    <MessageLevel Certainty="95">Error</MessageLevel>
+    <File Name="DesignRules.dll" Version="1.30.0.0" />
+   </Rule>
+   <Rule TypeName="ParameterNamesDifferByMoreThanCase">
+    <Name>Parameter names differ by more than case</Name>
+    <Description>Do not use names that require case sensitivity for uniqueness.</Description>
+    <LongDescription />
+    <GroupOwner>MS FxCopDev</GroupOwner>
+    <DevOwner />
+    <Url>http://www.gotdotnet.com/team/fxcop/docs/rules/NamingRules/ParmNamesDifferByMoreThanCase.html</Url>
+    <Email>askfxcop@microsoft.com</Email>
+    <MessageLevel Certainty="99">Error</MessageLevel>
+    <File Name="NamingRules.dll" Version="1.30.0.0" />
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

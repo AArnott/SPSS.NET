@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<ddi:codeBook version='2.0' xmlns:ddi='http://www.icpsr.umich.edu/DDI'>
+	<ddi:docDscr>
+		<ddi:citation>
+			<ddi:titlStmt>
+				<ddi:titl />
+			</ddi:titlStmt>
+			<ddi:prodStmt>
+				<ddi:prodDate date='2004-1-01' />
+				<ddi:software version='2.00' date='2003-06-18' />
+			</ddi:prodStmt>
+		</ddi:citation>
+	</ddi:docDscr>
+	<ddi:stdyDscr>
+		<ddi:citation>
+			<ddi:titlStmt>
+				<ddi:titl />
+				<ddi:IDNo />
+			</ddi:titlStmt>
+			<ddi:prodStmt>
+				<ddi:prodDate date='2003-12-09' />
+				<ddi:software version='2.00' date='2003-06-18' />
+			</ddi:prodStmt>
+		</ddi:citation>
+	</ddi:stdyDscr>
+	<ddi:fileDscr />
+	<ddi:dataDscr />
+</ddi:codeBook>

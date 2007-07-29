@@ -1,0 +1,62 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spss", "Spss\Spss.csproj", "{230E956E-FB2D-448E-AD4A-E90CB4BE2092}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSpss", "TestSpss\TestSpss.csproj", "{87954EEF-2A60-444B-A1D0-1E94C2C663F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A3031523-E511-4728-87FF-0E012D1BCB84}"
+	ProjectSection(SolutionItems) = preProject
+		localtestrun.testrunconfig = localtestrun.testrunconfig
+		Spss.vsmdi = Spss.vsmdi
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SimpleDemo", "SimpleDemo\SimpleDemo.vbproj", "{7D996EAE-1C78-4E18-954F-882BE7AA6E99}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs04.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SimpleDemo\\SimpleDemo.vbproj
+		SccProjectName1 = SimpleDemo
+		SccLocalPath1 = SimpleDemo
+		SccProjectUniqueName2 = Spss\\Spss.csproj
+		SccProjectName2 = Spss
+		SccLocalPath2 = Spss
+		SccProjectUniqueName3 = TestSpss\\TestSpss.csproj
+		SccProjectName3 = TestSpss
+		SccLocalPath3 = TestSpss
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Spss.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		SPSS test|Any CPU = SPSS test|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.SPSS test|Any CPU.ActiveCfg = SPSS test|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.SPSS test|Any CPU.Build.0 = SPSS test|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.SPSS test|Any CPU.ActiveCfg = Release|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.SPSS test|Any CPU.Build.0 = Release|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.SPSS test|Any CPU.ActiveCfg = Release|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.SPSS test|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

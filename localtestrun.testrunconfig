@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tests>
+  <TestRunConfiguration type="Microsoft.VisualStudio.QualityTools.Common.TestRunConfiguration, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <id type="Microsoft.VisualStudio.QualityTools.Common.TestRunConfigurationId, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <id type="System.Guid">3a73b7a6-da3f-48f0-8de7-e77d02a88772</id>
+    </id>
+    <name type="System.String">Local Test Run</name>
+    <description type="System.String">This is a template of test run configuration for local test run.</description>
+    <isCodeCoverageEnabled type="System.Boolean">False</isCodeCoverageEnabled>
+    <codeCoverageItems type="System.Collections.Generic.List`1[[Microsoft.VisualStudio.QualityTools.Common.CodeCoverageItem, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]">
+      <_size type="System.Int32">0</_size>
+      <_version type="System.Int32">0</_version>
+    </codeCoverageItems>
+    <aspNetProjectCoverageItems type="System.Collections.Generic.List`1[[Microsoft.VisualStudio.QualityTools.Common.AspNetProjectItem, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]">
+      <_size type="System.Int32">0</_size>
+      <_version type="System.Int32">0</_version>
+    </aspNetProjectCoverageItems>
+    <isExecutedRemotely type="System.Boolean">False</isExecutedRemotely>
+    <executionTimeout type="System.Int32">300000</executionTimeout>
+    <deploymentTimeout type="System.Int32">300000</deploymentTimeout>
+    <controllerName type="System.String" />
+    <plugins type="System.Collections.Generic.List`1[[System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+      <_size type="System.Int32">0</_size>
+      <_version type="System.Int32">0</_version>
+    </plugins>
+    <testTypeSpecificData type="System.Collections.Generic.Dictionary`2[[Microsoft.VisualStudio.QualityTools.Common.TestType, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a],[Microsoft.VisualStudio.QualityTools.Common.ITestTypeSpecificRunConfigurationData, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]">
+      <buckets type="System.Int32">-1,-1,0</buckets>
+      <entries type="System.Collections.Generic.Dictionary`2+Entry[[Microsoft.VisualStudio.QualityTools.Common.TestType, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a],[Microsoft.VisualStudio.QualityTools.Common.ITestTypeSpecificRunConfigurationData, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]][]">
+        <element type="System.Collections.Generic.Dictionary`2+Entry[[Microsoft.VisualStudio.QualityTools.Common.TestType, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a],[Microsoft.VisualStudio.QualityTools.Common.ITestTypeSpecificRunConfigurationData, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]">
+          <hashCode type="System.Int32">1572788756</hashCode>
+          <next type="System.Int32">-1</next>
+          <key type="Microsoft.VisualStudio.QualityTools.Common.TestType, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+            <id type="System.Guid">4e7599fa-5ecb-43e9-a887-cd63cf72d207</id>
+          </key>
+          <value type="Microsoft.VisualStudio.QualityTools.WebStress.WebTestRunConfig, Microsoft.VisualStudio.QualityTools.LoadTest, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+            <m_stepping type="System.Boolean">False</m_stepping>
+            <m_simulateThinkTimes type="System.Boolean">False</m_simulateThinkTimes>
+            <m_runUntilDataExhausted type="System.Boolean">False</m_runUntilDataExhausted>
+            <m_iterationCount type="System.Int32">1</m_iterationCount>
+            <m_browser type="Microsoft.VisualStudio.QualityTools.WebStress.WebTestBrowser, Microsoft.VisualStudio.QualityTools.LoadTest, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+              <m_name type="System.String">Internet Explorer 6.0</m_name>
+              <m_headers type="Microsoft.VisualStudio.QualityTools.WebTestFramework.WebTestRequestHeaderCollection, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+            </m_browser>
+            <m_network type="Microsoft.VisualStudio.QualityTools.WebStress.WebTestNetwork, Microsoft.VisualStudio.QualityTools.LoadTest, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+              <m_name type="System.String">LAN</m_name>
+              <m_bandwidthInKbps type="System.Single">0</m_bandwidthInKbps>
+            </m_network>
+          </value>
+        </element>
+        <element type="System.Collections.Generic.Dictionary`2+Entry[[Microsoft.VisualStudio.QualityTools.Common.TestType, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a],[Microsoft.VisualStudio.QualityTools.Common.ITestTypeSpecificRunConfigurationData, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]">
+          <hashCode type="System.Int32">0</hashCode>
+          <next type="System.Int32">0</next>
+        </element>
+        <element type="System.Collections.Generic.Dictionary`2+Entry[[Microsoft.VisualStudio.QualityTools.Common.TestType, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a],[Microsoft.VisualStudio.QualityTools.Common.ITestTypeSpecificRunConfigurationData, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]">
+          <hashCode type="System.Int32">0</hashCode>
+          <next type="System.Int32">0</next>
+        </element>
+      </entries>
+      <count type="System.Int32">1</count>
+      <version type="System.Int32">1</version>
+      <freeList type="System.Int32">-1</freeList>
+      <freeCount type="System.Int32">0</freeCount>
+      <comparer type="System.Collections.Generic.ObjectEqualityComparer`1[[Microsoft.VisualStudio.QualityTools.Common.TestType, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]" />
+    </testTypeSpecificData>
+    <userDeploymentRoot type="System.String" />
+    <useDefaultDeploymentRoot type="System.Boolean">True</useDefaultDeploymentRoot>
+    <relativePathRoot type="System.String">C:\Sandbox\Libraries\Spss\trunk\</relativePathRoot>
+    <deploymentItems type="Microsoft.VisualStudio.QualityTools.Common.DeploymentItemCollection, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <m_container type="System.Collections.Hashtable">
+        <key type="Microsoft.VisualStudio.QualityTools.Common.DeploymentItem, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+          <path type="System.String">TestSpss\SAVs\</path>
+          <outputDirectory type="System.String" />
+        </key>
+        <value />
+        <key type="Microsoft.VisualStudio.QualityTools.Common.DeploymentItem, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+          <path type="System.String">Resources\spssio32.dll</path>
+          <outputDirectory type="System.String" />
+        </key>
+        <value />
+      </m_container>
+    </deploymentItems>
+    <testRunNamingScheme type="Microsoft.VisualStudio.QualityTools.Common.TestRunNamingScheme, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <appendTimeStamp type="System.Boolean">True</appendTimeStamp>
+      <useDefault type="System.Boolean">True</useDefault>
+    </testRunNamingScheme>
+    <setupCommand type="System.String" />
+    <cleanupCommand type="System.String" />
+    <abortRunOnError type="System.Boolean">False</abortRunOnError>
+    <mapIPAddresses type="System.Boolean">False</mapIPAddresses>
+    <isExecutedOutOfProc type="System.Boolean">True</isExecutedOutOfProc>
+    <ignorePerTestAgentProperties type="System.Boolean">False</ignorePerTestAgentProperties>
+    <agentProperties type="System.Collections.Specialized.StringDictionary, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <hostData type="Microsoft.VisualStudio.QualityTools.Common.HostRunConfigurationData, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <mapHostSpecificData type="System.Collections.Generic.Dictionary`2[[System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[Microsoft.VisualStudio.QualityTools.Common.IHostSpecificRunConfigurationData, Microsoft.VisualStudio.QualityTools.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]]">
+        <count type="System.Int32">0</count>
+        <version type="System.Int32">0</version>
+        <freeList type="System.Int32">0</freeList>
+        <freeCount type="System.Int32">0</freeCount>
+        <comparer type="System.Collections.Generic.GenericEqualityComparer`1[[System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" />
+      </mapHostSpecificData>
+    </hostData>
+    <ignoredDependentAssemblies type="System.String" />
+    <apartmentState type="System.Threading.ApartmentState">
+      <value__ type="System.Int32">0</value__>
+    </apartmentState>
+  </TestRunConfiguration>
+</Tests>
