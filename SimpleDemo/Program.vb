@@ -13,9 +13,15 @@ Module Program
 			PrintMetaData(doc)
 			PrintData(doc)
 		End Using
-		Console.WriteLine("SPSS dictionary copying demo:")
+
+		Console.WriteLine("Exporting a DataTable demo... (the source code is interesting)")
+		Dim dt As DataTable = SpssConvert.ToDataTable(GetFileName)
 		If File.Exists("example2.sav") Then File.Delete("example2.sav")
-		Using doc As SpssDataDocument = SpssDataDocument.Create("example2.sav", GetFileName)
+		SpssConvert.ToFile(dt, "example2.sav", New Spss.MetadataProviderCallback(AddressOf MetaDataCallback))
+
+		Console.WriteLine("SPSS dictionary copying demo:")
+		If File.Exists("example3.sav") Then File.Delete("example3.sav")
+		Using doc As SpssDataDocument = SpssDataDocument.Create("example3.sav", GetFileName)
 			PrintMetaData(doc)
 		End Using
 
@@ -27,6 +33,7 @@ Module Program
 
 	Function GetFileName() As String
 		If File.Exists("..\..\demo.sav") Then Return "..\..\demo.sav"
+		If File.Exists("..\..\..\demo.sav") Then Return "..\..\..\demo.sav"
 		If File.Exists("demo.sav") Then Return "demo.sav"
 		Throw New ApplicationException("Cannot find demo.sav file.")
 	End Function
@@ -66,6 +73,23 @@ Module Program
 		case2("v3") = 2
 		case2("v4") = DateTime.Parse("12/31/2002")
 		case2.Commit()
+	End Sub
+	Sub MetaDataCallback(ByVal var As VarMetaData)
+		' In a real application, you would probably draw this metadata out of 
+		' some repository of your own rather than hard-coding the labels.
+		Select Case var.Name
+			Case "v1"
+				var.Label = "What is your name?"
+			Case "v2"
+				var.Label = "How old are you?"
+			Case "v3"
+				var.Label = "What is your gender?"
+				' Set the value labels
+				var(1) = "Male"
+				var(2) = "Female"
+			Case "v4"
+				var.Label = "What is your birthdate?"
+		End Select
 	End Sub
 
 	Sub PrintMetaData(ByVal doc As SpssDataDocument)

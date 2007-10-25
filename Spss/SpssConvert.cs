@@ -47,6 +47,23 @@ namespace Spss
 		/// Call to convert data to SPSS format using a passed in SQL query to provide the data.
 		/// </summary>
 		/// <param name="dataTable">The DataTable to convert to SPSS format</param>
+		/// <param name="spssSavFilename">The fully-qualified target .SAV file to save results to</param>
+		/// <param name="fillInMetaDataCallBack">Callback function to provide per-variable metadata</param>
+		public static void ToFile(DataTable dataTable, 
+			string spssSavFilename, MetadataProviderCallback fillInMetaDataCallBack)
+		{
+			ToFile(dataTable, getRowsFromTable(dataTable), spssSavFilename, fillInMetaDataCallBack);
+		}
+		static IEnumerable<DataRow> getRowsFromTable(DataTable dataTable)
+		{
+			foreach (DataRow row in dataTable.Rows)
+				yield return row;
+		}
+
+		/// <summary>
+		/// Call to convert data to SPSS format using a passed in SQL query to provide the data.
+		/// </summary>
+		/// <param name="dataTable">The DataTable to convert to SPSS format</param>
 		/// <param name="data">An enumerable list of DataRows.</param>
 		/// <param name="spssSavFilename">The fully-qualified target .SAV file to save results to</param>
 		/// <param name="fillInMetaDataCallBack">Callback function to provide per-variable metadata</param>
@@ -66,7 +83,6 @@ namespace Spss
 				Sav.ImportData( dataTable, data );
 			} 
 		}
-
 
 		/// <summary>
 		/// Call to asynchronously convert data to SPSS format using a passed in SQL query 
