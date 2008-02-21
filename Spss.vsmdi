@@ -1,67 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Tests>
-	<edtdocversion branch="retail" build="50727" revision="112" />
-	<TestCategory type="Microsoft.VisualStudio.TestTools.Common.TestCategory">
-		<id type="Microsoft.VisualStudio.TestTools.Common.TestCategoryId">
-			<id type="System.Guid">8c43106b-9dc1-4907-a29f-aa66a61bf5b6</id>
-		</id>
-		<name type="System.String">Lists of Tests</name>
-		<description type="System.String" />
-		<enabled type="System.Boolean">True</enabled>
-		<parentCategoryId type="Microsoft.VisualStudio.TestTools.Common.TestCategoryId">
-			<id type="System.Guid">00000000-0000-0000-0000-000000000000</id>
-		</parentCategoryId>
-		<runConfiguration type="Microsoft.VisualStudio.TestTools.Common.Link">
-			<id type="System.Guid">3a73b7a6-da3f-48f0-8de7-e77d02a88772</id>
-			<name type="System.String">Local Test Run</name>
-			<storage type="System.String">..\..\sandbox\libraries\spss\trunk\localtestrun.testrunconfig</storage>
-			<type type="System.Type, mscorlib">Microsoft.VisualStudio.TestTools.Common.TestRunConfiguration</type>
-			<enabled type="System.Boolean">True</enabled>
-		</runConfiguration>
-	</TestCategory>
-	<TestCategory type="Microsoft.VisualStudio.TestTools.Common.TestCategory">
-		<id type="Microsoft.VisualStudio.TestTools.Common.TestCategoryId">
-			<id type="System.Guid">8c84fa94-04c1-424b-9868-57a2d4851a1d</id>
-		</id>
-		<name type="System.String">Tests Not in a List</name>
-		<description type="System.String" />
-		<enabled type="System.Boolean">True</enabled>
-		<parentCategoryId type="Microsoft.VisualStudio.TestTools.Common.TestCategoryId">
-			<id type="System.Guid">00000000-0000-0000-0000-000000000000</id>
-		</parentCategoryId>
-		<testLinks type="System.Collections.Hashtable">
-			<key type="System.Guid">6c86f6e6-e77c-5d86-23fd-f258b7e7c915</key>
-			<value type="Microsoft.VisualStudio.TestTools.Common.Link">
-				<id type="System.Guid">6c86f6e6-e77c-5d86-23fd-f258b7e7c915</id>
-				<name type="System.String">testT1</name>
-				<storage type="System.String">testspss\bin\debug\testspss.dll</storage>
-				<type type="System.Type, mscorlib">Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</type>
-				<enabled type="System.Boolean">True</enabled>
-			</value>
-			<key type="System.Guid">181e92f1-be4a-d5b2-c4a8-b118b9a05b86</key>
-			<value type="Microsoft.VisualStudio.TestTools.Common.Link">
-				<id type="System.Guid">181e92f1-be4a-d5b2-c4a8-b118b9a05b86</id>
-				<name type="System.String">testlistSurveys</name>
-				<storage type="System.String">testspss\bin\debug\testspss.dll</storage>
-				<type type="System.Type, mscorlib">Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</type>
-				<enabled type="System.Boolean">True</enabled>
-			</value>
-			<key type="System.Guid">0ebedd75-8979-cc72-bc00-93d42fbc1f8a</key>
-			<value type="Microsoft.VisualStudio.TestTools.Common.Link">
-				<id type="System.Guid">0ebedd75-8979-cc72-bc00-93d42fbc1f8a</id>
-				<name type="System.String">anorectic</name>
-				<storage type="System.String">testspss\bin\debug\testspss.dll</storage>
-				<type type="System.Type, mscorlib">Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</type>
-				<enabled type="System.Boolean">False</enabled>
-			</value>
-			<key type="System.Guid">5df2833b-2fed-4af2-9aa5-8347a940c126</key>
-			<value type="Microsoft.VisualStudio.TestTools.Common.Link">
-				<id type="System.Guid">5df2833b-2fed-4af2-9aa5-8347a940c126</id>
-				<name type="System.String">smoking</name>
-				<storage type="System.String">testspss\bin\debug\testspss.dll</storage>
-				<type type="System.Type, mscorlib">Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</type>
-				<enabled type="System.Boolean">False</enabled>
-			</value>
-		</testLinks>
-	</TestCategory>
-</Tests>
+<TestLists xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006" xmlns:custom="http://microsoft.com/schemas/VisualStudio/TeamTest/2006/XsltFunctions">
+  <TestList name="Lists of Tests" id="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
+    <RunConfiguration name="Local Test Run" storage="..\..\sandbox\libraries\spss\trunk\localtestrun.testrunconfig" id="3a73b7a6-da3f-48f0-8de7-e77d02a88772" type="Microsoft.VisualStudio.TestTools.Common.TestRunConfiguration" />
+  </TestList>
+  <TestList name="Tests Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    <TestLinks>
+      <TestLink name="testT1" storage="testspss\bin\debug\testspss.dll" id="6c86f6e6-e77c-5d86-23fd-f258b7e7c915" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink name="testlistSurveys" storage="testspss\bin\debug\testspss.dll" id="181e92f1-be4a-d5b2-c4a8-b118b9a05b86" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink enabled="false" name="anorectic" storage="testspss\bin\debug\testspss.dll" id="0ebedd75-8979-cc72-bc00-93d42fbc1f8a" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink enabled="false" name="smoking" storage="testspss\bin\debug\testspss.dll" id="5df2833b-2fed-4af2-9aa5-8347a940c126" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+    </TestLinks>
+  </TestList>
+</TestLists>

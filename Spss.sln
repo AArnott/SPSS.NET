@@ -1,15 +1,15 @@
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spss", "Spss\Spss.csproj", "{230E956E-FB2D-448E-AD4A-E90CB4BE2092}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSpss", "TestSpss\TestSpss.csproj", "{87954EEF-2A60-444B-A1D0-1E94C2C663F1}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A3031523-E511-4728-87FF-0E012D1BCB84}"
 	ProjectSection(SolutionItems) = preProject
 		demo.sav = demo.sav
 		localtestrun.testrunconfig = localtestrun.testrunconfig
 		Spss.vsmdi = Spss.vsmdi
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spss", "Spss\Spss.csproj", "{230E956E-FB2D-448E-AD4A-E90CB4BE2092}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSpss", "TestSpss\TestSpss.csproj", "{87954EEF-2A60-444B-A1D0-1E94C2C663F1}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SimpleDemo", "SimpleDemo\SimpleDemo.vbproj", "{7D996EAE-1C78-4E18-954F-882BE7AA6E99}"
 EndProject
