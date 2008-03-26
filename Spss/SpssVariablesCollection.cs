@@ -46,7 +46,9 @@ namespace Spss
 			
 					string[] varNames;
 					int[] varTypes;
-					SpssSafeWrapper.spssGetVarNames(FileHandle, out varNames, out varTypes);
+					result = SpssSafeWrapper.spssGetVarNames(FileHandle, out varNames, out varTypes);
+					if (result != ReturnCode.SPSS_OK)
+						throw new SpssException(result, "spssGetVarNames");
 					Debug.Assert( varNames.Length == varTypes.Length );
 					for( int i = 0; i < varNames.Length; i++ )
 						Add( SpssVariable.LoadVariable(this, varNames[i], varTypes[i]) );
