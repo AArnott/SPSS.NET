@@ -14,21 +14,6 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SimpleDemo", "SimpleDemo\SimpleDemo.vbproj", "{7D996EAE-1C78-4E18-954F-882BE7AA6E99}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs04.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = SimpleDemo\\SimpleDemo.vbproj
-		SccProjectName1 = SimpleDemo
-		SccLocalPath1 = SimpleDemo
-		SccProjectUniqueName2 = Spss\\Spss.csproj
-		SccProjectName2 = Spss
-		SccLocalPath2 = Spss
-		SccProjectUniqueName3 = TestSpss\\TestSpss.csproj
-		SccProjectName3 = TestSpss
-		SccLocalPath3 = TestSpss
-	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Spss.vsmdi
 	EndGlobalSection
