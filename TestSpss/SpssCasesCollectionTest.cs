@@ -9,6 +9,7 @@ namespace Spss.Testing
 	///to contain all Spss.SpssCasesCollection Unit Tests
 	///</summary>
 	[TestClass()]
+	[DeploymentItem("spssio32.dll"), DeploymentItem("msvcp71.dll"), DeploymentItem("msvcr71.dll"), DeploymentItem("icuuc32.dll"), DeploymentItem("icudt32.dll"), DeploymentItem("icuin32.dll")]
 	public class SpssCasesCollectionTest : TestBase
 	{
 
