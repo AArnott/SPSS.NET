@@ -74,15 +74,17 @@ namespace Spss
 		{
 			get 
 			{
-				if (this.Document.AccessMode == SpssFileAccess.Create) {
-					return this.caseCountInWriteMode;
+				Int32 casecount = 0;
+				
+				// New documents aren't allowed to query cases count, and appended docs
+				// report the # of cases there were when the file was first opened.
+				if (this.Document.AccessMode != SpssFileAccess.Create) {
+					ReturnCode result = SpssSafeWrapper.spssGetNumberofCases(FileHandle, out casecount);
+					if (result != ReturnCode.SPSS_OK)
+						throw new SpssException(result, "spssGetNumberofCases");
 				}
 
-				Int32 casecount = 0;
-				ReturnCode result = SpssSafeWrapper.spssGetNumberofCases(FileHandle, out casecount);
-				if( result != ReturnCode.SPSS_OK )
-					throw new SpssException(result, "spssGetNumberofCases");
-				return casecount;
+				return casecount + this.caseCountInWriteMode;
 			}
 		}
 		private int position = -1;
@@ -247,9 +249,7 @@ namespace Spss
 		#endregion
 
 		internal void OnCaseCommitted() {
-			if (this.Document.AccessMode == SpssFileAccess.Create) {
-				this.caseCountInWriteMode++;
-			}
+			this.caseCountInWriteMode++;
 		}
 	}
 }
