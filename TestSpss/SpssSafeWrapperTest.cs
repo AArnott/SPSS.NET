@@ -139,7 +139,7 @@ namespace Spss.Testing
 			ReturnCode result = SpssSafeWrapper.spssGetReleaseInfo(handle, out relInfo);
 			Assert.AreEqual(12, relInfo[0]);
 			Assert.AreEqual(0, relInfo[1]);
-			Assert.AreEqual(2, relInfo[7]);
+			Assert.AreEqual(0, relInfo[7]);
 		}
 	}
 
