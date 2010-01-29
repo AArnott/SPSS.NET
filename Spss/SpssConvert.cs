@@ -359,62 +359,55 @@ namespace Spss
 		/// </returns>
 		public static DataTable ToDataTable(string spssSavFilename)
 		{
-						
-			if( spssSavFilename == null ) throw new ArgumentNullException( "spssSavFilename" );
+			if (spssSavFilename == null) throw new ArgumentNullException("spssSavFilename");
 			DataTable dataTable = new DataTable();
+			using (SpssDataDocument doc = SpssDataDocument.Open(spssSavFilename, SpssFileAccess.Read)) {
+				ToDataTable(doc, dataTable);
+			}
+
+			// Return the completed DataTable.
+			return dataTable;
+		}
+
+		public static void ToDataTable(SpssDataDocument doc, DataTable dataTable) {
+			if (doc == null) {
+				throw new ArgumentNullException("doc");
+			}
+			if (dataTable == null) {
+				throw new ArgumentNullException("dataTable");
+			}
+
 			// Build initial DataTable up.
-			// Open up SPSS file and fill in the metadata.
-			using( SpssDataDocument doc = SpssDataDocument.Open(spssSavFilename,SpssFileAccess.Read) )
-			{
-				try 
-				{
-					//set up the columns with the metadata
-					foreach( SpssVariable var in doc.Variables )
-					{
-						string nameOfVar = var.Name;
+			// Fill in the metadata.
+			//set up the columns with the metadata
+			foreach (SpssVariable var in doc.Variables) {
+				string nameOfVar = var.Name;
 
-						//add a column of the variable name to the DataTable
-						DataColumn dataColumn = dataTable.Columns.Add(nameOfVar);
-											
-						//label of the variable is set in "varlabel" and extracted using var.Label 
-						dataColumn.Caption = var.Label;
+				//add a column of the variable name to the DataTable
+				DataColumn dataColumn = dataTable.Columns.Add(nameOfVar);
 
-						//set the type of the column
-						if( var is SpssNumericVariable )
-						{
-							dataColumn.DataType = typeof(double);
-						}
-						else if(var is SpssStringVariable )
-						{
-							dataColumn.DataType = typeof(string);
-						}
-						else if(var is SpssDateVariable)
-						{
-							dataColumn.DataType = typeof(DateTime);
-						}
-						else
-						{
-							throw new NotSupportedException( "Variable " +nameOfVar + " is not a string or a numeric variable type.");
-						}		
-					}//end of extraction of metadata
+				//label of the variable is set in "varlabel" and extracted using var.Label 
+				dataColumn.Caption = var.Label;
 
-					//add data into the DataTable
-					foreach (SpssCase rowCase in doc.Cases)
-					{
-						List<object> values = new List<object>();
-						foreach (SpssVariable column in doc.Variables)
-						{
-							values.Add(rowCase[column.Name]);
-						}
-						dataTable.Rows.Add(values.ToArray());
-					}
+				//set the type of the column
+				if (var is SpssNumericVariable) {
+					dataColumn.DataType = typeof(double);
+				} else if (var is SpssStringVariable) {
+					dataColumn.DataType = typeof(string);
+				} else if (var is SpssDateVariable) {
+					dataColumn.DataType = typeof(DateTime);
+				} else {
+					throw new NotSupportedException("Variable " + nameOfVar + " is not a string or a numeric variable type.");
 				}
-				finally
-				{
-					doc.Close();
+			}//end of extraction of metadata
+
+			//add data into the DataTable
+			foreach (SpssCase rowCase in doc.Cases) {
+				List<object> values = new List<object>();
+				foreach (SpssVariable column in doc.Variables) {
+					values.Add(rowCase[column.Name]);
 				}
-				// Return the completed DataTable.
-				return dataTable;
+				dataTable.Rows.Add(values.ToArray());
 			}
 		}
 	}
