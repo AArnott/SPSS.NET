@@ -1,17 +1,26 @@
-using System;
-using System.IO;
-using System.Data;
-using System.Collections;
-using System.Diagnostics;
-using System.Globalization;
-
 namespace Spss
 {
+	using System;
+	using System.IO;
+	using System.Data;
+	using System.Collections;
+	using System.Diagnostics;
+	using System.Globalization;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+
 	/// <summary>
 	/// Class to manage the metadata of variables in an <see cref="SpssDataDocument">SPSS data document</see>.
 	/// </summary>
-	public sealed class SpssVariablesCollection : IList
+	public sealed class SpssVariablesCollection : IList<SpssVariable>
 	{
+		/// <summary>
+		/// The list of variables in the file, or that will shortly be committed to the file.
+		/// </summary>
+		private List<SpssVariable> variables;
+	
+		private KeyedCollection<string, SpssVariable> variablesLookup;
+
 		#region Construction
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssVariablesCollection"/> class.
@@ -34,8 +43,8 @@ namespace Spss
 			if (result != ReturnCode.SPSS_OK) {
 				throw new SpssException(result, "spssGetNumberofVariables");
 			}
-			variables = new ArrayList(initialSize);
-			variablesLookup = new System.Collections.Generic.SortedDictionary<string, SpssVariable>();
+			variables = new List<SpssVariable>(initialSize);
+			variablesLookup = new SpssVariableKeyedCollection();
 
 			string[] varNames;
 			int[] varTypes;
@@ -52,35 +61,16 @@ namespace Spss
 		}
 		#endregion
 
-		/// <summary>
-		/// The list of variables in the file, or that will shortly be committed to the file.
-		/// </summary>
-		private ArrayList variables;
-		private System.Collections.Generic.SortedDictionary<string, SpssVariable> variablesLookup;
-		
 		#region Indexers
-		/// <summary>
-		/// Gets the variable at some 0-based index.
-		/// </summary>
-		public SpssVariable this [int index]
-		{
-			get
-			{
-				return (SpssVariable) variables[index];
-			}
-		}
 
 		/// <summary>
 		/// Gets the variable with a given name.
 		/// </summary>
 		public SpssVariable this [string varName]
 		{
-			get
-			{
-				if (varName == null) throw new ArgumentNullException("varName");
-				return variablesLookup[varName.ToLower(CultureInfo.InvariantCulture)];
-			}
+			get { return variablesLookup[varName]; }
 		}
+
 		#endregion
 
 		#region Attributes
@@ -122,7 +112,7 @@ namespace Spss
 			if( varName == null || varName.Length == 0 ) 
 				throw new ArgumentNullException("varName");
 
-			return variablesLookup.ContainsKey(varName.ToLower(CultureInfo.InvariantCulture));
+			return variablesLookup.Contains(varName);
 		}
 		/// <summary>
 		/// Gets the position of a variable.
@@ -144,7 +134,7 @@ namespace Spss
 		public int IndexOf(string varName)
 		{
 			if( varName == null || varName.Length == 0 ) throw new ArgumentNullException("varName");
-			return IndexOf(variablesLookup[varName.ToLower(CultureInfo.InvariantCulture)]);
+			return IndexOf(variablesLookup[varName]);
 		}
 		#endregion
 
@@ -157,7 +147,7 @@ namespace Spss
 			if( variable == null ) throw new ArgumentNullException("variable");
 			EnsureAuthoringDictionary();
 			variable.AddToCollection(this);
-			variablesLookup.Add(variable.Name.ToLower(CultureInfo.InvariantCulture), variable);
+			variablesLookup.Add(variable);
 			variables.Insert(index, variable);
 		}
 		/// <summary>
@@ -166,24 +156,29 @@ namespace Spss
 		/// <returns>
 		/// The index of the newly added variable.
 		/// </returns>
-		public int Add(SpssVariable variable)
+		public void Add(SpssVariable variable)
 		{
 			if( variable == null ) throw new ArgumentNullException("variable");
 			EnsureAuthoringDictionary();
 			variable.AddToCollection(this);
-			variablesLookup.Add(variable.Name.ToLower(CultureInfo.InvariantCulture), variable);
-			return variables.Add(variable);
+			variablesLookup.Add(variable);
+			variables.Add(variable);
 		}
 		/// <summary>
 		/// Removes a variable from the document.
 		/// </summary>
-		public void Remove(SpssVariable variable)
+		public bool Remove(SpssVariable variable)
 		{
 			if( variable == null ) throw new ArgumentNullException("variable");
 			EnsureAuthoringDictionary();
-			variable.RemoveFromCollection(this);
+			try {
+				variable.RemoveFromCollection(this);
+			} catch (ArgumentException) {
+				return false;
+			}
 			variables.Remove( variable );
-			variablesLookup.Remove(variable.Name.ToLower(CultureInfo.InvariantCulture));
+			variablesLookup.Remove(variable.Name);
+			return true;
 		}
 
 		/// <summary>
@@ -279,7 +274,6 @@ namespace Spss
 		{
 			ImportSchema( table, null );
 		}
-		
 
 		/// <summary>
 		/// Comes up with a variable name guaranteed to be short enough 
@@ -312,138 +306,71 @@ namespace Spss
 		/// </summary>
 		internal void ColumnNameUpdated(SpssVariable variable, string oldName)
 		{
-			variablesLookup.Remove(oldName.ToLower(CultureInfo.InvariantCulture));
-			variablesLookup.Add(variable.Name, variable);
+			variablesLookup.Remove(oldName);
+			variablesLookup.Add(variable);
 		}
 		#endregion
 
-		#region IList Members
+		#region IList<SpssVariable> Members
 
 		/// <summary>
-		/// Gets whether the list of variables is read only.
+		/// Gets the variable at some 0-based index.
 		/// </summary>
-		public bool IsReadOnly
-		{
-			get
-			{
-				return !Document.IsAuthoringDictionary;
-			}
+		public SpssVariable this[int index] {
+			get { return variables[index]; }
+			set { variables[index] = value; }
 		}
 
-		object IList.this[int index]
-		{
-			get
-			{
-				return this[index];
-			}
-			set
-			{
-				throw new NotSupportedException("Setting variables in this way is not supported.");
-			}
-		}
+		#endregion
 
-		/// <summary>
-		/// Removes a variable at the specified index.
-		/// </summary>
-		public void RemoveAt(int index)
-		{
-			// TODO:  Add SpssVariablesCollection.RemoveAt implementation
+		#region ICollection<SpssVariable> Members
+
+		public void CopyTo(SpssVariable[] array, int arrayIndex) {
 			throw new NotImplementedException();
 		}
 
-		void IList.Insert(int index, object value)
-		{
-			Insert(index, (SpssVariable) value);
+		#endregion
+
+		#region IEnumerable<SpssVariable> Members
+
+		IEnumerator<SpssVariable> IEnumerable<SpssVariable>.GetEnumerator() {
+			return this.variables.GetEnumerator();
 		}
 
-		void IList.Remove(object value)
-		{
-			Remove((SpssVariable)value);
+		#endregion
+
+		#region IList<SpssVariable> Members
+
+
+		public void RemoveAt(int index) {
+			throw new NotImplementedException();
 		}
 
-		bool IList.Contains(object value)
-		{
-			return Contains((SpssVariable)value);
-		}
+		#endregion
 
-		/// <summary>
-		/// Removes all variables from the collection.
-		/// </summary>
-		public void Clear()
-		{
+		#region ICollection<SpssVariable> Members
+
+		public void Clear() {
 			EnsureAuthoringDictionary();
-			variables.Clear();
-		}
-
-		int IList.IndexOf(object value)
-		{
-			return IndexOf((SpssVariable)value);
-		}
-
-		int IList.Add(object value)
-		{
-			return Add((SpssVariable)value);
-		}
-
-		/// <summary>
-		/// Gets whether adding or removing variables is allowed.
-		/// </summary>
-		public bool IsFixedSize
-		{
-			get
-			{
-				return IsReadOnly;
+			while (this.variables.Count > 0) {
+				this.Remove(this.variables[0]);
 			}
 		}
 
-		#endregion
-
-		#region ICollection Members
-
-		bool ICollection.IsSynchronized
-		{
-			get
-			{
-				// SPSS is assumed to not be thread safe.
-				return false;
-			}
+		public int Count {
+			get { return this.variables.Count; }
 		}
 
-		/// <summary>
-		/// Gets the number of variables that are in the document.
-		/// </summary>
-		public int Count
-		{
-			get
-			{
-				return variables.Count;
-			}
-		}
-
-		void ICollection.CopyTo(Array array, int index)
-		{
-			// TODO:  Add SpssVariablesCollection.CopyTo implementation
-			throw new NotImplementedException();
-		}
-
-		object ICollection.SyncRoot
-		{
-			get
-			{
-				return this;
-			}
+		public bool IsReadOnly {
+			get { return !this.Document.IsAuthoringDictionary; }
 		}
 
 		#endregion
 
 		#region IEnumerable Members
 
-		/// <summary>
-		/// Gets the enumerator for the variables in the list.
-		/// </summary>
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return variables.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() {
+			return this.variables.GetEnumerator();
 		}
 
 		#endregion

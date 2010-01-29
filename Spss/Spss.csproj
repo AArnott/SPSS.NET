@@ -179,6 +179,7 @@
     <Compile Include="SpssVariable.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SpssVariableKeyedCollection.cs" />
     <Compile Include="SpssVariableNameConflictException.cs">
       <SubType>Code</SubType>
     </Compile>
