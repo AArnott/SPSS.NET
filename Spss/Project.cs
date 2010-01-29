@@ -1,13 +1,16 @@
-using System;
+//-----------------------------------------------------------------------
+// <copyright file="Project.cs" company="Andrew Arnott">
+//     Copyright (c) Andrew Arnott. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 
-namespace Spss
-{
+namespace Spss {
+	using System;
+
 	/// <summary>
 	/// Summary description for Project.
 	/// </summary>
-	internal class Project
-	{
-		private Project() {}
+	internal static class Project {
 		public const string DefaultNamespace = "Spss";
 	}
 }
