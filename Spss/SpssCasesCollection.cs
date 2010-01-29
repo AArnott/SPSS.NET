@@ -10,6 +10,8 @@ namespace Spss
 	/// </summary>
 	public sealed class SpssCasesCollection : IEnumerable
 	{
+		private int caseCountInWriteMode;
+
 		#region Construction
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssCasesCollection"/> class.
@@ -72,6 +74,10 @@ namespace Spss
 		{
 			get 
 			{
+				if (this.Document.AccessMode == SpssFileAccess.Create) {
+					return this.caseCountInWriteMode;
+				}
+
 				Int32 casecount = 0;
 				ReturnCode result = SpssSafeWrapper.spssGetNumberofCases(FileHandle, out casecount);
 				if( result != ReturnCode.SPSS_OK )
@@ -239,5 +245,11 @@ namespace Spss
 		}
 
 		#endregion
+
+		internal void OnCaseCommitted() {
+			if (this.Document.AccessMode == SpssFileAccess.Create) {
+				this.caseCountInWriteMode++;
+			}
+		}
 	}
 }

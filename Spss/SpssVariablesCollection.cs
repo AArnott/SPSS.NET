@@ -27,35 +27,28 @@ namespace Spss
 			
 			InitializeVariablesList();
 		}
-		private void InitializeVariablesList()
-		{
-			Debug.Assert( FileHandle >= 0, "Must be working with an open file." );
+		private void InitializeVariablesList() {
+			Debug.Assert(FileHandle >= 0, "Must be working with an open file.");
 			int initialSize;
 			ReturnCode result = SpssSafeWrapper.spssGetNumberofVariables(FileHandle, out initialSize);
-			switch( result )
-			{
-				case ReturnCode.SPSS_DICT_NOTCOMMIT:
-					// brand new file
-					variables = new ArrayList();
-					variablesLookup = new System.Collections.Generic.SortedDictionary<string, SpssVariable>();
-					break;
-				case ReturnCode.SPSS_OK:
-					// loaded existing file
-					variables = new ArrayList( initialSize );
-					variablesLookup = new System.Collections.Generic.SortedDictionary<string, SpssVariable>();
-			
-					string[] varNames;
-					int[] varTypes;
-					result = SpssSafeWrapper.spssGetVarNames(FileHandle, out varNames, out varTypes);
-					if (result != ReturnCode.SPSS_OK)
-						throw new SpssException(result, "spssGetVarNames");
-					Debug.Assert( varNames.Length == varTypes.Length );
-					for( int i = 0; i < varNames.Length; i++ )
-						Add( SpssVariable.LoadVariable(this, varNames[i], varTypes[i]) );
-					break;
-				default:
-					throw new SpssException(result, "spssGetNumberofVariables");
+			if (result != ReturnCode.SPSS_OK) {
+				throw new SpssException(result, "spssGetNumberofVariables");
 			}
+			variables = new ArrayList(initialSize);
+			variablesLookup = new System.Collections.Generic.SortedDictionary<string, SpssVariable>();
+
+			string[] varNames;
+			int[] varTypes;
+			result = SpssSafeWrapper.spssGetVarNames(FileHandle, out varNames, out varTypes);
+			if (result == ReturnCode.SPSS_INVALID_FILE) {
+				// brand new file
+				return;
+			} else if (result != ReturnCode.SPSS_OK) {
+				throw new SpssException(result, "spssGetVarNames");
+			}
+			Debug.Assert(varNames.Length == varTypes.Length);
+			for (int i = 0; i < varNames.Length; i++)
+				Add(SpssVariable.LoadVariable(this, varNames[i], varTypes[i]));
 		}
 		#endregion
 

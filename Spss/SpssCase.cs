@@ -108,6 +108,7 @@ namespace Spss
 			Cases.Document.EnsureNotClosed();
 			if( Cases.IsReadOnly ) throw new InvalidOperationException("Not available when in read-only mode.");
 			SpssSafeWrapper.spssCommitCaseRecord(Cases.FileHandle);
+			this.Cases.OnCaseCommitted();
 		}
 		/// <summary>
 		/// Clears every variable of data for this row.

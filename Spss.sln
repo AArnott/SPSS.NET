@@ -4,6 +4,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		demo.sav = demo.sav
 		localtestrun.testrunconfig = localtestrun.testrunconfig
+		Resources\SPSS 14.0 for Windows Developer's Guide.pdf = Resources\SPSS 14.0 for Windows Developer's Guide.pdf
 		Spss.vsmdi = Spss.vsmdi
 	EndProjectSection
 EndProject
