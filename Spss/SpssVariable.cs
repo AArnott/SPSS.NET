@@ -1,4 +1,7 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Spss
 {
@@ -243,6 +246,21 @@ namespace Spss
 		#endregion
 
 		#region Operations
+
+		public IEnumerable<KeyValuePair<string, string>> GetValueLabels() {
+			var numeric = this as SpssNumericVariable;
+			if (numeric != null) {
+				return numeric.ValueLabels.Select(pair => new KeyValuePair<string, string>(pair.Key.ToString(CultureInfo.InvariantCulture), pair.Value));
+			}
+
+			var str = this as SpssStringVariable;
+			if (str != null) {
+				return str.ValueLabels;
+			}
+
+			return Enumerable.Empty<KeyValuePair<string, string>>();
+		}
+
 		/// <summary>
 		/// Clones the variable for use in another <see cref="SpssDataDocument"/>.
 		/// </summary>

@@ -7,66 +7,27 @@ namespace Spss
 	/// <summary>
 	/// A collection of value labels for a <see cref="SpssNumericVariable"/>.
 	/// </summary>
-	public class SpssNumericVariableValueLabelsCollection : SpssVariableValueLabelsCollection
+	public class SpssNumericVariableValueLabelsDictionary : SpssVariableValueLabelsDictionary<double>
 	{
-		#region Construction
 		/// <summary>
-		/// Creates an instance of the <see cref="SpssNumericVariableValueLabelsCollection"/> class.
+		/// Initializes a new instance of the <see cref="SpssNumericVariableValueLabelsDictionary"/> class.
 		/// </summary>
-		public SpssNumericVariableValueLabelsCollection(SpssVariable variable) : base(variable)
+		/// <param name="variable">The variable containing this collection.</param>
+		public SpssNumericVariableValueLabelsDictionary(SpssVariable variable) : base(variable, null)
 		{
 		}
-		#endregion
-
-		#region Attributes
-		/// <summary>
-		/// Gets/sets the response label for some response value.
-		/// </summary>
-		public string this [double Value]
-		{
-			get
-			{
-				return base[Value];
-			}
-			set
-			{
-				base[Value] = value;
-			}
-		}
-		#endregion
 
 		#region Operations
-		/// <summary>
-		/// Adds a value label.
-		/// </summary>
-		/// <param name="value">
-		/// The response value to associate with the new response label.
-		/// </param>
-		/// <param name="label">
-		/// The new response label.
-		/// </param>
-		public void Add(double value, string label)
-		{
-			base.Add(value, label);
-		}
-		/// <summary>
-		/// Removes a value label.
-		/// </summary>
-		/// <param name="value">
-		/// The response value to remove.
-		/// </param>
-		public void Remove(double value)
-		{
-			base.Remove(value);
-		}
+
 		/// <summary>
 		/// Updates the SPSS data file with changes made to the collection.
 		/// </summary>
-		protected internal override void Update()
-		{
-			foreach( DictionaryEntry de in this )
-				SpssSafeWrapper.spssSetVarNValueLabel(FileHandle, Variable.Name, (double) de.Key, (string) de.Value);
+		protected internal override void Update() {
+			foreach (var pair in this) {
+				SpssSafeWrapper.spssSetVarNValueLabel(FileHandle, Variable.Name, pair.Key, pair.Value);
+			}
 		}
+
 		/// <summary>
 		/// Initializes the value labels dictionary from the SPSS data file.
 		/// </summary>

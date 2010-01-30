@@ -134,9 +134,6 @@
     </Compile>
     <Compile Include="Demographics.cs" />
     <Compile Include="EmbeddedResources.cs" />
-    <Compile Include="ISpssVariableWithValueLabels.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Project.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -186,9 +183,7 @@
     <Compile Include="SpssVariablesCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SpssVariableValueLabels.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="SpssVariableValueLabels.cs" />
     <Compile Include="VarMetaData.cs">
       <SubType>Code</SubType>
     </Compile>

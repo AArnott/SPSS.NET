@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 
 namespace Spss
 {
 	/// <summary>
 	/// Represents an SPSS data variable that stores character string information.
 	/// </summary>
-	public class SpssStringVariable : SpssVariable, ISpssVariableWithValueLabels
+	public class SpssStringVariable : SpssVariable
 	{
 		#region Construction
 		/// <summary>
@@ -14,8 +15,9 @@ namespace Spss
 		/// </summary>
 		public SpssStringVariable()
 		{
-			valueLabels = new SpssStringVariableValueLabelsCollection(this);
+			this.valueLabels = new SpssStringVariableValueLabelsDictionary(this);
 		}
+
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssStringVariable"/> class, 
 		/// for use in loading variables from an existing SPSS data file.
@@ -32,7 +34,7 @@ namespace Spss
 		protected internal SpssStringVariable(SpssVariablesCollection variables, string varName, int length)
 			: base( variables, varName )
 		{
-			valueLabels = new SpssStringVariableValueLabelsCollection(this);
+			this.valueLabels = new SpssStringVariableValueLabelsDictionary(this);
 			this.length = length;
 		}
 		#endregion
@@ -88,11 +90,15 @@ namespace Spss
 			}
 		}
 
-		private SpssStringVariableValueLabelsCollection valueLabels;
+		private readonly SpssStringVariableValueLabelsDictionary valueLabels;
+
 		/// <summary>
 		/// The set of value labels (response values and labels) that are defined.
 		/// </summary>
-		public SpssStringVariableValueLabelsCollection ValueLabels { get { return valueLabels; } }
+		public IDictionary<string, string> ValueLabels {
+			get { return this.valueLabels; }
+		}
+
 		#endregion
 
 		#region Operations
@@ -105,7 +111,7 @@ namespace Spss
 
 			if( !IsInCollection ) return; // we'll get to do this later
 
-			ValueLabels.Update();
+			this.valueLabels.Update();
 		}
 
 		public override SpssVariable Clone()
@@ -122,19 +128,7 @@ namespace Spss
 			if (other == null)
 				throw new ArgumentException("Must be of type " + GetType().Name + ".", "other");
 			other.Length = Length;
-			ValueLabels.CopyTo(other.ValueLabels);
-		}
-
-		#endregion
-
-		#region ISpssVariableWithValueLabels Members
-
-		SpssVariableValueLabelsCollection Spss.ISpssVariableWithValueLabels.ValueLabels
-		{
-			get
-			{
-				return this.ValueLabels;
-			}
+			this.valueLabels.CopyTo(other.valueLabels);
 		}
 
 		#endregion

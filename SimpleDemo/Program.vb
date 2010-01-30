@@ -98,7 +98,7 @@ Module Program
 			Console.WriteLine("{0}" & vbTab & "{1}", var.Name, var.Label)
 			If TypeOf var Is SpssNumericVariable Then
 				Dim varNum As SpssNumericVariable = CType(var, SpssNumericVariable)
-				For Each label As DictionaryEntry In varNum.ValueLabels
+				For Each label As KeyValuePair(Of Double, String) In varNum.ValueLabels
 					Console.WriteLine(vbTab & label.Key.ToString & vbTab & label.Value.ToString)
 				Next
 			End If

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Spss
 {
@@ -10,7 +11,7 @@ namespace Spss
 	/// Both integer and floating point numbers are handled through this
 	/// class.
 	/// </remarks>
-	public class SpssNumericVariable : SpssVariable, ISpssVariableWithValueLabels
+	public class SpssNumericVariable : SpssVariable
 	{
 		#region Construction
 		/// <summary>
@@ -19,7 +20,7 @@ namespace Spss
 		/// </summary>
 		public SpssNumericVariable()
 		{
-			valueLabels = new SpssNumericVariableValueLabelsCollection(this);
+			this.valueLabels = new SpssNumericVariableValueLabelsDictionary(this);
 		}
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssNumericVariable"/> class,
@@ -34,7 +35,7 @@ namespace Spss
 		protected internal SpssNumericVariable(SpssVariablesCollection variables, string varName)
 			: base( variables, varName )
 		{
-			valueLabels = new SpssNumericVariableValueLabelsCollection(this);
+			this.valueLabels = new SpssNumericVariableValueLabelsDictionary(this);
 		}
 		#endregion
 
@@ -76,11 +77,16 @@ namespace Spss
 				Update();
 			}
 		}
-		private readonly SpssNumericVariableValueLabelsCollection valueLabels;
+
+		private readonly SpssNumericVariableValueLabelsDictionary valueLabels;
+
 		/// <summary>
 		/// The set of value labels (response values and labels) that are defined.
 		/// </summary>
-		public SpssNumericVariableValueLabelsCollection ValueLabels { get { return valueLabels; } }
+		public IDictionary<double, string> ValueLabels {
+			get { return this.valueLabels; }
+		}
+
 		/// <summary>
 		/// Gets/sets the data value of this variable within a specific case.
 		/// </summary>
@@ -124,7 +130,7 @@ namespace Spss
 			SpssSafeWrapper.spssSetVarPrintFormat(FileHandle, Name, FormatTypeCode.SPSS_FMT_F, DecimalPlaces, ColumnWidth);
 			SpssSafeWrapper.spssSetVarWriteFormat(FileHandle, Name, FormatTypeCode.SPSS_FMT_F, DecimalPlaces, ColumnWidth);
 
-			ValueLabels.Update();
+			this.valueLabels.Update();
 		}
 
 		public override SpssVariable Clone()
@@ -141,19 +147,7 @@ namespace Spss
 			if (other == null)
 				throw new ArgumentException("Must be of type " + GetType().Name + ".", "other");
 			other.DecimalPlaces = DecimalPlaces;
-			ValueLabels.CopyTo(other.ValueLabels);
-		}
-
-		#endregion
-
-		#region ISpssVariableWithValueLabels Members
-
-		SpssVariableValueLabelsCollection Spss.ISpssVariableWithValueLabels.ValueLabels
-		{
-			get
-			{
-				return this.ValueLabels;
-			}
+			this.valueLabels.CopyTo(other.valueLabels);
 		}
 
 		#endregion

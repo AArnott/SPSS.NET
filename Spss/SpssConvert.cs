@@ -5,9 +5,11 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using System.CodeDom.Compiler;
+using System.Linq;
 using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Spss
 {
@@ -211,110 +213,84 @@ namespace Spss
 			XmlDocument ddi = new XmlDocument();
 			// Build initial ddi document up.
 			// Open up SPSS file and fill in the ddi var tags.
-			using( SpssDataDocument doc = SpssDataDocument.Open(spssSavFilename,SpssFileAccess.Read) )
-			{
-				try 
-				{
-					;
-					ddi.PreserveWhitespace= true;
-					//Read from the embedded xml file: blankDdi.xml into the ddi document
-					ddi.LoadXml( EmbeddedResources.LoadFileFromAssemblyWithNamespace("/blankDdi.xml",Project.DefaultNamespace) );
-					//This is where the hard coding ends and methods are called to extract data from the sav file
+			using (SpssDataDocument doc = SpssDataDocument.Open(spssSavFilename, SpssFileAccess.Read)) {
+				ddi.PreserveWhitespace = true;
+				//Read from the embedded xml file: blankDdi.xml into the ddi document
+				ddi.LoadXml(EmbeddedResources.LoadFileFromAssemblyWithNamespace("/blankDdi.xml", Project.DefaultNamespace));
+				//This is where the hard coding ends and methods are called to extract data from the sav file
 
-					XmlElement xmlRoot = ddi.DocumentElement;
-					XmlNamespaceManager xmlNS = new XmlNamespaceManager( ddi.NameTable );
-					xmlNS.AddNamespace( "ddi", ddiNamespace );
-					XmlNode nData = xmlRoot.SelectSingleNode( @"ddi:dataDscr", xmlNS);
-					
-					foreach( SpssVariable var in doc.Variables )
-					{
-						string nameOfVar = var.Name;
+				XmlElement xmlRoot = ddi.DocumentElement;
+				XmlNamespaceManager xmlNS = new XmlNamespaceManager(ddi.NameTable);
+				xmlNS.AddNamespace("ddi", ddiNamespace);
+				XmlNode nData = xmlRoot.SelectSingleNode(@"ddi:dataDscr", xmlNS);
 
-						//variable name and its ID and then if its a numeric : its interval
-						XmlElement variable = ddi.CreateElement("ddi:var",ddiNamespace);
-						variable.SetAttribute( "ID", "", nameOfVar );
-						variable.SetAttribute( "name", "", nameOfVar );
-						
-						//This is the variable that holds the characteristic whether the variable has discrete or continuous interval
-						int Dec;
-						if( var is SpssNumericVariable)
-						{
-							Dec = ((SpssNumericVariable)var).DecimalPlaces;
-							string interval= string.Empty;
-							if( Dec == 0 )
-							{
-								interval = "discrete";
-							}
-							else
-							{
-								interval = "contin";
-							}
-							variable.SetAttribute("intrvl","",interval);
+				foreach (SpssVariable var in doc.Variables) {
+					string nameOfVar = var.Name;
+
+					//variable name and its ID and then if its a numeric : its interval
+					XmlElement variable = ddi.CreateElement("ddi:var", ddiNamespace);
+					variable.SetAttribute("ID", "", nameOfVar);
+					variable.SetAttribute("name", "", nameOfVar);
+
+					//This is the variable that holds the characteristic whether the variable has discrete or continuous interval
+					int Dec;
+					if (var is SpssNumericVariable) {
+						Dec = ((SpssNumericVariable)var).DecimalPlaces;
+						string interval = string.Empty;
+						if (Dec == 0) {
+							interval = "discrete";
+						} else {
+							interval = "contin";
 						}
-					
-						//for the location width part
-						XmlElement location = ddi.CreateElement( "ddi:location", ddiNamespace );
-						int Wid = var.ColumnWidth;
-						location.SetAttribute( "width", Wid.ToString() );
-						variable.AppendChild(location);
-					
-					
-						//label of the variable is set in "varlabel" and extracted using var.Label 
-						XmlElement varLabel = ddi.CreateElement( "ddi:labl", ddiNamespace );
-						varLabel.InnerText = var.Label;
-						variable.AppendChild( varLabel );
+						variable.SetAttribute("intrvl", "", interval);
+					}
 
-						if( var is ISpssVariableWithValueLabels )
-						{
-							foreach( DictionaryEntry de in (( ISpssVariableWithValueLabels )var ).ValueLabels )
-							{
-								object responseVal = de.Key;//the response value
-								string responseLabel = de.Value.ToString();//the response value label
-                        
-								XmlElement answer=ddi.CreateElement( "ddi:catgry", ddiNamespace );
-						
-								//catValue(category Value) is the element storing the text i.e. option number
-								XmlElement catValue = ddi.CreateElement( "ddi:catValu", ddiNamespace );
-								catValue.InnerText = responseVal.ToString();
-								answer.AppendChild( catValue );
-						
-								//catLabel(category Label) is the element storing the text i.e. name of answer
-								XmlElement catLabel = ddi.CreateElement( "ddi:labl", ddiNamespace );
-								catLabel.InnerText = responseLabel;
-								answer.AppendChild( catLabel );
+					//for the location width part
+					XmlElement location = ddi.CreateElement("ddi:location", ddiNamespace);
+					int Wid = var.ColumnWidth;
+					location.SetAttribute("width", Wid.ToString());
+					variable.AppendChild(location);
 
-								//appending the answer option to the parent "variable" node i.e. the question node
-								variable.AppendChild( answer );
-									
-							}//end of the for loop
-							
-						}//If "var" had any response value labels then this is the 
-						//end of extracting the response values for each variable 
-						
-						XmlElement varFormat=ddi.CreateElement( "ddi:varFormat", ddiNamespace );
 
-						if( var is SpssNumericVariable )
-						{
-							varFormat.SetAttribute( "type", "numeric" );
-						}
-						else if(var is SpssStringVariable )
-						{
-							varFormat.SetAttribute( "type", "character" );
-						}
-						else
-						{
-						throw new NotSupportedException( "Variable " +nameOfVar + " is not a string or a numeric variable type.");
-						}
-						variable.AppendChild( varFormat );
-						
-						nData.AppendChild( variable );
-						
-					}//end of extraction of each variable and now we have put all the variable data into ndata
-				}
-				finally
-				{
-					doc.Close();
-				}
+					//label of the variable is set in "varlabel" and extracted using var.Label 
+					XmlElement varLabel = ddi.CreateElement("ddi:labl", ddiNamespace);
+					varLabel.InnerText = var.Label;
+					variable.AppendChild(varLabel);
+
+					foreach (var response in var.GetValueLabels()) {
+						XmlElement answer = ddi.CreateElement("ddi:catgry", ddiNamespace);
+
+						//catValue(category Value) is the element storing the text i.e. option number
+						XmlElement catValue = ddi.CreateElement("ddi:catValu", ddiNamespace);
+						catValue.InnerText = response.Key;
+						answer.AppendChild(catValue);
+
+						//catLabel(category Label) is the element storing the text i.e. name of answer
+						XmlElement catLabel = ddi.CreateElement("ddi:labl", ddiNamespace);
+						catLabel.InnerText = response.Value;
+						answer.AppendChild(catLabel);
+
+						//appending the answer option to the parent "variable" node i.e. the question node
+						variable.AppendChild(answer);
+
+					}//end of the for loop
+
+					//end of extracting the response values for each variable 
+
+					XmlElement varFormat = ddi.CreateElement("ddi:varFormat", ddiNamespace);
+
+					if (var is SpssNumericVariable) {
+						varFormat.SetAttribute("type", "numeric");
+					} else if (var is SpssStringVariable) {
+						varFormat.SetAttribute("type", "character");
+					} else {
+						throw new NotSupportedException("Variable " + nameOfVar + " is not a string or a numeric variable type.");
+					}
+					variable.AppendChild(varFormat);
+
+					nData.AppendChild(variable);
+
+				}//end of extraction of each variable and now we have put all the variable data into ndata
 				// Return the completed ddi file.
 				return ddi;
 			}

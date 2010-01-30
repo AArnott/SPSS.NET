@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -128,7 +129,7 @@ namespace Spss.Testing
 			Assert.AreEqual("Rarely", var.ValueLabels[2]);
 
 			var.ValueLabels.Remove(4);
-			Assert.IsNull(var.ValueLabels[4]);
+			Assert.IsFalse(var.ValueLabels.ContainsKey(4));
 			Assert.AreEqual(4, var.ValueLabels.Count);
 		}
 
@@ -232,12 +233,7 @@ namespace Spss.Testing
 			using (SpssDataDocument docRead = SpssDataDocument.Open(TestBase.GoodFilename, SpssFileAccess.Read))
 			{
 				SpssVariable var = docRead.Variables[3];
-				Assert.AreEqual(0, ((ISpssVariableWithValueLabels)var).ValueLabels.Count);
-				foreach (System.Collections.DictionaryEntry de in ((ISpssVariableWithValueLabels)var).ValueLabels)
-				{
-					Assert.Fail("No value labels, yet foreach has been entered.");
-					Assert.IsNull(de); // just to avoid a warning that we don't use de
-				}
+				Assert.IsFalse(var.GetValueLabels().Any());
 			}
 		}
 	}

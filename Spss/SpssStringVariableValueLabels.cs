@@ -7,36 +7,22 @@ namespace Spss
 	/// <summary>
 	/// A collection of value labels for a <see cref="SpssStringVariable"/>.
 	/// </summary>
-	public class SpssStringVariableValueLabelsCollection : SpssVariableValueLabelsCollection
+	public class SpssStringVariableValueLabelsDictionary : SpssVariableValueLabelsDictionary<string>
 	{
-		#region Construction
 		/// <summary>
-		/// Creates an instance of the <see cref="SpssStringVariableValueLabelsCollection"/> class.
+		/// Creates an instance of the <see cref="SpssStringVariableValueLabelsDictionary"/> class.
 		/// </summary>
-		public SpssStringVariableValueLabelsCollection(SpssVariable variable) : base(variable)
+		public SpssStringVariableValueLabelsDictionary(SpssVariable variable)
+			: base(variable, StringComparer.Ordinal)
 		{
 		}
-		#endregion
 
 		#region Attributes
 		/// <summary>
 		/// The variable hosting this collection.
 		/// </summary>
 		protected new SpssStringVariable Variable { get { return (SpssStringVariable) base.Variable; } }
-		/// <summary>
-		/// Gets/sets the response label for some response value.
-		/// </summary>
-		public string this [string Value]
-		{
-			get
-			{
-				return base[Value];
-			}
-			set
-			{
-				base[Value] = value;
-			}
-		}
+	
 		/// <summary>
 		/// Gets whether this string variable can have value labels.
 		/// </summary>
@@ -64,29 +50,21 @@ namespace Spss
 		/// <param name="label">
 		/// The new response label.
 		/// </param>
-		public void Add(string value, string label)
+		public override void Add(string value, string label)
 		{
 			if( !Applies ) throw new InvalidOperationException("Cannot add value labels to a long string variable.");
 			base.Add(value, label);
 		}
-		/// <summary>
-		/// Removes a value label.
-		/// </summary>
-		/// <param name="value">
-		/// The response value to remove.
-		/// </param>
-		public void Remove(string value)
-		{
-			base.Remove(value);
-		}
+
 		/// <summary>
 		/// Updates the SPSS data file with changes made to the collection.
 		/// </summary>
 		protected internal override void Update()
 		{
-			foreach( DictionaryEntry de in this )
-				SpssSafeWrapper.spssSetVarCValueLabel(FileHandle, Variable.Name, (string)de.Key, (string)de.Value);
+			foreach( var pair in this )
+				SpssSafeWrapper.spssSetVarCValueLabel(FileHandle, Variable.Name, pair.Key, pair.Value);
 		}
+	
 		/// <summary>
 		/// Initializes the value labels dictionary from the SPSS data file.
 		/// </summary>
