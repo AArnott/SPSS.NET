@@ -43,7 +43,7 @@ namespace Spss
 		/// <summary>
 		/// Gets the SPSS type for the variable.
 		/// </summary>
-		protected override int SpssType
+		public override int SpssType
 		{
 			get
 			{

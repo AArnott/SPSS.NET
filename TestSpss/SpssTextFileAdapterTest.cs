@@ -7,9 +7,9 @@
 
 	[TestClass]
 	public class SpssTextFileAdapterTest {
-		private const string VariablesTableTextFormat = @"Name	Label
-v1	What is your age?
-v2	What is your name?
+		private const string VariablesTableTextFormat = @"Name	Label	Width	Length
+v1	What is your age?	3	0
+v2	What is your name?	15	15
 ";
 
 		/// <summary>
@@ -56,8 +56,8 @@ v2	What is your name?
 
 		private static SpssDataSet.VariablesDataTable GetVariablesDataTable() {
 			var dataTable = new SpssDataSet.VariablesDataTable();
-			dataTable.AddVariablesRow("v1", "What is your age?");
-			dataTable.AddVariablesRow("v2", "What is your name?");
+			dataTable.AddVariablesRow("v1", "What is your age?", 3, 0);
+			dataTable.AddVariablesRow("v2", "What is your name?", 15, 15);
 			return dataTable;
 		}
 	}

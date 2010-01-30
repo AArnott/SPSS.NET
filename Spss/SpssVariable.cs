@@ -57,20 +57,31 @@ namespace Spss
 
 			name = varName;
 		}
-		internal static SpssVariable LoadVariable( SpssVariablesCollection parent, string varName, int varType )
-		{
-			switch( varType )
-			{
+		internal static SpssVariable LoadVariable(SpssVariablesCollection parent, string varName, int varType) {
+			SpssVariable variable;
+			switch (varType) {
 				case 0:
 					// This may be a date or a numeric
-					if( IsDateVariable( parent.Document.Handle, varName, varType ) )
-						return new SpssDateVariable( parent, varName );
+					if (IsDateVariable(parent.Document.Handle, varName, varType))
+						variable = new SpssDateVariable(parent, varName);
 					else
-						return new SpssNumericVariable( parent, varName );
+						variable = new SpssNumericVariable(parent, varName);
+					break;
 				default:
-					return new SpssStringVariable( parent, varName, varType );
+					variable = new SpssStringVariable(parent, varName, varType);
+					break;
 			}
+
+			FormatTypeCode writeType;
+			int trash1, trash2;
+			SpssSafeWrapper.spssGetVarWriteFormat(parent.Document.Handle, varName, out writeType, out trash1, out trash2);
+			variable.WriteFormat = writeType;
+
+			return variable;
 		}
+
+		public FormatTypeCode WriteFormat { get; private set; }
+
 		private static bool IsDateVariable( int fileHandle, string varName, int varType )
 		{
 			if( fileHandle < 0 ) throw new ArgumentOutOfRangeException("fileHandle", fileHandle, "Negative values are not valid file handles.");
@@ -220,7 +231,8 @@ namespace Spss
 		/// <summary>
 		/// Gets the SPSS type for the variable.
 		/// </summary>
-		protected abstract int SpssType { get; }
+		/// <value>For numeric/date types, this is 0.  For strings, this is the length of the column.</value>
+		public abstract int SpssType { get; }
 		private const int ColumnWidthDefault = 8;
 		private int columnWidth = -1;
 		/// <summary>
