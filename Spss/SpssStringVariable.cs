@@ -73,9 +73,7 @@ namespace Spss
 			get
 			{
 				string v;
-				ReturnCode result = SpssSafeWrapper.spssGetValueChar( FileHandle, Handle, out v );
-				if( result != ReturnCode.SPSS_OK )
-					throw new SpssException(result, "spssGetValueChar");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueChar(FileHandle, Handle, out v), "SpssSafeWrapper");
 				return v;
 			}
 			set

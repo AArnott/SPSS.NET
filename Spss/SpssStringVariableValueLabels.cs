@@ -68,26 +68,20 @@ namespace Spss
 		/// <summary>
 		/// Initializes the value labels dictionary from the SPSS data file.
 		/// </summary>
-		protected override void LoadFromSpssFile()
-		{
-			if( !Applies ) return; 
+		protected override void LoadFromSpssFile() {
+			if (!Applies) return;
 
 			string[] values;
 			string[] labels;
-			ReturnCode result = SpssSafeWrapper.spssGetVarCValueLabels(FileHandle, Variable.Name, out values, out labels);
-			switch( result )
-			{
-				case ReturnCode.SPSS_OK:
-					Debug.Assert( values.Length == labels.Length );
-					for( int i = 0; i < values.Length; i++ )
-						Add(values[i], labels[i]);
-					break;
-				case ReturnCode.SPSS_NO_LABELS:
-					break; // nothing special -- just no labels to add
-				default:
-					throw new SpssException(result, "spssGetVarCValueLabels");
+			ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarCValueLabels(FileHandle, Variable.Name, out values, out labels), "spssGetVarCValueLabels", ReturnCode.SPSS_NO_LABELS);
+			if (result == ReturnCode.SPSS_OK) { // ReturnCode.SPSS_NO_LABELS is nothing special -- just no labels to add
+				Debug.Assert(values.Length == labels.Length);
+				for (int i = 0; i < values.Length; i++) {
+					Add(values[i], labels[i]);
+				}
 			}
 		}
+
 		#endregion
 	}
 }

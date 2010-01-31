@@ -52,12 +52,13 @@ namespace Spss {
 		/// </summary>
 		/// <param name="returnCode">The return code actually received from the SPSS function.</param>
 		/// <param name="spssFunctionName">Name of the SPSS function invoked.</param>
+		/// <returns>The value of <paramref name="returnCode"/>.</returns>
 		/// <remarks>
 		/// This method overload is here to avoid the CLR (or C# compiler) automatically instantiating
 		/// an empty params array to callers who don't pass extra returnCode.
 		/// </remarks>
-		internal static void ThrowOnFailure(ReturnCode returnCode, string spssFunctionName) {
-			ThrowOnFailure(returnCode, spssFunctionName, null);
+		internal static ReturnCode ThrowOnFailure(ReturnCode returnCode, string spssFunctionName) {
+			return ThrowOnFailure(returnCode, spssFunctionName, null);
 		}
 
 		/// <summary>
@@ -65,15 +66,16 @@ namespace Spss {
 		/// </summary>
 		/// <param name="returnCode">The return code actually received from the SPSS function.</param>
 		/// <param name="spssFunctionName">Name of the SPSS function invoked.</param>
-		/// <param name="acceptableReturnCodes">The acceptable return codes that should not result in a thrown exception.</param>
-		internal static void ThrowOnFailure(ReturnCode returnCode, string spssFunctionName, params ReturnCode[] acceptableReturnCodes) {
+		/// <param name="acceptableReturnCodes">The acceptable return codes that should not result in a thrown exception (SPSS_OK is always ok).</param>
+		/// <returns>The value of <paramref name="returnCode"/>.</returns>
+		internal static ReturnCode ThrowOnFailure(ReturnCode returnCode, string spssFunctionName, params ReturnCode[] acceptableReturnCodes) {
 			if (returnCode == ReturnCode.SPSS_OK) {
-				return;
+				return returnCode;
 			}
 
 			if (acceptableReturnCodes != null) {
 				if (Array.IndexOf(acceptableReturnCodes, returnCode) >= 0) {
-					return;
+					return returnCode;
 				}
 			}
 

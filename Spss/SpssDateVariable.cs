@@ -58,9 +58,7 @@ namespace Spss
 			get
 			{
 				double v;
-				ReturnCode result = SpssSafeWrapper.spssGetValueNumeric( FileHandle, Handle, out v );
-				if( result != ReturnCode.SPSS_OK )
-					throw new SpssException(result, "spssGetValueNumeric");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumeric(FileHandle, Handle, out v), "SpssSafeWrapper");
 
 				if( v == SpssDataDocument.SystemMissingValue ) return null;
 

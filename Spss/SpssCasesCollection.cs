@@ -79,9 +79,7 @@ namespace Spss
 				// New documents aren't allowed to query cases count, and appended docs
 				// report the # of cases there were when the file was first opened.
 				if (this.Document.AccessMode != SpssFileAccess.Create) {
-					ReturnCode result = SpssSafeWrapper.spssGetNumberofCases(FileHandle, out casecount);
-					if (result != ReturnCode.SPSS_OK)
-						throw new SpssException(result, "spssGetNumberofCases");
+					SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetNumberofCases(FileHandle, out casecount), "spssGetNumberofCases");
 				}
 
 				return casecount + this.caseCountInWriteMode;
@@ -105,12 +103,8 @@ namespace Spss
 				if( value >= Count ) 
 					throw new ArgumentOutOfRangeException("Position", value, "Must be less than the number of cases in the file.");
 				if( value == position ) return; // nothing to do!
-				ReturnCode result = SpssSafeWrapper.spssSeekNextCase(FileHandle, value);
-				if( result != ReturnCode.SPSS_OK )
-					throw new SpssException(result, "spssSeekNextCase");
-				result = SpssSafeWrapper.spssReadCaseRecord(FileHandle);
-				if( result != ReturnCode.SPSS_OK )
-					throw new SpssException(result, "spssReadCaseRecord");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssSeekNextCase(FileHandle, value), "spssSeekNextCase");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssReadCaseRecord(FileHandle), "spssReadCaseRecord");
 				position = value;
 			}
 		}

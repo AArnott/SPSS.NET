@@ -1772,34 +1772,27 @@ namespace Spss
 		/// The two arrays and the label strings are allocated on the heap. When they are no longer
 		/// needed, <see cref="SpssThinWrapper.spssFreeVarNValueLabels"/> should be called to free the memory.
 		/// </remarks>
-		unsafe public static ReturnCode spssGetVarNValueLabels(int handle, string varName, out double[] values, out string[] labels)
-		{
+		unsafe public static ReturnCode spssGetVarNValueLabels(int handle, string varName, out double[] values, out string[] labels) {
 			double* cValues;
 			char** cLabels;
 			int numLabels;
-			ReturnCode result = spssGetVarNValueLabels(handle, ref varName, out cValues, out cLabels, out numLabels);
-			switch( result )
-			{
-				case ReturnCode.SPSS_NO_LABELS:
-					values = new double[0];
-					labels = new string[0];
-					break;
-				case ReturnCode.SPSS_OK:
-					values = new double[numLabels];
-					labels = new string[numLabels];
-					for( int i = 0; i < numLabels; i++ )
-					{
-						values[i] = cValues[i];
-						labels[i] = Marshal.PtrToStringAnsi(new IntPtr( cLabels[i] ));
-					}
-					spssFreeVarNValueLabels(cValues, cLabels, numLabels);
-					break;
-				default:
-					throw new SpssException(result, "spssGetVarNValueLabels");
+			ReturnCode result = SpssException.ThrowOnFailure(spssGetVarNValueLabels(handle, ref varName, out cValues, out cLabels, out numLabels), "spssGetVarNValueLabels", ReturnCode.SPSS_NO_LABELS);
+			if (result == ReturnCode.SPSS_NO_LABELS) {
+				values = new double[0];
+				labels = new string[0];
+			} else { // ReturnCode.SPSS_OK
+				values = new double[numLabels];
+				labels = new string[numLabels];
+				for (int i = 0; i < numLabels; i++) {
+					values[i] = cValues[i];
+					labels[i] = Marshal.PtrToStringAnsi(new IntPtr(cLabels[i]));
+				}
+				spssFreeVarNValueLabels(cValues, cLabels, numLabels);
 			}
 
 			return result;
 		}
+
 		/// <summary>
 		/// Gets the list of response values and labels for a variable.
 		/// </summary>
@@ -1836,35 +1829,28 @@ namespace Spss
 		/// The two arrays and the value and label strings are allocated on the heap. When they
 		/// are no longer needed, <see cref="SpssThinWrapper.spssFreeVarCValueLabels"/> should be called to free the memory.
 		/// </remarks>
-		unsafe public static ReturnCode spssGetVarCValueLabels(int handle, string varName, out string[] values, out string[] labels)
-		{
+		unsafe public static ReturnCode spssGetVarCValueLabels(int handle, string varName, out string[] values, out string[] labels) {
 			char** cValues;
 			char** cLabels;
 			int numLabels;
-			
-			ReturnCode result = spssGetVarCValueLabels(handle, ref varName, out cValues, out cLabels, out numLabels);
-			switch( result )
-			{
-				case ReturnCode.SPSS_NO_LABELS:
-					values = new string[0];
-					labels = new string[0];
-					break;
-				case ReturnCode.SPSS_OK:
-					values = new string[numLabels];
-					labels = new string[numLabels];
-					for( int i = 0; i < numLabels; i++ )
-					{
-						values[i] = Marshal.PtrToStringAnsi(new IntPtr( cValues[i] ));
-						labels[i] = Marshal.PtrToStringAnsi(new IntPtr( cLabels[i] ));
-					}
-					spssFreeVarCValueLabels(cValues, cLabels, numLabels);
-					break;
-				default:
-					throw new SpssException(result, "spssGetVarCValueLabels");
+
+			ReturnCode result = SpssException.ThrowOnFailure(spssGetVarCValueLabels(handle, ref varName, out cValues, out cLabels, out numLabels), "spssGetVarCValueLabels", ReturnCode.SPSS_NO_LABELS);
+			if (result == ReturnCode.SPSS_NO_LABELS) {
+				values = new string[0];
+				labels = new string[0];
+			} else { // ReturnCode.SPSS_OK
+				values = new string[numLabels];
+				labels = new string[numLabels];
+				for (int i = 0; i < numLabels; i++) {
+					values[i] = Marshal.PtrToStringAnsi(new IntPtr(cValues[i]));
+					labels[i] = Marshal.PtrToStringAnsi(new IntPtr(cLabels[i]));
+				}
+				spssFreeVarCValueLabels(cValues, cLabels, numLabels);
 			}
 
 			return result;
 		}
+
 		/// <summary>
 		/// Reports on all the variables in a data file, including names and types.
 		/// </summary>
@@ -1918,46 +1904,34 @@ namespace Spss
 		[Obsolete("Use spssSetVarWriteFormat instead.")]
 		public static void SetVarWriteFormat( int handle, string varName, FormatTypeCode writeType, int writeDec, int writeWidth ) 
 		{
-			ReturnCode result = spssSetVarWriteFormat( handle, varName, writeType, writeDec, writeWidth );
-			if( result != ReturnCode.SPSS_OK )
-				throw new SpssException(result, "spssSetVarWriteFormat");
+			SpssException.ThrowOnFailure(spssSetVarWriteFormat(handle, varName, writeType, writeDec, writeWidth), "spssSetVarWriteFormat");
 		}
 		[Obsolete("Use spssSetVarPrintFormat instead.")]
 		public static void SetVarPrintFormat( int handle, string varName, FormatTypeCode printType, int printDec, int printWidth ) 
 		{
-			ReturnCode result = spssSetVarPrintFormat( handle, varName, printType, printDec, printWidth );
-			if( result != ReturnCode.SPSS_OK )
-				throw new SpssException(result, "spssSetVarPrintFormat");
+			SpssException.ThrowOnFailure(spssSetVarPrintFormat(handle, varName, printType, printDec, printWidth), "spssSetVarPrintFormat");
 		}
 		[Obsolete("Use spssSetVarName instead.")]
 		public static void SetVarName( int handle, string varName, int varType ) 
 		{
-			ReturnCode result = spssSetVarName( handle, varName, varType );
-			if( result != ReturnCode.SPSS_OK )
-				throw new SpssException(result, "spssSetVarName");
+			SpssException.ThrowOnFailure(spssSetVarName(handle, varName, varType), "spssSetVarName");
 		}
 		[Obsolete("Use spssSetVarLabel instead.")]
 		public static void SetVarLabel( int handle, string varName, string varLabel ) 
 		{
-			ReturnCode result = spssSetVarLabel( handle, varName, varLabel );
-			if( result != ReturnCode.SPSS_OK )
-				throw new SpssException(result, "spssSetVarLabel");
+			SpssException.ThrowOnFailure(spssSetVarLabel(handle, varName, varLabel), "spssSetVarLabel");
 		}
 		[Obsolete("Use spssSetVarNValueLabel instead.")]
 		public static void SetVarNValueLabel( int handle, string varName, double value, string label ) 
 		{
-			ReturnCode result = spssSetVarNValueLabel( handle, varName, value, label );
-			if( result != ReturnCode.SPSS_OK ) 
-				throw new SpssException(result, "spssSetVarNValueLabel");
+			SpssException.ThrowOnFailure(spssSetVarNValueLabel(handle, varName, value, label), "spssSetVarNValueLabel");
 		}
 
 		[Obsolete("Use spssGetVarLabel instead.")]
 		public static string GetVarLabel( int handle, string varName ) 
 		{
 			string varLabel;
-			ReturnCode result = spssGetVarLabel( handle, varName, out varLabel);
-			if( result != ReturnCode.SPSS_OK )
-				throw new SpssException(result, "spssGetVarLabelLong");
+			SpssException.ThrowOnFailure(spssGetVarLabel(handle, varName, out varLabel), "spssGetVarLabel");
 			return varLabel;
 		}
 
@@ -1965,9 +1939,7 @@ namespace Spss
 		public static string GetVarNValueLabel( int handle, string varName, double value ) 
 		{
 			string label;
-			ReturnCode result = spssGetVarNValueLabel( handle, varName, value, out label );
-			if( result != ReturnCode.SPSS_OK )
-				throw new SpssException(result, "spssGetVarNValueLabelLong");
+			SpssException.ThrowOnFailure(spssGetVarNValueLabel(handle, varName, value, out label), "spssGetVarNValueLabel");
 			return label;
 		}
 		
@@ -1975,9 +1947,7 @@ namespace Spss
 		public static string GetValueChar( int handle, double varHandle ) 
 		{
 			string value;
-			ReturnCode result = spssGetValueChar( handle, varHandle, out value );
-			if( result != ReturnCode.SPSS_OK ) 
-				throw new SpssException(result, "spssGetValueChar");
+			SpssException.ThrowOnFailure(spssGetValueChar(handle, varHandle, out value), "spssGetValueChar");
 			return value;
 		}
 		#endregion

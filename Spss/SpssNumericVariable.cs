@@ -102,9 +102,7 @@ namespace Spss
 			get
 			{
 				double v;
-				ReturnCode result = SpssSafeWrapper.spssGetValueNumeric( FileHandle, Handle, out v );
-				if( result != ReturnCode.SPSS_OK )
-					throw new SpssException(result, "spssGetValueNumeric");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumeric(FileHandle, Handle, out v), "SpssSafeWrapper");
 				if( v == SpssDataDocument.SystemMissingValue )
 					return null;
 				return v;
@@ -112,9 +110,7 @@ namespace Spss
 			set
 			{
 				if( !value.HasValue ) value = SpssDataDocument.SystemMissingValue;
-				ReturnCode result = SpssSafeWrapper.spssSetValueNumeric( FileHandle, Handle, value.Value );
-				if( result != ReturnCode.SPSS_OK )
-					throw new SpssException(result, "spssSetValueNumeric");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetValueNumeric(FileHandle, Handle, value.Value), "SpssSafeWrapper");
 			}
 		}
 

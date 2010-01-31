@@ -174,9 +174,7 @@ namespace Spss
 				// may not have been loaded yet.
 				if( label == null && IsCommitted )
 				{
-					ReturnCode result = SpssSafeWrapper.spssGetVarLabel(FileHandle, Name, out label);
-					if( result != ReturnCode.SPSS_OK && result != ReturnCode.SPSS_NO_LABEL )
-						throw new SpssException(result, "spssGetVarLabel");
+					SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarLabel(FileHandle, Name, out label), "SpssSafeWrapper", ReturnCode.SPSS_NO_LABEL);
 				}
 				return label != null ? label : ""; // don't ever return null
 			}
@@ -383,9 +381,7 @@ namespace Spss
 			if( Handle >= 0 ) throw new InvalidOperationException("Already committed.");
 
 			// Create the variable.
-			ReturnCode result = SpssSafeWrapper.spssSetVarName(FileHandle, Name, SpssType);
-			if( result != ReturnCode.SPSS_OK )
-				throw new SpssException(result, "spssSetVarName");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarName(FileHandle, Name, SpssType), "SpssSafeWrapper");
 
 			// Call the descending class to finish the details.
 			Update();
@@ -442,9 +438,7 @@ namespace Spss
 		private void Document_DictionaryCommitted(object sender, EventArgs e)
 		{
 			// Set the variable handle			
-			ReturnCode result = SpssSafeWrapper.spssGetVarHandle(FileHandle, Name, out variableHandle);
-			if( result != ReturnCode.SPSS_OK )
-				throw new SpssException(result, "spssGetVarHandle");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarHandle(FileHandle, Name, out variableHandle), "SpssSafeWrapper");
 		}
 		#endregion
 	}

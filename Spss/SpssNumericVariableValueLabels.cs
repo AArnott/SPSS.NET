@@ -35,19 +35,14 @@ namespace Spss
 		{
 			double[] values;
 			string[] labels;
-			ReturnCode result = SpssSafeWrapper.spssGetVarNValueLabels(FileHandle, Variable.Name, out values, out labels);
-			switch( result )
-			{
-				case ReturnCode.SPSS_OK:
-					Debug.Assert( values.Length == labels.Length );
-					for( int i = 0; i < values.Length; i++ )
-						Add(values[i], labels[i]);
-					break;
-				case ReturnCode.SPSS_NO_LABELS:
-					break; // nothing special -- just no labels to add
-				default:
-					throw new SpssException(result, "spssGetVarNValueLabels");
+			ReturnCode result =  SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNValueLabels(FileHandle, Variable.Name, out values, out labels), "spssGetVarNValueLabels", ReturnCode.SPSS_NO_LABELS);
+			if (result == ReturnCode.SPSS_OK) {
+				Debug.Assert(values.Length == labels.Length);
+				for (int i = 0; i < values.Length; i++)
+					Add(values[i], labels[i]);
 			}
+
+			// SPSS_NO_LABELs is nothing special -- just no labels to add
 		}
 
 		#endregion

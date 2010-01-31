@@ -39,21 +39,16 @@ namespace Spss
 		private void InitializeVariablesList() {
 			Debug.Assert(FileHandle >= 0, "Must be working with an open file.");
 			int initialSize;
-			ReturnCode result = SpssSafeWrapper.spssGetNumberofVariables(FileHandle, out initialSize);
-			if (result != ReturnCode.SPSS_OK) {
-				throw new SpssException(result, "spssGetNumberofVariables");
-			}
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetNumberofVariables(FileHandle, out initialSize), "SpssSafeWrapper");
 			variables = new List<SpssVariable>(initialSize);
 			variablesLookup = new SpssVariableKeyedCollection();
 
 			string[] varNames;
 			int[] varTypes;
-			result = SpssSafeWrapper.spssGetVarNames(FileHandle, out varNames, out varTypes);
+			ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNames(FileHandle, out varNames, out varTypes), "spssGetVarNames", ReturnCode.SPSS_INVALID_FILE);
 			if (result == ReturnCode.SPSS_INVALID_FILE) {
 				// brand new file
 				return;
-			} else if (result != ReturnCode.SPSS_OK) {
-				throw new SpssException(result, "spssGetVarNames");
 			}
 			Debug.Assert(varNames.Length == varTypes.Length);
 			for (int i = 0; i < varNames.Length; i++)

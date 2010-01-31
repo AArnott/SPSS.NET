@@ -47,28 +47,20 @@ namespace Spss
 			this.filename = filename;
 			this.accessMode = access;
 
-			ReturnCode result;
 			switch( access )
 			{
 				case SpssFileAccess.Read:
-					result = SpssSafeWrapper.spssOpenRead(filename, out handle);
+					SpssException.ThrowOnFailure(SpssSafeWrapper.spssOpenRead(filename, out handle), "spssOpenRead");
 					break;
 				case SpssFileAccess.Append:
-					result = SpssSafeWrapper.spssOpenAppend(filename, out handle);
+					SpssException.ThrowOnFailure(SpssSafeWrapper.spssOpenAppend(filename, out handle), "spssOpenAppend");
 					break;
 				case SpssFileAccess.Create:
-					result = SpssSafeWrapper.spssOpenWrite(filename, out handle);
+					SpssException.ThrowOnFailure(SpssSafeWrapper.spssOpenWrite(filename, out handle), "spssOpenWrite");
 					IsCompressed = true;
 					break;
 				default:
 					throw new ApplicationException("Unrecognized access level: " + access);
-			}
-			switch( result )
-			{
-				case ReturnCode.SPSS_OK:
-					break;
-				default:
-					throw new SpssException(result, "spssOpen***");
 			}
 
 			isAuthoringDictionary = true;
@@ -146,16 +138,12 @@ namespace Spss
 			get
 			{
 				int compressed;
-				ReturnCode result = SpssSafeWrapper.spssGetCompression(Handle, out compressed);
-				if( result != ReturnCode.SPSS_OK )
-					throw new SpssException(result, "spssGetCompression");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetCompression(Handle, out compressed), "SpssSafeWrapper");
 				return compressed != 0;
 			}
 			set
 			{
-				ReturnCode result = SpssSafeWrapper.spssSetCompression(Handle, value ? 1 : 0);
-				if( result != ReturnCode.SPSS_OK )
-					throw new SpssException(result, "spssSetCompression");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetCompression(Handle, value ? 1 : 0), "SpssSafeWrapper");
 			}
 		}
 		/// <summary>
@@ -284,32 +272,19 @@ namespace Spss
 
 			lock( this )
 			{
-				ReturnCode result;
 				switch( AccessMode ) 
 				{
 					case SpssFileAccess.Read:
-						result = SpssSafeWrapper.spssCloseRead(handle);
+						SpssException.ThrowOnFailure(SpssSafeWrapper.spssCloseRead(handle), "spssCloseRead");
 						break;
 					case SpssFileAccess.Append:
-						result = SpssSafeWrapper.spssCloseAppend(handle);
+						SpssException.ThrowOnFailure(SpssSafeWrapper.spssCloseAppend(handle), "spssCloseAppend");
 						break;
 					case SpssFileAccess.Create:
-						result = SpssSafeWrapper.spssCloseWrite(handle);
+						SpssException.ThrowOnFailure(SpssSafeWrapper.spssCloseWrite(handle), "spssCloseWrite", ReturnCode.SPSS_DICT_NOTCOMMIT);
 						break;
 					default:
 						throw new ApplicationException("Unrecognized access level: " + AccessMode );
-				}
-				switch( result )
-				{
-					case ReturnCode.SPSS_OK:
-						break;
-					case ReturnCode.SPSS_DICT_NOTCOMMIT:
-						Debug.Assert( AccessMode == SpssFileAccess.Create ); // only expected scenario
-						// A file was created, but the dictionary was never even committed.
-						// That's ok though.  The file was still closed.
-						break;
-					default:
-						throw new SpssException(result, "spssClose***");
 				}
 				handle = -1; // mark that we don't have any handle
 			
@@ -330,9 +305,7 @@ namespace Spss
 			EnsureAuthoringDictionary();
 			Variables.Commit();
 
-			ReturnCode result = SpssSafeWrapper.spssCommitHeader(handle);
-			if( result != ReturnCode.SPSS_OK )
-				throw new SpssException(result, "spssCommitHeader");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssCommitHeader(handle), "SpssSafeWrapper");
 
 			isAuthoringDictionary = false;
 
