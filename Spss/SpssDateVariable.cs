@@ -12,22 +12,26 @@ namespace Spss
 		/// Creates an instance of the <see cref="SpssDateVariable"/> class,
 		/// for use when defining a new variable.
 		/// </summary>
-		public SpssDateVariable()
-		{
+		public SpssDateVariable() {
+			this.WriteFormat = this.PrintFormat = FormatTypeCode.SPSS_FMT_DATE_TIME;
+			this.WriteDecimal = this.PrintDecimal = 4;
+			this.WriteWidth = this.PrintWidth = 28;
 		}
+
 		/// <summary>
-		/// Creates an instance of the <see cref="SpssDateVariable"/> class, 
+		/// Creates an instance of the <see cref="SpssDateVariable"/> class,
 		/// for use in loading variables from an existing SPSS data file.
 		/// </summary>
-		/// <param name="variables">
-		/// The containing collection.
-		/// </param>
-		/// <param name="varName">
-		/// The name of the variable.
-		/// </param>
-		protected internal SpssDateVariable(SpssVariablesCollection variables, string varName)
-			: base( variables, varName )
-		{
+		/// <param name="variables">The containing collection.</param>
+		/// <param name="varName">The name of the variable.</param>
+		/// <param name="writeFormat">The write format.</param>
+		/// <param name="writeDecimal">The write decimal.</param>
+		/// <param name="writeWidth">Width of the write.</param>
+		/// <param name="printFormat">The print format.</param>
+		/// <param name="printDecimal">The print decimal.</param>
+		/// <param name="printWidth">Width of the print.</param>
+		protected internal SpssDateVariable(SpssVariablesCollection variables, string varName, FormatTypeCode writeFormat, int writeDecimal, int writeWidth, FormatTypeCode printFormat, int printDecimal, int printWidth)
+			: base(variables, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth) {
 		}
 		#endregion
 
@@ -85,7 +89,6 @@ namespace Spss
 		}
 		#endregion
 
-		#region Operations
 		/// <summary>
 		/// Updates the changed attributes of the variable within SPSS.
 		/// </summary>
@@ -94,9 +97,6 @@ namespace Spss
 			base.Update ();
 
 			if( !IsInCollection ) return; // we'll get to do this later
-
-			SpssSafeWrapper.spssSetVarPrintFormat(FileHandle, Name, FormatTypeCode.SPSS_FMT_DATE_TIME, 4, 28);
-			SpssSafeWrapper.spssSetVarWriteFormat(FileHandle, Name, FormatTypeCode.SPSS_FMT_DATE_TIME, 4, 28);
 		}
 
 		public override SpssVariable Clone()
@@ -106,6 +106,22 @@ namespace Spss
 			return other;
 		}
 
-		#endregion
+		protected override bool IsApplicableFormatTypeCode(FormatTypeCode formatType) {
+			return IsDateVariable(formatType);
+		}
+
+		protected internal static bool IsDateVariable(FormatTypeCode writeType) {
+			return writeType == FormatTypeCode.SPSS_FMT_ADATE ||
+				writeType == FormatTypeCode.SPSS_FMT_DATE ||
+				writeType == FormatTypeCode.SPSS_FMT_DATE_TIME ||
+				writeType == FormatTypeCode.SPSS_FMT_DTIME ||
+				writeType == FormatTypeCode.SPSS_FMT_EDATE ||
+				writeType == FormatTypeCode.SPSS_FMT_JDATE ||
+				writeType == FormatTypeCode.SPSS_FMT_MOYR ||
+				writeType == FormatTypeCode.SPSS_FMT_QYR ||
+				writeType == FormatTypeCode.SPSS_FMT_SDATE ||
+				writeType == FormatTypeCode.SPSS_FMT_TIME ||
+				writeType == FormatTypeCode.SPSS_FMT_WKYR;
+		}
 	}
 }

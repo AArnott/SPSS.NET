@@ -13,7 +13,6 @@ namespace Spss
 	/// </remarks>
 	public class SpssNumericVariable : SpssVariable
 	{
-		#region Construction
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssNumericVariable"/> class,
 		/// for use when defining a new variable.
@@ -21,23 +20,27 @@ namespace Spss
 		public SpssNumericVariable()
 		{
 			this.valueLabels = new SpssNumericVariableValueLabelsDictionary(this);
+			this.WriteFormat = this.PrintFormat = FormatTypeCode.SPSS_FMT_F;
+			this.WriteDecimal = this.PrintDecimal = DecimalPlacesDefault;
+			this.WriteWidth = this.PrintWidth = ColumnWidthDefault;
 		}
+
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssNumericVariable"/> class,
 		/// for use in loading variables from an existing SPSS data file.
 		/// </summary>
-		/// <param name="variables">
-		/// The containing collection.
-		/// </param>
-		/// <param name="varName">
-		/// The name of the variable.
-		/// </param>
-		protected internal SpssNumericVariable(SpssVariablesCollection variables, string varName)
-			: base( variables, varName )
-		{
+		/// <param name="variables">The containing collection.</param>
+		/// <param name="varName">The name of the variable.</param>
+		/// <param name="writeFormat">The write format.  The default is <see cref="FormatTypeCode.SPSS_FMT_F"/></param>
+		/// <param name="writeDecimal">The write decimal.</param>
+		/// <param name="writeWidth">Width of the write.</param>
+		/// <param name="printFormat">The print format.  The default is <see cref="FormatTypeCode.SPSS_FMT_F"/></param>
+		/// <param name="printDecimal">The print decimal.</param>
+		/// <param name="printWidth">Width of the print.</param>
+		protected internal SpssNumericVariable(SpssVariablesCollection variables, string varName, FormatTypeCode writeFormat, int writeDecimal, int writeWidth, FormatTypeCode printFormat, int printDecimal, int printWidth)
+			: base(variables, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth) {
 			this.valueLabels = new SpssNumericVariableValueLabelsDictionary(this);
 		}
-		#endregion
 
 		#region Attributes
 		/// <summary>
@@ -117,7 +120,6 @@ namespace Spss
 
 		#endregion
 
-		#region Operations
 		/// <summary>
 		/// Updates details of the variable.
 		/// </summary>
@@ -126,9 +128,6 @@ namespace Spss
 			base.Update();
 
 			if( !IsInCollection ) return; // we'll get to do this later
-
-			SpssSafeWrapper.spssSetVarPrintFormat(FileHandle, Name, FormatTypeCode.SPSS_FMT_F, DecimalPlaces, ColumnWidth);
-			SpssSafeWrapper.spssSetVarWriteFormat(FileHandle, Name, FormatTypeCode.SPSS_FMT_F, DecimalPlaces, ColumnWidth);
 
 			this.valueLabels.Update();
 		}
@@ -150,6 +149,9 @@ namespace Spss
 			this.valueLabels.CopyTo(other.valueLabels);
 		}
 
-		#endregion
+		protected override bool IsApplicableFormatTypeCode(FormatTypeCode formatType) {
+			return formatType != FormatTypeCode.SPSS_FMT_A &&
+				!SpssDateVariable.IsDateVariable(formatType);
+		}
 	}
 }

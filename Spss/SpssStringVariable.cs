@@ -8,7 +8,6 @@ namespace Spss
 	/// </summary>
 	public class SpssStringVariable : SpssVariable
 	{
-		#region Construction
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssStringVariable"/> class,
 		/// for use when defining a new variable.
@@ -19,25 +18,23 @@ namespace Spss
 		}
 
 		/// <summary>
-		/// Creates an instance of the <see cref="SpssStringVariable"/> class, 
+		/// Creates an instance of the <see cref="SpssStringVariable"/> class,
 		/// for use in loading variables from an existing SPSS data file.
 		/// </summary>
-		/// <param name="variables">
-		/// The containing collection.
-		/// </param>
-		/// <param name="varName">
-		/// The name of the variable being loaded.
-		/// </param>
-		/// <param name="length">
-		/// The length of the string variable.  This is the same as SpssType
-		/// </param>
-		protected internal SpssStringVariable(SpssVariablesCollection variables, string varName, int length)
-			: base( variables, varName )
-		{
+		/// <param name="variables">The containing collection.</param>
+		/// <param name="varName">The name of the variable being loaded.</param>
+		/// <param name="length">The length of the string variable.  This is the same as SpssType</param>
+		/// <param name="writeFormat">The write format.</param>
+		/// <param name="writeDecimal">The write decimal.</param>
+		/// <param name="writeWidth">Width of the write.</param>
+		/// <param name="printFormat">The print format.</param>
+		/// <param name="printDecimal">The print decimal.</param>
+		/// <param name="printWidth">Width of the print.</param>
+		protected internal SpssStringVariable(SpssVariablesCollection variables, string varName, int length, FormatTypeCode writeFormat, int writeDecimal, int writeWidth, FormatTypeCode printFormat, int printDecimal, int printWidth)
+			: base(variables, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth) {
 			this.valueLabels = new SpssStringVariableValueLabelsDictionary(this);
 			this.length = length;
 		}
-		#endregion
 
 		#region Attributes
 		private int length = -1;
@@ -101,7 +98,6 @@ namespace Spss
 
 		#endregion
 
-		#region Operations
 		/// <summary>
 		/// Updates the changed attributes of the variable within SPSS.
 		/// </summary>
@@ -131,6 +127,8 @@ namespace Spss
 			this.valueLabels.CopyTo(other.valueLabels);
 		}
 
-		#endregion
+		protected override bool IsApplicableFormatTypeCode(FormatTypeCode formatType) {
+			return formatType == FormatTypeCode.SPSS_FMT_A;
+		}
 	}
 }
