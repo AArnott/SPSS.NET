@@ -176,7 +176,8 @@ namespace Spss
 				{
 					SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarLabel(FileHandle, Name, out label), "SpssSafeWrapper", ReturnCode.SPSS_NO_LABEL);
 				}
-				return label != null ? label : ""; // don't ever return null
+
+				return label ?? string.Empty;
 			}
 			set
 			{

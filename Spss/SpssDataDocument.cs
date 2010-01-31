@@ -30,7 +30,7 @@ namespace Spss
 	/// Manages reading from and writing to SPSS data files.
 	/// </summary>
 	public class SpssDataDocument : IDisposable
-	{		
+	{
 		#region Construction
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssDataDocument"/> class, 
@@ -46,7 +46,7 @@ namespace Spss
 		{
 			this.filename = filename;
 			this.accessMode = access;
-
+			int handle;
 			switch( access )
 			{
 				case SpssFileAccess.Read:
@@ -57,12 +57,15 @@ namespace Spss
 					break;
 				case SpssFileAccess.Create:
 					SpssException.ThrowOnFailure(SpssSafeWrapper.spssOpenWrite(filename, out handle), "spssOpenWrite");
-					IsCompressed = true;
 					break;
 				default:
 					throw new ApplicationException("Unrecognized access level: " + access);
 			}
 
+			this.Handle = new SpssSafeHandle(handle, access);
+			if (access == SpssFileAccess.Create) {
+				IsCompressed = true;
+			}
 			isAuthoringDictionary = true;
 			variables = new SpssVariablesCollection(this);
 			cases = new SpssCasesCollection(this);
@@ -87,17 +90,11 @@ namespace Spss
 			}
 		}
 
-		private Int32 handle = -1;
 		/// <summary>
 		/// Gets the SPSS file handle for the open document.
 		/// </summary>
-		protected internal Int32 Handle
-		{
-			get
-			{
-				return handle;
-			}
-		}
+		protected internal SpssSafeHandle Handle { get; private set; }
+
 		private SpssFileAccess accessMode;
 		/// <summary>
 		/// Gets whether this document is open for read or write access.
@@ -127,7 +124,7 @@ namespace Spss
 		{
 			get
 			{
-				return Handle < 0;
+				return Handle.IsClosed;
 			}
 		}
 		/// <summary>
@@ -269,28 +266,7 @@ namespace Spss
 		public void Close()
 		{
 			if( IsClosed ) return; // already closed
-
-			lock( this )
-			{
-				switch( AccessMode ) 
-				{
-					case SpssFileAccess.Read:
-						SpssException.ThrowOnFailure(SpssSafeWrapper.spssCloseRead(handle), "spssCloseRead");
-						break;
-					case SpssFileAccess.Append:
-						SpssException.ThrowOnFailure(SpssSafeWrapper.spssCloseAppend(handle), "spssCloseAppend");
-						break;
-					case SpssFileAccess.Create:
-						SpssException.ThrowOnFailure(SpssSafeWrapper.spssCloseWrite(handle), "spssCloseWrite", ReturnCode.SPSS_DICT_NOTCOMMIT);
-						break;
-					default:
-						throw new ApplicationException("Unrecognized access level: " + AccessMode );
-				}
-				handle = -1; // mark that we don't have any handle
-			
-				// We don't need to have Dispose called later.
-				GC.SuppressFinalize(this);
-			}
+			this.Handle.Close();
 		}
 
 		/// <summary>
@@ -305,7 +281,7 @@ namespace Spss
 			EnsureAuthoringDictionary();
 			Variables.Commit();
 
-			SpssException.ThrowOnFailure(SpssSafeWrapper.spssCommitHeader(handle), "SpssSafeWrapper");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssCommitHeader(this.Handle), "SpssSafeWrapper");
 
 			isAuthoringDictionary = false;
 
@@ -366,19 +342,27 @@ namespace Spss
 		#endregion
 
 		#region IDisposable Members
+
 		/// <summary>
-		/// Disposes of all unmanaged resources held by the <see cref="SpssDataDocument"/>.
-		/// </summary>
-		~SpssDataDocument() 
-		{
-			Dispose();
-		}
-		/// <summary>
-		/// Disposes of all unmanaged resources held by the <see cref="SpssDataDocument"/>.
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
 		/// </summary>
 		public void Dispose()
 		{
-			Close();
+			this.Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		/// <summary>
+		/// Releases unmanaged and - optionally - managed resources
+		/// </summary>
+		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+		protected virtual void Dispose(bool disposing) {
+			if (disposing) {
+				Close();
+			}
+
+			// We don't clean up our SPSS handle if !disposing because it's a SafeHandle, which will take care of itself.
+			// And SafeHandle is a class, and we should never touch references during finalization.
 		}
 
 		#endregion

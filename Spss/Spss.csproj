@@ -154,6 +154,7 @@
     <Compile Include="SpssException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SpssSafeHandle.cs" />
     <Compile Include="SpssNumericVariable.cs">
       <SubType>Code</SubType>
     </Compile>
