@@ -1,7 +1,7 @@
-using System;
-
 namespace Spss
 {
+	using System;
+
 	/// <summary>
 	/// Represents a single case in an SPSS data file.
 	/// Allows for reading/writing variable data on a per-case basis.
@@ -12,7 +12,6 @@ namespace Spss
 	/// </remarks>
 	public class SpssCase
 	{
-		#region Construction
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssCase"/> class.
 		/// </summary>
@@ -24,9 +23,7 @@ namespace Spss
 			// garbage characters in those data areas.
 			if( cases.IsAppendOnly ) ClearData();
 		}
-		#endregion
 
-		#region Attributes
 		private readonly SpssCasesCollection cases;
 		/// <summary>
 		/// Gets the containing <see cref="SpssCasesCollection"/>.
@@ -65,9 +62,7 @@ namespace Spss
 				Variables[varName].Value = value;
 			}
 		}
-		#endregion
 
-		#region Operations
 		/// <summary>
 		/// Ensures that the SPSS data file is currently pointing at this case's data.
 		/// </summary>
@@ -131,6 +126,5 @@ namespace Spss
 		{
 			this[varName] = (value != DBNull.Value) ? value : null;
 		}
-		#endregion
 	}
 }

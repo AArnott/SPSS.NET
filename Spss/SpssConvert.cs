@@ -52,12 +52,7 @@ namespace Spss
 		public static void ToFile(DataTable dataTable,
 			string spssSavFilename, Action<SpssVariable> fillInMetaDataCallBack)
 		{
-			ToFile(dataTable, getRowsFromTable(dataTable), spssSavFilename, fillInMetaDataCallBack);
-		}
-		static IEnumerable<DataRow> getRowsFromTable(DataTable dataTable)
-		{
-			foreach (DataRow row in dataTable.Rows)
-				yield return row;
+			ToFile(dataTable, dataTable.Rows.Cast<DataRow>(), spssSavFilename, fillInMetaDataCallBack);
 		}
 
 		/// <summary>
