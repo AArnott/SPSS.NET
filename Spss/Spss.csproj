@@ -184,10 +184,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SpssVariableValueLabels.cs" />
-    <Compile Include="VarMetaData.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VarMetaDataBase.cs" />
     <EmbeddedResource Include="blankDdi.xml" />
   </ItemGroup>
   <ItemGroup>
