@@ -132,7 +132,6 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Demographics.cs" />
     <Compile Include="EmbeddedResources.cs" />
     <Compile Include="Project.cs">
       <SubType>Code</SubType>
