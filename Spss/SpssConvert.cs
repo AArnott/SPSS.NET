@@ -41,7 +41,7 @@ namespace Spss
 		#endregion
 
 		private delegate void ToFileAsyncDelegate(DataTable dataTable, IEnumerable<DataRow> data,
-			 string spssSavFilename, MetadataProviderCallback fillInMetaDataCallBack);
+			 string spssSavFilename, Action<SpssVariable> fillInMetaDataCallBack);
 
 		/// <summary>
 		/// Call to convert data to SPSS format using a passed in SQL query to provide the data.
@@ -49,8 +49,8 @@ namespace Spss
 		/// <param name="dataTable">The DataTable to convert to SPSS format</param>
 		/// <param name="spssSavFilename">The fully-qualified target .SAV file to save results to</param>
 		/// <param name="fillInMetaDataCallBack">Callback function to provide per-variable metadata</param>
-		public static void ToFile(DataTable dataTable, 
-			string spssSavFilename, MetadataProviderCallback fillInMetaDataCallBack)
+		public static void ToFile(DataTable dataTable,
+			string spssSavFilename, Action<SpssVariable> fillInMetaDataCallBack)
 		{
 			ToFile(dataTable, getRowsFromTable(dataTable), spssSavFilename, fillInMetaDataCallBack);
 		}
@@ -68,7 +68,7 @@ namespace Spss
 		/// <param name="spssSavFilename">The fully-qualified target .SAV file to save results to</param>
 		/// <param name="fillInMetaDataCallBack">Callback function to provide per-variable metadata</param>
 		public static void ToFile(DataTable dataTable, IEnumerable<DataRow> data,
-			string spssSavFilename, MetadataProviderCallback fillInMetaDataCallBack)
+			string spssSavFilename, Action<SpssVariable> fillInMetaDataCallBack)
 		{
 			// Remove the file if it already exists.
 			if( File.Exists( spssSavFilename ) ) File.Delete( spssSavFilename );
@@ -104,8 +104,8 @@ namespace Spss
 		///	<returns>
 		///	Returns a handle to poll the status of the conversion.
 		///	</returns>
-		public static IAsyncResult ToFileAsync(DataTable dataTable, IEnumerable<DataRow> data, string spssSavFilename, 
-			MetadataProviderCallback fillInMetaDataCallback, EventHandler notifyDoneCallback)
+		public static IAsyncResult ToFileAsync(DataTable dataTable, IEnumerable<DataRow> data, string spssSavFilename,
+			Action<SpssVariable> fillInMetaDataCallback, EventHandler notifyDoneCallback)
 		{
 			// Spin off an asynchronous thread to do the work 
 			// Be sure to use a callback function, even if we don't care when this 
@@ -147,7 +147,7 @@ namespace Spss
 		/// A temporary file is created during this process, but is guaranteed to be removed
 		/// as the method returns.
 		/// </remarks>
-		public static MemoryStream ToStream(DataTable dataTable, IEnumerable<DataRow> data, MetadataProviderCallback fillInMetaDataCallBack)
+		public static MemoryStream ToStream(DataTable dataTable, IEnumerable<DataRow> data, Action<SpssVariable> fillInMetaDataCallBack)
 		{
 			// Create a temporary file for the SPSS data that we will generate.
 			using( TempFileCollection tfc = new TempFileCollection() )

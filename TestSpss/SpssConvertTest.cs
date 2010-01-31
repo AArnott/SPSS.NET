@@ -62,7 +62,6 @@ namespace Spss.Testing
 		[TestCleanup()]
 		public void Cleanup()
 		{
-			//  TODO: Add test cleanup code
 		}
 
 		DataTable tblTest;
@@ -107,20 +106,22 @@ namespace Spss.Testing
 			using (System.CodeDom.Compiler.TempFileCollection tfc = new System.CodeDom.Compiler.TempFileCollection())
 			{
 				SAVfilename = tfc.AddExtension("sav", true);
-				SpssConvert.ToFile(tblTest, tblTest.Select(), SAVfilename, new MetadataProviderCallback(FillInMetaData));
+				SpssConvert.ToFile(tblTest, tblTest.Select(), SAVfilename, FillInMetaData);
 				Console.WriteLine("The file with metadata is stored at: " + SAVfilename);
 			}
 		}
-		protected void FillInMetaData(VarMetaData var)
+
+		protected void FillInMetaData(SpssVariable var)
 		{
 			switch (var.Name)
 			{
 				case "ID":
+					var numericVar = (SpssNumericVariable)var;
 					var.Label = "Some ID label";
-					var[1] = "one";
-					var[2] = "two";
-					var[3] = "three";
-					var[4] = "four";
+					numericVar.ValueLabels[1] = "one";
+					numericVar.ValueLabels[2] = "two";
+					numericVar.ValueLabels[3] = "three";
+					numericVar.ValueLabels[4] = "four";
 					break;
 				case "str":
 					var.Label = "some str label";

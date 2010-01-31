@@ -17,7 +17,7 @@ Module Program
 		Console.WriteLine("Exporting a DataTable demo... (the source code is interesting)")
 		Dim dt As DataTable = SpssConvert.ToDataTable(GetFileName)
 		If File.Exists("example2.sav") Then File.Delete("example2.sav")
-		SpssConvert.ToFile(dt, "example2.sav", New Spss.MetadataProviderCallback(AddressOf MetaDataCallback))
+		SpssConvert.ToFile(dt, "example2.sav", AddressOf MetaDataCallback)
 
 		Console.WriteLine("SPSS dictionary copying demo:")
 		If File.Exists("example3.sav") Then File.Delete("example3.sav")
@@ -74,7 +74,7 @@ Module Program
 		case2("v4") = DateTime.Parse("12/31/2002")
 		case2.Commit()
 	End Sub
-	Sub MetaDataCallback(ByVal var As VarMetaData)
+	Sub MetaDataCallback(ByVal var As SpssVariable)
 		' In a real application, you would probably draw this metadata out of 
 		' some repository of your own rather than hard-coding the labels.
 		Select Case var.Name
@@ -85,8 +85,9 @@ Module Program
 			Case "v3"
 				var.Label = "What is your gender?"
 				' Set the value labels
-				var(1) = "Male"
-				var(2) = "Female"
+				Dim numericVar As SpssNumericVariable = CType(var, SpssNumericVariable)
+				numericVar.ValueLabels(1) = "Male"
+				numericVar.ValueLabels(2) = "Female"
 			Case "v4"
 				var.Label = "What is your birthdate?"
 		End Select

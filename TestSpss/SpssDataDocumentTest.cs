@@ -40,7 +40,6 @@ namespace Spss.Testing
 		public void Initialize()
 		{
 			Console.WriteLine(Directory.GetCurrentDirectory());
-			//  TODO: Add test initialization code
 		}
 
 		/// <summary>
@@ -51,7 +50,6 @@ namespace Spss.Testing
 		[TestCleanup()]
 		public void Cleanup()
 		{
-			//  TODO: Add test cleanup code
 		}
 
 

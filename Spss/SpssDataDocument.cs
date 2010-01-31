@@ -8,15 +8,6 @@ using System.Diagnostics;
 namespace Spss
 {
 	/// <summary>
-	/// The delegate for the metadata callback method.
-	/// The method that implements this callback should
-	/// fill the provided <see cref="VarMetaData"/> object
-	/// with metadata such as variable label and 
-	/// response labels.
-	/// </summary>
-	public delegate void MetadataProviderCallback( VarMetaData var );
-
-	/// <summary>
 	/// The three levels of file access supported by SPSS.
 	/// </summary>
 	public enum SpssFileAccess

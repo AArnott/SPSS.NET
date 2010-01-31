@@ -220,24 +220,18 @@ namespace Spss
 		/// to put into the SPSS data document, that is not included in a DataTable.
 		/// Optional.
 		/// </param>
-		public void ImportSchema(DataTable table, MetadataProviderCallback fillInMetadataCallback) 
-		{
-			foreach( DataColumn column in table.Columns ) 
-			{
-				try 
-				{
+		public void ImportSchema(DataTable table, Action<SpssVariable> metadataCallback) {
+			foreach (DataColumn column in table.Columns) {
+				try {
 					SpssVariable var;
-					if( column.DataType == typeof(string) ) 
-					{
+					if (column.DataType == typeof(string)) {
 						var = new SpssStringVariable();
 						((SpssStringVariable)var).Length = (column.MaxLength < 0 || column.MaxLength > SpssSafeWrapper.SPSS_MAX_LONGSTRING) ? SpssSafeWrapper.SPSS_MAX_LONGSTRING : column.MaxLength;
-					}
-					else if( column.DataType == typeof(DateTime) ) 
+					} else if (column.DataType == typeof(DateTime))
 						var = new SpssDateVariable();
-					else 
-					{
+					else {
 						var = new SpssNumericVariable();
-						if( column.DataType == typeof(float) || column.DataType == typeof(double) )
+						if (column.DataType == typeof(float) || column.DataType == typeof(double))
 							((SpssNumericVariable)var).DecimalPlaces = 2;
 					}
 
@@ -245,24 +239,19 @@ namespace Spss
 					Add(var);
 
 					// Provide opportunity for callback function to fill in variable-specific metadata
-					if( fillInMetadataCallback != null && var != null ) 
-						try 
-						{
-							VarMetaData varMetaData = new VarMetaData( var, column.ColumnName );
-							fillInMetadataCallback( varMetaData );
-							varMetaData.ApplyToSpssVar();
+					if (metadataCallback != null) {
+						try {
+							metadataCallback(var);
+						} catch (Exception ex) {
+							throw new ApplicationException("Exception in metadata filler callback function on column " + column.ColumnName + ".", ex);
 						}
-						catch( Exception ex ) 
-						{
-							throw new ApplicationException("Exception in metadata filler callback function on column " + column.ColumnName + ".",ex );
-						}
-				}
-				catch( Exception ex ) 
-				{
+					}
+				} catch (Exception ex) {
 					throw new ApplicationException("Error adding column " + column.ColumnName + " schema information to the SPSS .SAV data file.", ex);
 				}
 			}
 		}
+
 		/// <summary>
 		/// Defines the variables in the SPSS data file so that they mirror
 		/// those defined in a <see cref="DataTable"/>.

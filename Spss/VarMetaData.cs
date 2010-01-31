@@ -17,8 +17,6 @@ namespace Spss
 			this.var = var;
 		}
 
-
-		#region Attributes
 		/// <summary>
 		/// The variable label.
 		/// </summary>
@@ -39,9 +37,7 @@ namespace Spss
 				base.Label = value;
 			}
 		}
-		#endregion
 
-		#region Operations
 		internal void ApplyToSpssVar()
 		{
 			var.Label = Label == null ? "" : Label;
@@ -51,6 +47,5 @@ namespace Spss
 				else if( var is SpssStringVariable )
 					((SpssStringVariable)var).ValueLabels.Add(key, ValueLabels[key]);
 		}
-		#endregion
 	}
 }
