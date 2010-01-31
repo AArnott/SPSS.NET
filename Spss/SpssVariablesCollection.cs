@@ -220,7 +220,7 @@ namespace Spss
 		/// to put into the SPSS data document, that is not included in a DataTable.
 		/// Optional.
 		/// </param>
-		public void ImportSchema(DataTable table, Action<SpssVariable> metadataCallback) {
+		public void ImportSchema(DataTable table, Action<SpssVariable> fillInMetadataCallback) {
 			foreach (DataColumn column in table.Columns) {
 				try {
 					SpssVariable var;
@@ -239,9 +239,9 @@ namespace Spss
 					Add(var);
 
 					// Provide opportunity for callback function to fill in variable-specific metadata
-					if (metadataCallback != null) {
+					if (fillInMetadataCallback != null) {
 						try {
-							metadataCallback(var);
+							fillInMetadataCallback(var);
 						} catch (Exception ex) {
 							throw new ApplicationException("Exception in metadata filler callback function on column " + column.ColumnName + ".", ex);
 						}
