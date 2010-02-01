@@ -1,5 +1,11 @@
-namespace Spss
-{
+//-----------------------------------------------------------------------
+// <copyright file="SpssCase.cs" company="Andrew Arnott">
+//     Copyright (c) Andrew Arnott. All rights reserved.
+//     Copyright (c) Brigham Young University
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace Spss {
 	using System;
 
 	/// <summary>
@@ -10,72 +16,57 @@ namespace Spss
 	/// In SPSS a case is analogous to a <see cref="System.Data.DataRow"/> 
 	/// in ADO.NET.
 	/// </remarks>
-	public class SpssCase
-	{
+	public class SpssCase {
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssCase"/> class.
 		/// </summary>
-		protected internal SpssCase(SpssCasesCollection cases, int position)
-		{
-			this.cases = cases;
-			this.position = position;
+		protected internal SpssCase(SpssCasesCollection cases, int position) {
+			this.Cases = cases;
+			this.Position = position;
+
 			// Clear out all variables explicitly to prevent SPSS from assuming
 			// garbage characters in those data areas.
-			if( cases.IsAppendOnly ) ClearData();
-		}
-
-		private readonly SpssCasesCollection cases;
-		/// <summary>
-		/// Gets the containing <see cref="SpssCasesCollection"/>.
-		/// </summary>
-		protected SpssCasesCollection Cases { get { return cases; } }
-		/// <summary>
-		/// Gets the variables in the document.
-		/// </summary>
-		protected SpssVariablesCollection Variables
-		{
-			get
-			{
-				return Cases.Document.Variables;
+			if (cases.IsAppendOnly) {
+				this.ClearData();
 			}
 		}
-		private readonly int position;
+
 		/// <summary>
 		/// The index of the row within the data file.
 		/// </summary>
-		public int Position { get { return position; } }
+		public int Position { get; private set; }
+
 		/// <summary>
-		/// Gets/sets the value of some variable on this row.
+		/// Gets the containing <see cref="SpssCasesCollection"/>.
 		/// </summary>
-		public object this [string varName]
-		{
-			get
-			{
-				EnsureActiveCase();
-				
-				return Variables[varName].Value;
-			}
-			set
-			{
-				EnsureActiveCase();
-				
-				Variables[varName].Value = value;
+		protected SpssCasesCollection Cases { get; private set; }
+
+		/// <summary>
+		/// Gets the variables in the document.
+		/// </summary>
+		protected SpssVariablesCollection Variables {
+			get {
+				return Cases.Document.Variables;
 			}
 		}
 
 		/// <summary>
-		/// Ensures that the SPSS data file is currently pointing at this case's data.
+		/// Gets or sets the value of some variable on this row.
 		/// </summary>
-		protected void EnsureActiveCase()
-		{
-			if( Position != Cases.Position )
-			{
-				if( Cases.IsAppendOnly )
-					throw new InvalidOperationException("This case is no longer the one being appended.");
+		public object this[string varName] {
+			get {
+				this.EnsureActiveCase();
 
-				Cases.Position = Position;
+				return this.Variables[varName].Value;
+			}
+
+			set {
+				this.EnsureActiveCase();
+
+				this.Variables[varName].Value = value;
 			}
 		}
+
 		/// <summary>
 		/// Writes a newly added row to the data file.
 		/// </summary>
@@ -98,13 +89,15 @@ namespace Spss
 		///	}
 		/// </code>
 		/// </example>
-		public void Commit() 
-		{
-			Cases.Document.EnsureNotClosed();
-			if( Cases.IsReadOnly ) throw new InvalidOperationException("Not available when in read-only mode.");
-			SpssSafeWrapper.spssCommitCaseRecord(Cases.FileHandle);
+		public void Commit() {
+			this.Cases.Document.EnsureNotClosed();
+			if (this.Cases.IsReadOnly) {
+				throw new InvalidOperationException("Not available when in read-only mode.");
+			}
+			SpssSafeWrapper.spssCommitCaseRecord(this.Cases.FileHandle);
 			this.Cases.OnCaseCommitted();
 		}
+
 		/// <summary>
 		/// Clears every variable of data for this row.
 		/// </summary>
@@ -113,18 +106,30 @@ namespace Spss
 		/// prevent garbage from being placed into SPSS for the values that are never
 		/// explicitly set otherwise.
 		/// </remarks>
-		public void ClearData()
-		{
-			foreach( SpssVariable var in Cases.Document.Variables )
+		public void ClearData() {
+			foreach (SpssVariable var in Cases.Document.Variables)
 				this[var.Name] = null;
 		}
-		public object GetDBValue(string varName)
-		{
+
+		public object GetDBValue(string varName) {
 			return (this[varName] != null) ? this[varName] : DBNull.Value;
 		}
-		public void SetDBValue(string varName, object value)
-		{
+
+		public void SetDBValue(string varName, object value) {
 			this[varName] = (value != DBNull.Value) ? value : null;
+		}
+
+		/// <summary>
+		/// Ensures that the SPSS data file is currently pointing at this case's data.
+		/// </summary>
+		protected void EnsureActiveCase() {
+			if (this.Position != this.Cases.Position) {
+				if (this.Cases.IsAppendOnly) {
+					throw new InvalidOperationException("This case is no longer the one being appended.");
+				}
+
+				this.Cases.Position = this.Position;
+			}
 		}
 	}
 }

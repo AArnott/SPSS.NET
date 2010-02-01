@@ -1,15 +1,19 @@
-using System;
+//-----------------------------------------------------------------------
+// <copyright file="SpssDateVariable.cs" company="Andrew Arnott">
+//     Copyright (c) Andrew Arnott. All rights reserved.
+//     Copyright (c) Brigham Young University
+// </copyright>
+//-----------------------------------------------------------------------
 
-namespace Spss
-{
+namespace Spss {
+	using System;
+
 	/// <summary>
 	/// Represents an SPSS data variable that stores date information.
 	/// </summary>
-	public class SpssDateVariable : SpssVariable
-	{
-		#region Construction
+	public class SpssDateVariable : SpssVariable {
 		/// <summary>
-		/// Creates an instance of the <see cref="SpssDateVariable"/> class,
+		/// Initializes a new instance of the <see cref="SpssDateVariable"/> class
 		/// for use when defining a new variable.
 		/// </summary>
 		public SpssDateVariable() {
@@ -19,7 +23,7 @@ namespace Spss
 		}
 
 		/// <summary>
-		/// Creates an instance of the <see cref="SpssDateVariable"/> class,
+		/// Initializes a new instance of the <see cref="SpssDateVariable"/> class.
 		/// for use in loading variables from an existing SPSS data file.
 		/// </summary>
 		/// <param name="variables">The containing collection.</param>
@@ -33,34 +37,31 @@ namespace Spss
 		protected internal SpssDateVariable(SpssVariablesCollection variables, string varName, FormatTypeCode writeFormat, int writeDecimal, int writeWidth, FormatTypeCode printFormat, int printDecimal, int printWidth)
 			: base(variables, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth) {
 		}
-		#endregion
 
-		#region Attributes
 		/// <summary>
 		/// Gets the SPSS type for the variable.
 		/// </summary>
-		public override int SpssType
-		{
-			get
-			{
+		public override int SpssType {
+			get {
 				return 0; // date variables are numerics
 			}
 		}
+
 		/// <summary>
-		/// Gets/sets the data value of this variable within a specific case.
+		/// Gets or sets the data value of this variable within a specific case.
 		/// </summary>
 		/// <remarks>
 		/// Null values are translated to and from 
 		/// <see cref="SpssDataDocument.SystemMissingValue"/> transparently.
 		/// </remarks>
-		internal new DateTime? Value
-		{
-			get
-			{
+		internal new DateTime? Value {
+			get {
 				double v;
 				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumeric(FileHandle, Handle, out v), "SpssSafeWrapper");
 
-				if( v == SpssDataDocument.SystemMissingValue ) return null;
+				if (v == SpssDataDocument.SystemMissingValue) {
+					return null;
+				}
 
 				int sD, sM, sY, sd, sh, sm, ss, sms;
 				double smsDbl;
@@ -70,13 +71,12 @@ namespace Spss
 				sms = (int)((smsDbl % 1.0) * 1000);
 				return new DateTime(sY, sM, sD, sh, sm, ss, sms);
 			}
-			set
-			{
+
+			set {
 				double d, t = 0;
-				if( !value.HasValue )
+				if (!value.HasValue) {
 					d = SpssDataDocument.SystemMissingValue;
-				else
-				{
+				} else {
 					SpssSafeWrapper.spssConvertDate(value.Value.Day, value.Value.Month, value.Value.Year, out d);
 					double seconds = (double)(value.Value.Second) + (value.Value.Millisecond / 1000.0);
 					SpssSafeWrapper.spssConvertTime(0, value.Value.Hour, value.Value.Minute, seconds, out t);
@@ -85,20 +85,8 @@ namespace Spss
 				SpssSafeWrapper.spssSetValueNumeric(FileHandle, Handle, d + t);
 			}
 		}
-		#endregion
 
-		/// <summary>
-		/// Updates the changed attributes of the variable within SPSS.
-		/// </summary>
-		protected override void Update()
-		{
-			base.Update ();
-
-			if( !IsInCollection ) return; // we'll get to do this later
-		}
-
-		public override SpssVariable Clone()
-		{
+		public override SpssVariable Clone() {
 			SpssDateVariable other = new SpssDateVariable();
 			CloneTo(other);
 			return other;

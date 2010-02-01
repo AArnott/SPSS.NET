@@ -1,6 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="SpssSafeHandle.cs" company="Andrew Arnott">
 //     Copyright (c) Andrew Arnott. All rights reserved.
+//     Copyright (c) Brigham Young University
 // </copyright>
 //-----------------------------------------------------------------------
 

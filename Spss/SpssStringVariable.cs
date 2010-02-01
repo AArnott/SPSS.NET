@@ -1,8 +1,15 @@
-using System;
-using System.Collections.Generic;
+//-----------------------------------------------------------------------
+// <copyright file="SpssStringVariable.cs" company="Andrew Arnott">
+//     Copyright (c) Andrew Arnott. All rights reserved.
+//     Copyright (c) Brigham Young University
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace Spss
 {
+	using System;
+	using System.Collections.Generic;
+
 	/// <summary>
 	/// Represents an SPSS data variable that stores character string information.
 	/// </summary>
@@ -66,7 +73,7 @@ namespace Spss
 			}
 		}
 		/// <summary>
-		/// Gets/sets the data value of this variable within a specific case.
+		/// Gets or sets the data value of this variable within a specific case.
 		/// </summary>
 		internal new string Value
 		{

@@ -24,7 +24,7 @@ namespace Spss
 		protected new SpssStringVariable Variable { get { return (SpssStringVariable) base.Variable; } }
 	
 		/// <summary>
-		/// Gets whether this string variable can have value labels.
+		/// Gets a value indicating whether this string variable can have value labels.
 		/// </summary>
 		/// <remarks>
 		/// SPSS only supports value labels on strings within

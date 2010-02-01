@@ -240,73 +240,88 @@ namespace Spss
 		#endregion
 
 		#region Warning codes returned by functions
+
 		/// <summary>
 		/// Label length exceeds 64, truncated and used (warning)
 		/// </summary>
 		SPSS_EXC_LEN64 = -1,
+
 		/// <summary>
 		/// Variable label’s length exceeds 120, truncated and
 		/// used (warning)
 		/// </summary>
 		SPSS_EXC_LEN120 = -2,
+
 		/// <summary>
 		/// ... (warning)
 		/// </summary>
 		SPSS_EXC_VARLABEL = -2,
+
 		/// <summary>
 		/// Label length exceeds 60, truncated and used (warning)
 		/// </summary>
 		SPSS_EXC_LEN60 = -4,
+
 		/// <summary>
 		/// ... (warning)
 		/// </summary>
 		SPSS_EXC_VALLABEL = -4,
+
 		/// <summary>
 		/// End of the file reached, no more cases (warning)
 		/// </summary>
 		SPSS_FILE_END = -5,
+
 		/// <summary>
 		/// There is no variable sets information in the file (warning)
 		/// </summary>
 		SPSS_NO_VARSETS = -6,
+
 		/// <summary>
 		/// The variable sets information is empty (warning)
 		/// </summary>
 		SPSS_EMPTY_VARSETS = -7,
+
 		/// <summary>
 		/// The variable has no labels (warning) (warning)
 		/// </summary>
 		SPSS_NO_LABELS = -8,
+
 		/// <summary>
 		/// There is no label for the given value (warning)
 		/// </summary>
 		SPSS_NO_LABEL = -9,
+
 		/// <summary>
 		/// A case weight variable has not been defined for this file (warning)
 		/// </summary>
 		SPSS_NO_CASEWGT = -10,
+
 		/// <summary>
 		/// There is no TRENDS date variable information in the file (warning)
 		/// </summary>
 		SPSS_NO_DATEINFO = -11,
+
 		/// <summary>
 		/// No definitions on the file (warning)
 		/// </summary>
 		SPSS_NO_MULTRESP = -12,
+
 		/// <summary>
 		/// The string contains no definitions (warning)
 		/// </summary>
 		SPSS_EMPTY_MULTRESP = -13,
+
 		/// <summary>
 		/// File contains no DEW information (warning)
 		/// </summary>
 		SPSS_NO_DEW = -14,
+
 		/// <summary>
 		/// Zero bytes to be written (warning)
 		/// </summary>
 		SPSS_EMPTY_DEW = -15,
 		#endregion
-
 	}
 
 	/// <summary>
@@ -318,23 +333,28 @@ namespace Spss
 		/// Indicates that no discrete missing values will be defined.
 		/// </summary>
 		SPSS_NO_MISSVAL = 0,
+
 		/// <summary>
 		/// Indicates that 1 discrete missing values will be defined.
 		/// </summary>
 		SPSS_ONE_MISSVAL = 1,
+
 		/// <summary>
 		/// Indicates that 2 discrete missing values will be defined.
 		/// </summary>
 		SPSS_TWO_MISSVAL = 2,
+
 		/// <summary>
 		/// Indicates that 3 discrete missing values will be defined.
 		/// </summary>
 		SPSS_THREE_MISSVAL = 3,
+
 		/// <summary>
 		/// missingVal1 and missingVal2 are taken as the upper and lower limits, 
 		/// respectively, of the range, and missingVal3 is ignored
 		/// </summary>
 		SPSS_MISS_RANGE = -2,
+
 		/// <summary>
 		/// missingval1 and missingVal2 are taken as limits of the range and missingVal3 is taken
 		/// as the discrete missing value.
@@ -351,138 +371,172 @@ namespace Spss
 		/// Alphanumeric
 		/// </summary>
 		SPSS_FMT_A = 1,
+
 		/// <summary>
 		/// Alphanumeric hexadecimal
 		/// </summary>
 		SPSS_FMT_AHEX = 2,
+
 		/// <summary>
 		/// F Format with commas
 		/// </summary>
 		SPSS_FMT_COMMA = 3,
+
 		/// <summary>
 		/// Commas and floating dollar sign
 		/// </summary>
 		SPSS_FMT_DOLLAR = 4,
+
 		/// <summary>
 		/// Default Numeric Format
 		/// </summary>
 		SPSS_FMT_F = 5,
+
 		/// <summary>
 		/// Int16 binary
 		/// </summary>
 		SPSS_FMT_IB = 6,
+
 		/// <summary>
 		/// Positive Int16 binary - hex
 		/// </summary>
 		SPSS_FMT_PIBHEX = 7,
+
 		/// <summary>
 		/// Packed decimal
 		/// </summary>
 		SPSS_FMT_P = 8,
+
 		/// <summary>
 		/// Positive Int16 binary unsigned
 		/// </summary>
 		SPSS_FMT_PIB = 9,
+
 		/// <summary>
 		/// Positive Int16 binary unsigned
 		/// </summary>
 		SPSS_FMT_PK = 10,
+
 		/// <summary>
 		/// Floating poInt32 binary
 		/// </summary>
 		SPSS_FMT_RB = 11,
+
 		/// <summary>
 		/// Floating poInt32 binary hex
 		/// </summary>
 		SPSS_FMT_RBHEX = 12,
+
 		/// <summary>
 		/// Zoned decimal
 		/// </summary>
 		SPSS_FMT_Z = 15,
+
 		/// <summary>
 		/// N Format- unsigned with leading 0s
 		/// </summary>
 		SPSS_FMT_N = 16,
+
 		/// <summary>
 		/// E Format- with explicit power of 10
 		/// </summary>
 		SPSS_FMT_E = 17,
+
 		/// <summary>
 		/// Date format dd-mmm-yyyy
 		/// </summary>
 		SPSS_FMT_DATE = 20,
+
 		/// <summary>
 		/// Time format hh:mm:ss.s
 		/// </summary>
 		SPSS_FMT_TIME = 21,
+
 		/// <summary>
 		/// Date and Time
 		/// </summary>
 		SPSS_FMT_DATE_TIME = 22,
+
 		/// <summary>
 		/// Date format dd-mmm-yyyy
 		/// </summary>
 		SPSS_FMT_ADATE = 23,
+
 		/// <summary>
 		/// Julian date - yyyyddd
 		/// </summary>
 		SPSS_FMT_JDATE = 24,
+
 		/// <summary>
 		/// Date-time dd hh:mm:ss.s
 		/// </summary>
 		SPSS_FMT_DTIME = 25,
+
 		/// <summary>
 		/// Day of the week
 		/// </summary>
 		SPSS_FMT_WKDAY = 26,
+
 		/// <summary>
 		/// Month
 		/// </summary>
 		SPSS_FMT_MONTH = 27,
+
 		/// <summary>
 		/// mmm yyyy
 		/// </summary>
 		SPSS_FMT_MOYR = 28,
+
 		/// <summary>
 		/// q Q yyyy
 		/// </summary>
 		SPSS_FMT_QYR = 29,
+
 		/// <summary>
 		/// ww WK yyyy
 		/// </summary>
 		SPSS_FMT_WKYR = 30,
+
 		/// <summary>
 		/// Percent - F followed by %
 		/// </summary>
 		SPSS_FMT_PCT = 31,
+
 		/// <summary>
 		/// Like COMMA, switching dot for comma
 		/// </summary>
 		SPSS_FMT_DOT = 32,
+
 		/// <summary>
 		/// User Programmable currency format
 		/// </summary>
 		SPSS_FMT_CCA = 33,
+
 		/// <summary>
 		/// User Programmable currency format
 		/// </summary>
 		SPSS_FMT_CCB = 34,
+
 		/// <summary>
 		/// User Programmable currency format
 		/// </summary>
 		SPSS_FMT_CCC = 35,
+
 		/// <summary>
 		/// User Programmable currency format
 		/// </summary>
 		SPSS_FMT_CCD = 36,
+
 		/// <summary>
 		/// User Programmable currency format
 		/// </summary>
 		SPSS_FMT_CCE = 37,
+
 		/// <summary>
 		/// Date in dd/mm/yyyy style
 		/// </summary>
 		SPSS_FMT_EDATE = 38,
+
 		/// <summary>
 		/// Date in yyyy/mm/dd style
 		/// </summary>
@@ -498,14 +552,17 @@ namespace Spss
 		/// Unknown
 		/// </summary>
 		SPSS_MLVL_UNK = 0,
+
 		/// <summary>
 		/// Nominal 
 		/// </summary>
 		SPSS_MLVL_NOM = 1,
+
 		/// <summary>
 		/// Ordinal
 		/// </summary>
 		SPSS_MLVL_ORD = 2,
+
 		/// <summary>
 		/// Scale (Ratio)
 		/// </summary>
@@ -520,10 +577,12 @@ namespace Spss
 		/// Left aligned
 		/// </summary>
 		SPSS_ALIGN_LEFT = 0,
+
 		/// <summary>
 		/// Right aligned
 		/// </summary>
 		SPSS_ALIGN_RIGHT = 1,
+
 		/// <summary>
 		/// Centered
 		/// </summary>
@@ -538,26 +597,32 @@ namespace Spss
 		/// Valid standard name
 		/// </summary>
 		SPSS_NAME_OK = 0,
+
 		/// <summary>
 		/// Valid scratch var name
 		/// </summary>
 		SPSS_NAME_SCRATCH = 1,
+
 		/// <summary>
 		/// Valid system var name
 		/// </summary>
 		SPSS_NAME_SYSTEM = 2,
+
 		/// <summary>
 		/// Empty or longer than SPSS_MAX_VARNAME
 		/// </summary>
 		SPSS_NAME_BADLTH = 3,
+
 		/// <summary>
 		/// Invalid character or imbedded blank
 		/// </summary>
 		SPSS_NAME_BADCHAR = 4,
+
 		/// <summary>
 		/// Name is a reserved word
 		/// </summary>
 		SPSS_NAME_RESERVED = 5,
+
 		/// <summary>
 		/// Invalid initial character
 		/// </summary>
@@ -572,50 +637,62 @@ namespace Spss
 		/// Documents (actually type 6
 		/// </summary>
 		SPSS_T7_DOCUMENTS = 0,
+
 		/// <summary>
 		/// VAX Data Entry - dictionary version
 		/// </summary>
 		SPSS_T7_VAXDE_DICT = 1,
+
 		/// <summary>
 		/// VAX Data Entry - data
 		/// </summary>
 		SPSS_T7_VAXDE_DATA = 2,
+
 		/// <summary>
 		/// Source system characteristics
 		/// </summary>
 		SPSS_T7_SOURCE = 3,
+
 		/// <summary>
 		/// Source system floating pt constants
 		/// </summary>
 		SPSS_T7_HARDCONST = 4,
+
 		/// <summary>
 		/// Variable sets
 		/// </summary>
 		SPSS_T7_VARSETS = 5,
+
 		/// <summary>
 		/// Trends date information
 		/// </summary>
 		SPSS_T7_TRENDS = 6,
+
 		/// <summary>
 		/// Multiple response groups
 		/// </summary>
 		SPSS_T7_MULTRESP = 7,
+
 		/// <summary>
 		/// Windows Data Entry data
 		/// </summary>
 		SPSS_T7_DEW_DATA = 8,
+
 		/// <summary>
 		/// TextSmart data
 		/// </summary>
 		SPSS_T7_TEXTSMART = 10,
+
 		/// <summary>
 		/// Msmt level, col width, &amp; alignment
 		/// </summary>
 		SPSS_T7_MSMTLEVEL = 11,
+
 		/// <summary>
 		/// Windows Data Entry GUID
 		/// </summary>
 		SPSS_T7_DEW_GUID = 12,
+
 		/// <summary>
 		/// Extended variable names
 		/// </summary>
@@ -642,34 +719,42 @@ namespace Spss
 	public class SpssThinWrapper
 	{
 		#region Maximum lengths of SPSS data file objects
+
 		/// <summary>
 		/// Maximum length of a variable name
 		/// </summary>
 		public const int SPSS_MAX_VARNAME = 64;  
+
 		/// <summary>
 		/// Short (compatibility) variable name.
 		/// </summary>
 		public const int SPSS_MAX_SHORTVARNAME = 8;
+
 		/// <summary>
 		/// Maximum length of a short string variable
 		/// </summary>
 		public const int SPSS_MAX_SHORTSTRING = 8;  
+
 		/// <summary>
 		/// Maximum length of a file label string
 		/// </summary>
 		public const int SPSS_MAX_IDSTRING = 64 ; 
+
 		/// <summary>
 		/// Maximum length of a long string variable
 		/// </summary>
 		public const int SPSS_MAX_LONGSTRING = 255;   
+
 		/// <summary>
 		/// Maximum length of a value label
 		/// </summary>
 		public const int SPSS_MAX_VALLABEL = 60;  
+
 		/// <summary>
 		/// Maximum length of a variable label
 		/// </summary>
 		public const int SPSS_MAX_VARLABEL = 256;   
+
 		/// <summary>
 		/// Maximum record 7 subtype
 		/// </summary>
@@ -2260,7 +2345,7 @@ namespace Spss
 		protected static extern ReturnCode spssOpenWriteCopy([MarshalAs(UnmanagedType.VBByRefStr)] ref string fileName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string dictFileName, out int handle);
  
 		/// <summary>
-		/// Gets whether a data file contains a specific "type 7" record.
+		/// Gets a value indicating whether a data file contains a specific "type 7" record.
 		/// </summary>
 		/// <param name="fromHandle">
 		/// Handle to the data file

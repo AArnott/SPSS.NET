@@ -99,11 +99,11 @@ namespace Spss
 		private bool committedThisSession = false;
 		internal bool CommittedThisSession { get { return committedThisSession; } }
 		/// <summary>
-		/// Gets whether this variable has been added to a collection yet.
+		/// Gets a value indicating whether this variable has been added to a collection yet.
 		/// </summary>
 		protected internal bool IsInCollection { get { return Variables != null; } }
 		/// <summary>
-		/// Gets whether this variable has been committed to the SPSS data file.
+		/// Gets a value indicating whether this variable has been committed to the SPSS data file.
 		/// </summary>
 		protected internal bool IsCommitted { get { return Handle >= 0; } }
 		private SpssVariablesCollection variables;
@@ -164,7 +164,7 @@ namespace Spss
 		
 		private string label = null;
 		/// <summary>
-		/// Gets/sets the variable label.
+		/// Gets or sets the variable label.
 		/// </summary>
 		public string Label
 		{
@@ -190,7 +190,7 @@ namespace Spss
 			}
 		}
 		/// <summary>
-		/// Gets/sets the data value of this variable within a specific case.
+		/// Gets or sets the data value of this variable within a specific case.
 		/// </summary>
 		internal object Value
 		{

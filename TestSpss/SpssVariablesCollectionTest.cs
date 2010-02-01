@@ -69,7 +69,7 @@ namespace Spss.Testing
 		[ExpectedException(typeof(KeyNotFoundException))]
 		public void IndexerByNameEmpty()
 		{
-			SpssVariable var = docRead.Variables[""];
+			SpssVariable var = docRead.Variables[string.Empty];
 		}
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]

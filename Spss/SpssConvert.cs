@@ -149,6 +149,7 @@ namespace Spss
 			{
 				string filename = tfc.AddExtension("sav", false);
 				ToFile(dataTable, data, filename, fillInMetaDataCallBack);
+
 				// Now read the file into memory
 				using( FileStream fs = File.OpenRead(filename) )
 				{
@@ -156,8 +157,10 @@ namespace Spss
 					int b = 0;
 					while( (b = fs.ReadByte()) >= 0 )
 						ms.WriteByte((byte)b);
+
 					// reset to start of stream.
 					ms.Position = 0;
+
 					// return the memory stream.  All temporary files will delete as we exit.
 					return ms;
 				}
@@ -224,8 +227,8 @@ namespace Spss
 
 					//variable name and its ID and then if its a numeric : its interval
 					XmlElement variable = ddi.CreateElement("ddi:var", ddiNamespace);
-					variable.SetAttribute("ID", "", nameOfVar);
-					variable.SetAttribute("name", "", nameOfVar);
+					variable.SetAttribute("ID", string.Empty, nameOfVar);
+					variable.SetAttribute("name", string.Empty, nameOfVar);
 
 					//This is the variable that holds the characteristic whether the variable has discrete or continuous interval
 					int Dec;
@@ -237,7 +240,7 @@ namespace Spss
 						} else {
 							interval = "contin";
 						}
-						variable.SetAttribute("intrvl", "", interval);
+						variable.SetAttribute("intrvl", string.Empty, interval);
 					}
 
 					//for the location width part
@@ -245,7 +248,6 @@ namespace Spss
 					int Wid = var.ColumnWidth;
 					location.SetAttribute("width", Wid.ToString());
 					variable.AppendChild(location);
-
 
 					//label of the variable is set in "varlabel" and extracted using var.Label 
 					XmlElement varLabel = ddi.CreateElement("ddi:labl", ddiNamespace);
@@ -267,10 +269,9 @@ namespace Spss
 
 						//appending the answer option to the parent "variable" node i.e. the question node
 						variable.AppendChild(answer);
+					}
 
-					}//end of the for loop
-
-					//end of extracting the response values for each variable 
+					// end of extracting the response values for each variable 
 
 					XmlElement varFormat = ddi.CreateElement("ddi:varFormat", ddiNamespace);
 
@@ -285,7 +286,9 @@ namespace Spss
 
 					nData.AppendChild(variable);
 
-				}//end of extraction of each variable and now we have put all the variable data into ndata
+				}
+				
+				//end of extraction of each variable and now we have put all the variable data into ndata
 				// Return the completed ddi file.
 				return ddi;
 			}
@@ -311,10 +314,12 @@ namespace Spss
 				using (FileStream fs = new FileStream(filename, FileMode.CreateNew))
 				{
 					int b;
-					while ((b = spssSav.ReadByte()) >= 0)
+					while ((b = spssSav.ReadByte()) >= 0) {
 						fs.WriteByte((byte)b);
+					}
 				}
 				return ToDataTable(filename);
+
 				// leaving this block will remove the temporary file automatically
 			}
 		}

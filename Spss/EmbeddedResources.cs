@@ -1,20 +1,18 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="EmbeddedResources.cs" company="Andrew Arnott">
 //     Copyright (c) Andrew Arnott. All rights reserved.
+//     Copyright (c) Brigham Young University
 //     This file comes from the Nerdbank.Tools.dll assembly.
 // </copyright>
 //-----------------------------------------------------------------------
 
 namespace Spss {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Reflection;
-	using System.IO;
 	using System.Globalization;
-	using System.Threading;
+	using System.IO;
+	using System.Reflection;
 	using System.Text.RegularExpressions;
+	using System.Threading;
 
 	internal static class EmbeddedResources {
 		public static string LoadFileFromAssemblyWithNamespace(string filename, string namespacePrefix) {
@@ -26,7 +24,7 @@ namespace Spss {
 				throw new ArgumentNullException("filename");
 			}
 			if (namespacePrefix == null) {
-				namespacePrefix = "";
+				namespacePrefix = string.Empty;
 			}
 			if (filename.Substring(0, 1) != "/") {
 				filename = "/" + filename;

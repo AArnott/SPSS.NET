@@ -1,5 +1,4 @@
-namespace Spss
-{
+namespace Spss {
 	using System;
 	using System.IO;
 	using System.Data;
@@ -12,89 +11,59 @@ namespace Spss
 	/// <summary>
 	/// Class to manage the metadata of variables in an <see cref="SpssDataDocument">SPSS data document</see>.
 	/// </summary>
-	public sealed class SpssVariablesCollection : IList<SpssVariable>
-	{
+	public sealed class SpssVariablesCollection : IList<SpssVariable> {
 		/// <summary>
 		/// The list of variables in the file, or that will shortly be committed to the file.
 		/// </summary>
 		private List<SpssVariable> variables;
-	
+
 		private KeyedCollection<string, SpssVariable> variablesLookup;
 
-		#region Construction
 		/// <summary>
-		/// Creates an instance of the <see cref="SpssVariablesCollection"/> class.
+		/// Initializes a new instance of the <see cref="SpssVariablesCollection"/> class.
 		/// </summary>
-		/// <param name="document">
-		/// The hosting SPSS data document whose variables will be managed by
-		/// this instance.
-		/// </param>
-		internal SpssVariablesCollection(SpssDataDocument document)
-		{
-			if( document == null ) throw new ArgumentNullException("document");
-			this.document = document;
-			
+		/// <param name="document">The hosting SPSS data document whose variables will be managed by
+		/// this instance.</param>
+		internal SpssVariablesCollection(SpssDataDocument document) {
+			if (document == null) {
+				throw new ArgumentNullException("document");
+			}
+
+			this.Document = document;
+
 			InitializeVariablesList();
 		}
-		private void InitializeVariablesList() {
-			Debug.Assert(FileHandle >= 0, "Must be working with an open file.");
-			int initialSize;
-			SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetNumberofVariables(FileHandle, out initialSize), "SpssSafeWrapper");
-			variables = new List<SpssVariable>(initialSize);
-			variablesLookup = new SpssVariableKeyedCollection();
-
-			string[] varNames;
-			int[] varTypes;
-			ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNames(FileHandle, out varNames, out varTypes), "spssGetVarNames", ReturnCode.SPSS_INVALID_FILE);
-			if (result == ReturnCode.SPSS_INVALID_FILE) {
-				// brand new file
-				return;
-			}
-			Debug.Assert(varNames.Length == varTypes.Length);
-			for (int i = 0; i < varNames.Length; i++)
-				Add(SpssVariable.LoadVariable(this, varNames[i], varTypes[i]));
-		}
-		#endregion
-
-		#region Indexers
 
 		/// <summary>
 		/// Gets the variable with a given name.
 		/// </summary>
-		public SpssVariable this [string varName]
-		{
+		public SpssVariable this[string varName] {
 			get { return variablesLookup[varName]; }
 		}
 
-		#endregion
-
-		#region Attributes
-		private readonly SpssDataDocument document;
 		/// <summary>
 		/// The SPSS data document whose variables are being managed.
 		/// </summary>
-		public SpssDataDocument Document { get { return document; } }
+		public SpssDataDocument Document { get; private set; }
+
 		/// <summary>
 		/// The file handle of the SPSS data document whose variables are being managed.
 		/// </summary>
-		private Int32 FileHandle
-		{
-			get
-			{
-				return Document.Handle;
-			}
+		private Int32 FileHandle {
+			get { return this.Document.Handle; }
 		}
-		/// <summary>
-		/// Gets whether a variable has been added to this document.
-		/// </summary>
-		public bool Contains(SpssVariable variable)
-		{
-			if( variable == null ) throw new ArgumentNullException("variable");
 
-			return variables.Contains( variable );
-		}
 		/// <summary>
-		/// Gets whether a variable exists in this document.
+		/// Gets a value indicating whether a variable has been added to this document.
+		/// </summary>
+		public bool Contains(SpssVariable variable) {
+			if (variable == null) throw new ArgumentNullException("variable");
+
+			return variables.Contains(variable);
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether a variable exists in this document.
 		/// </summary>
 		/// <param name="varName">
 		/// The name of the variable in question.
@@ -102,104 +71,85 @@ namespace Spss
 		/// <returns>
 		/// True if the variable already exists in the document.  False otherwise.
 		/// </returns>
-		public bool Contains(string varName)
-		{
-			if( varName == null || varName.Length == 0 ) 
+		public bool Contains(string varName) {
+			if (varName == null || varName.Length == 0)
 				throw new ArgumentNullException("varName");
 
 			return variablesLookup.Contains(varName);
 		}
+
 		/// <summary>
 		/// Gets the position of a variable.
 		/// </summary>
 		/// <returns>
 		/// The index of the variable, or -1 if not found.
 		/// </returns>
-		public int IndexOf(SpssVariable variable)
-		{
-			if( variable == null ) throw new ArgumentNullException("variable");
+		public int IndexOf(SpssVariable variable) {
+			if (variable == null) throw new ArgumentNullException("variable");
 			return variables.IndexOf(variable);
 		}
+
 		/// <summary>
 		/// Gets the position of the variable with a given name.
 		/// </summary>
 		/// <returns>
 		/// The index of the variable, or -1 if not found.
 		/// </returns>
-		public int IndexOf(string varName)
-		{
-			if( varName == null || varName.Length == 0 ) throw new ArgumentNullException("varName");
+		public int IndexOf(string varName) {
+			if (varName == null || varName.Length == 0) throw new ArgumentNullException("varName");
 			return IndexOf(variablesLookup[varName]);
 		}
-		#endregion
 
-		#region Operations
 		/// <summary>
 		/// Adds a variable to the document at a specific index.
 		/// </summary>
-		public void Insert(int index, SpssVariable variable)
-		{
-			if( variable == null ) throw new ArgumentNullException("variable");
+		public void Insert(int index, SpssVariable variable) {
+			if (variable == null) throw new ArgumentNullException("variable");
 			EnsureAuthoringDictionary();
 			variable.AddToCollection(this);
 			variablesLookup.Add(variable);
 			variables.Insert(index, variable);
 		}
+
 		/// <summary>
 		/// Adds a variable to the document.
 		/// </summary>
 		/// <returns>
 		/// The index of the newly added variable.
 		/// </returns>
-		public void Add(SpssVariable variable)
-		{
-			if( variable == null ) throw new ArgumentNullException("variable");
+		public void Add(SpssVariable variable) {
+			if (variable == null) {
+				throw new ArgumentNullException("variable");
+			}
 			EnsureAuthoringDictionary();
 			variable.AddToCollection(this);
 			variablesLookup.Add(variable);
 			variables.Add(variable);
 		}
+
 		/// <summary>
 		/// Removes a variable from the document.
 		/// </summary>
-		public bool Remove(SpssVariable variable)
-		{
-			if( variable == null ) throw new ArgumentNullException("variable");
+		public bool Remove(SpssVariable variable) {
+			if (variable == null) throw new ArgumentNullException("variable");
 			EnsureAuthoringDictionary();
 			try {
 				variable.RemoveFromCollection(this);
 			} catch (ArgumentException) {
 				return false;
 			}
-			variables.Remove( variable );
+			variables.Remove(variable);
 			variablesLookup.Remove(variable.Name);
 			return true;
 		}
 
 		/// <summary>
-		/// Writes the variables to the dictionary.
-		/// </summary>
-		internal void Commit()
-		{
-			EnsureAuthoringDictionary();
-
-			// Write the variables we have been caching into the data file.
-			foreach( SpssVariable var in this )
-				var.CommitToDictionary();
-		}
-
-		private void EnsureAuthoringDictionary()
-		{
-			Document.EnsureAuthoringDictionary();
-		}
-		/// <summary>
 		/// Copies the definition of variables from this file to another.
 		/// </summary>
-		public void CopyTo(SpssVariablesCollection other, int index)
-		{
-			if( other == null ) throw new ArgumentNullException("other");
-			if( other == this ) throw new ArgumentException("Must be a different variables collection.", "other");
-			
+		public void CopyTo(SpssVariablesCollection other, int index) {
+			if (other == null) throw new ArgumentNullException("other");
+			if (other == this) throw new ArgumentException("Must be a different variables collection.", "other");
+
 			throw new NotImplementedException();
 		}
 
@@ -254,9 +204,20 @@ namespace Spss
 		/// <param name="table">
 		/// The DataTable whose list of columns are the ones we want to copy.
 		/// </param>
-		public void ImportSchema(DataTable table) 
-		{
-			ImportSchema( table, null );
+		public void ImportSchema(DataTable table) {
+			ImportSchema(table, null);
+		}
+
+		/// <summary>
+		/// Writes the variables to the dictionary.
+		/// </summary>
+		internal void Commit() {
+			EnsureAuthoringDictionary();
+
+			// Write the variables we have been caching into the data file.
+			foreach (SpssVariable var in this) {
+				var.CommitToDictionary();
+			}
 		}
 
 		/// <summary>
@@ -277,9 +238,8 @@ namespace Spss
 		/// string is exactly the allowed length for a variable name.
 		/// The process is not guaranteed to produce a unique variable name.
 		/// </remarks>
-		internal string GenerateColumnName(string colName)  
-		{
-			if( colName.Length > SpssThinWrapper.SPSS_MAX_VARNAME )
+		internal string GenerateColumnName(string colName) {
+			if (colName.Length > SpssThinWrapper.SPSS_MAX_VARNAME)
 				colName = colName.Substring(0, SpssThinWrapper.SPSS_MAX_VARNAME / 2) + colName.Substring(colName.Length - SpssThinWrapper.SPSS_MAX_VARNAME / 2);
 			return colName;
 		}
@@ -288,12 +248,34 @@ namespace Spss
 		/// Called when a <see cref="SpssVariable.Name"/> changes so that the lookup
 		/// table can be updated.
 		/// </summary>
-		internal void ColumnNameUpdated(SpssVariable variable, string oldName)
-		{
+		internal void ColumnNameUpdated(SpssVariable variable, string oldName) {
 			variablesLookup.Remove(oldName);
 			variablesLookup.Add(variable);
 		}
-		#endregion
+
+		private void EnsureAuthoringDictionary() {
+			Document.EnsureAuthoringDictionary();
+		}
+
+		private void InitializeVariablesList() {
+			Debug.Assert(FileHandle >= 0, "Must be working with an open file.");
+			int initialSize;
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetNumberofVariables(FileHandle, out initialSize), "SpssSafeWrapper");
+			variables = new List<SpssVariable>(initialSize);
+			variablesLookup = new SpssVariableKeyedCollection();
+
+			string[] varNames;
+			int[] varTypes;
+			ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNames(FileHandle, out varNames, out varTypes), "spssGetVarNames", ReturnCode.SPSS_INVALID_FILE);
+			if (result == ReturnCode.SPSS_INVALID_FILE) {
+				// brand new file
+				return;
+			}
+			Debug.Assert(varNames.Length == varTypes.Length);
+			for (int i = 0; i < varNames.Length; i++) {
+				this.Add(SpssVariable.LoadVariable(this, varNames[i], varTypes[i]));
+			}
+		}
 
 		#region IList<SpssVariable> Members
 

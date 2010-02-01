@@ -1,9 +1,8 @@
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
+namespace Spss {
+	using System;
+	using System.Diagnostics;
+	using System.Collections.Generic;
 
-namespace Spss
-{
 	/// <summary>
 	/// Represents an SPSS data variable that stores numeric information.
 	/// </summary>
@@ -11,14 +10,18 @@ namespace Spss
 	/// Both integer and floating point numbers are handled through this
 	/// class.
 	/// </remarks>
-	public class SpssNumericVariable : SpssVariable
-	{
+	public class SpssNumericVariable : SpssVariable {
+		private const int DecimalPlacesDefault = 0;
+
+		private int decimalPlaces = -1;
+
+		private readonly SpssNumericVariableValueLabelsDictionary valueLabels;
+
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssNumericVariable"/> class,
 		/// for use when defining a new variable.
 		/// </summary>
-		public SpssNumericVariable()
-		{
+		public SpssNumericVariable() {
 			this.valueLabels = new SpssNumericVariableValueLabelsDictionary(this);
 			this.WriteFormat = this.PrintFormat = FormatTypeCode.SPSS_FMT_F;
 			this.WriteDecimal = this.PrintDecimal = DecimalPlacesDefault;
@@ -42,31 +45,23 @@ namespace Spss
 			this.valueLabels = new SpssNumericVariableValueLabelsDictionary(this);
 		}
 
-		#region Attributes
 		/// <summary>
 		/// Gets the SPSS type for the variable.
 		/// </summary>
-		public override int SpssType
-		{
-			get
-			{
+		public override int SpssType {
+			get {
 				return 0; // 0 = numeric to SPSS
 			}
 		}
 
-		private const int DecimalPlacesDefault = 0;
-		private int decimalPlaces = -1;
 		/// <summary>
 		/// The number of decimal places to reserve for the variable.
 		/// </summary>
-		public int DecimalPlaces
-		{
-			get
-			{
+		public int DecimalPlaces {
+			get {
 				// If this variable was read from an existing file, and 
 				// decimal places has not yet been retrieved, get it.
-				if( decimalPlaces < 0 && IsCommitted )
-				{
+				if (decimalPlaces < 0 && IsCommitted) {
 					FormatTypeCode code;
 					int width;
 					// just throw away code and width
@@ -74,14 +69,12 @@ namespace Spss
 				}
 				return decimalPlaces >= 0 ? decimalPlaces : DecimalPlacesDefault;
 			}
-			set
-			{
+
+			set {
 				decimalPlaces = value;
 				Update();
 			}
 		}
-
-		private readonly SpssNumericVariableValueLabelsDictionary valueLabels;
 
 		/// <summary>
 		/// The set of value labels (response values and labels) that are defined.
@@ -91,52 +84,47 @@ namespace Spss
 		}
 
 		/// <summary>
-		/// Gets/sets the data value of this variable within a specific case.
+		/// Gets or sets the data value of this variable within a specific case.
 		/// </summary>
 		/// <remarks>
 		/// Null values are translated to and from 
 		/// <see cref="SpssDataDocument.SystemMissingValue"/> transparently.
 		/// </remarks>
-		internal new double? Value
-		{
-			get
-			{
+		internal new double? Value {
+			get {
 				double v;
 				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumeric(FileHandle, Handle, out v), "SpssSafeWrapper");
-				if( v == SpssDataDocument.SystemMissingValue )
+				if (v == SpssDataDocument.SystemMissingValue)
 					return null;
 				return v;
 			}
-			set
-			{
-				if( !value.HasValue ) value = SpssDataDocument.SystemMissingValue;
+
+			set {
+				if (!value.HasValue) value = SpssDataDocument.SystemMissingValue;
 				SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetValueNumeric(FileHandle, Handle, value.Value), "SpssSafeWrapper");
 			}
 		}
 
-		#endregion
-
 		/// <summary>
 		/// Updates details of the variable.
 		/// </summary>
-		protected override void Update()
-		{
+		protected override void Update() {
 			base.Update();
 
-			if( !IsInCollection ) return; // we'll get to do this later
+			if (!IsInCollection) {
+				return; // we'll get to do this later
+			}
 
 			this.valueLabels.Update();
 		}
 
-		public override SpssVariable Clone()
-		{
+		public override SpssVariable Clone() {
 			SpssNumericVariable other = new SpssNumericVariable();
 			CloneTo(other);
 			return other;
 		}
 
-		protected override void CloneTo(SpssVariable spssVar)
-		{
+		protected override void CloneTo(SpssVariable spssVar) {
 			base.CloneTo(spssVar);
 			SpssNumericVariable other = spssVar as SpssNumericVariable;
 			if (other == null)
