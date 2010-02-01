@@ -7,9 +7,9 @@
 
 	[TestClass]
 	public class SpssTextFileAdapterTest {
-		private const string VariablesTableTextFormat = @"Name	Label	Width	Length	PrintFormat	PrintDecimal	PrintWidth	WriteFormat	WriteDecimal	WriteWidth
-v1	What is your age?	3	0	5	0	3	5	0	3
-v2	What is your name?	15	15	1	0	15	1	0	15
+		private const string VariablesTableTextFormat = @"Name	Label	Width	Length	PrintFormat	PrintDecimal	PrintWidth	WriteFormat	WriteDecimal	WriteWidth	MissingValue1	MissingValue2	MissingValue3	MissingFormatCode
+v1	What is your age?	3	0	5	0	3	5	0	3				0
+v2	What is your name?	15	15	1	0	15	1	0	15				0
 ";
 
 		/// <summary>
@@ -56,8 +56,8 @@ v2	What is your name?	15	15	1	0	15	1	0	15
 
 		private static SpssDataSet.VariablesDataTable GetVariablesDataTable() {
 			var dataTable = new SpssDataSet.VariablesDataTable();
-			dataTable.AddVariablesRow("v1", "What is your age?", 3, 0, FormatTypeCode.SPSS_FMT_F, 0, 3, FormatTypeCode.SPSS_FMT_F, 0, 3);
-			dataTable.AddVariablesRow("v2", "What is your name?", 15, 15, FormatTypeCode.SPSS_FMT_A, 0, 15, FormatTypeCode.SPSS_FMT_A, 0, 15);
+			dataTable.AddVariablesRow("v1", "What is your age?", 3, 0, FormatTypeCode.SPSS_FMT_F, 0, 3, FormatTypeCode.SPSS_FMT_F, 0, 3, string.Empty, string.Empty, string.Empty, MissingValueFormatCode.SPSS_NO_MISSVAL);
+			dataTable.AddVariablesRow("v2", "What is your name?", 15, 15, FormatTypeCode.SPSS_FMT_A, 0, 15, FormatTypeCode.SPSS_FMT_A, 0, 15, string.Empty, string.Empty, string.Empty, MissingValueFormatCode.SPSS_NO_MISSVAL);
 			return dataTable;
 		}
 	}

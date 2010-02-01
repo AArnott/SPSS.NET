@@ -1131,7 +1131,7 @@ namespace Spss
 		/// Variable name.
 		/// </param>
 		/// <param name="missingFormat">
-		/// Missing format code.
+		/// The number of missing values (0-3) actually supplied.
 		/// </param>
 		/// <param name="missingVal1">
 		/// First missing value.
