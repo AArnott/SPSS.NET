@@ -2,6 +2,7 @@ namespace Spss {
 	using System;
 	using System.Diagnostics;
 	using System.Collections.Generic;
+	using System.Linq;
 
 	/// <summary>
 	/// Represents an SPSS data variable that stores numeric information.
@@ -26,6 +27,7 @@ namespace Spss {
 			this.WriteFormat = this.PrintFormat = FormatTypeCode.SPSS_FMT_F;
 			this.WriteDecimal = this.PrintDecimal = DecimalPlacesDefault;
 			this.WriteWidth = this.PrintWidth = ColumnWidthDefault;
+			this.MissingValues = new List<double>(3);
 		}
 
 		/// <summary>
@@ -43,7 +45,24 @@ namespace Spss {
 		protected internal SpssNumericVariable(SpssVariablesCollection variables, string varName, FormatTypeCode writeFormat, int writeDecimal, int writeWidth, FormatTypeCode printFormat, int printDecimal, int printWidth)
 			: base(variables, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth) {
 			this.valueLabels = new SpssNumericVariableValueLabelsDictionary(this);
+
+			MissingValueFormatCode formatCode;
+			double[] missingValues = new double[3];
+			ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNMissingValues(this.FileHandle, this.Name, out formatCode, out missingValues[0], out missingValues[1], out missingValues[2]), "spssGetVarNMissingValues");
+			this.MissingValueFormat = formatCode;
+			this.MissingValues = new List<double>(missingValues.Take(Math.Abs((int)formatCode)));
 		}
+
+		/// <summary>
+		/// Gets or sets the missing values for this variable.
+		/// </summary>
+		/// <value>The missing values.</value>
+		/// <remarks>
+		/// A maximum of three maximum values may be supplied.
+		/// </remarks>
+		public IList<double> MissingValues { get; private set; }
+
+		public MissingValueFormatCode MissingValueFormat { get; set; }
 
 		/// <summary>
 		/// Gets the SPSS type for the variable.
@@ -116,6 +135,15 @@ namespace Spss {
 			}
 
 			this.valueLabels.Update();
+			double[] missingValues = new double[3];
+			this.MissingValues.Take(missingValues.Length).ToArray().CopyTo(missingValues, 0);
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarNMissingValues(
+				this.FileHandle,
+				this.Name,
+				this.MissingValueFormat,
+				missingValues[0],
+				missingValues[1],
+				missingValues[2]), "spssSetVarNMissingValues");
 		}
 
 		public override SpssVariable Clone() {

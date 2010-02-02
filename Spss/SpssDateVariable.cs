@@ -7,6 +7,8 @@
 
 namespace Spss {
 	using System;
+	using System.Collections.Generic;
+	using System.Linq;
 
 	/// <summary>
 	/// Represents an SPSS data variable that stores date information.
@@ -20,6 +22,7 @@ namespace Spss {
 			this.WriteFormat = this.PrintFormat = FormatTypeCode.SPSS_FMT_DATE_TIME;
 			this.WriteDecimal = this.PrintDecimal = 4;
 			this.WriteWidth = this.PrintWidth = 28;
+			this.MissingValues = new List<DateTime>(3);
 		}
 
 		/// <summary>
@@ -36,7 +39,24 @@ namespace Spss {
 		/// <param name="printWidth">Width of the print.</param>
 		protected internal SpssDateVariable(SpssVariablesCollection variables, string varName, FormatTypeCode writeFormat, int writeDecimal, int writeWidth, FormatTypeCode printFormat, int printDecimal, int printWidth)
 			: base(variables, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth) {
+
+			MissingValueFormatCode formatCode;
+			double[] missingValues = new double[3];
+			ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNMissingValues(this.FileHandle, this.Name, out formatCode, out missingValues[0], out missingValues[1], out missingValues[2]), "spssGetVarNMissingValues");
+			this.MissingValueFormat = formatCode;
+			this.MissingValues = new List<DateTime>(missingValues.Take(Math.Abs((int)formatCode)).Select(v => ConvertDoubleToDateTime(v)));
 		}
+
+		/// <summary>
+		/// Gets or sets the missing values for this variable.
+		/// </summary>
+		/// <value>The missing values.</value>
+		/// <remarks>
+		/// A maximum of three maximum values may be supplied.
+		/// </remarks>
+		public IList<DateTime> MissingValues { get; private set; }
+
+		public MissingValueFormatCode MissingValueFormat { get; set; }
 
 		/// <summary>
 		/// Gets the SPSS type for the variable.
@@ -58,31 +78,21 @@ namespace Spss {
 			get {
 				double v;
 				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumeric(FileHandle, Handle, out v), "SpssSafeWrapper");
-
 				if (v == SpssDataDocument.SystemMissingValue) {
 					return null;
 				}
 
-				int sD, sM, sY, sd, sh, sm, ss, sms;
-				double smsDbl;
-				SpssSafeWrapper.spssConvertSPSSDate(out sD, out sM, out sY, v);
-				SpssSafeWrapper.spssConvertSPSSTime(out sd, out sh, out sm, out smsDbl, v);
-				ss = (int)smsDbl;
-				sms = (int)((smsDbl % 1.0) * 1000);
-				return new DateTime(sY, sM, sD, sh, sm, ss, sms);
+				return ConvertDoubleToDateTime(v);
 			}
 
 			set {
-				double d, t = 0;
-				if (!value.HasValue) {
-					d = SpssDataDocument.SystemMissingValue;
+				double v;
+				if (value.HasValue) {
+					v = ConvertDateTimeToDouble(value.Value);
 				} else {
-					SpssSafeWrapper.spssConvertDate(value.Value.Day, value.Value.Month, value.Value.Year, out d);
-					double seconds = (double)(value.Value.Second) + (value.Value.Millisecond / 1000.0);
-					SpssSafeWrapper.spssConvertTime(0, value.Value.Hour, value.Value.Minute, seconds, out t);
+					v = SpssDataDocument.SystemMissingValue;
 				}
-
-				SpssSafeWrapper.spssSetValueNumeric(FileHandle, Handle, d + t);
+				SpssSafeWrapper.spssSetValueNumeric(FileHandle, Handle, v);
 			}
 		}
 
@@ -94,6 +104,20 @@ namespace Spss {
 
 		protected override bool IsApplicableFormatTypeCode(FormatTypeCode formatType) {
 			return IsDateVariable(formatType);
+		}
+
+		protected override void Update() {
+			base.Update();
+
+			double[] missingValues = new double[3];
+			this.MissingValues.Select(v => ConvertDateTimeToDouble(v)).Take(missingValues.Length).ToArray().CopyTo(missingValues, 0);
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarNMissingValues(
+				this.FileHandle,
+				this.Name,
+				this.MissingValueFormat,
+				missingValues[0],
+				missingValues[1],
+				missingValues[2]), "spssSetVarNMissingValues");
 		}
 
 		protected internal static bool IsDateVariable(FormatTypeCode writeType) {
@@ -108,6 +132,26 @@ namespace Spss {
 				writeType == FormatTypeCode.SPSS_FMT_SDATE ||
 				writeType == FormatTypeCode.SPSS_FMT_TIME ||
 				writeType == FormatTypeCode.SPSS_FMT_WKYR;
+		}
+
+		private static double ConvertDateTimeToDouble(DateTime value) {
+			double d, t = 0;
+			SpssSafeWrapper.spssConvertDate(value.Day, value.Month, value.Year, out d);
+			double seconds = (double)(value.Second) + (value.Millisecond / 1000.0);
+			SpssSafeWrapper.spssConvertTime(0, value.Hour, value.Minute, seconds, out t);
+
+			double total = d + t;
+			return total;
+		}
+
+		private static DateTime ConvertDoubleToDateTime(double v) {
+			int sD, sM, sY, sd, sh, sm, ss, sms;
+			double smsDbl;
+			SpssSafeWrapper.spssConvertSPSSDate(out sD, out sM, out sY, v);
+			SpssSafeWrapper.spssConvertSPSSTime(out sd, out sh, out sm, out smsDbl, v);
+			ss = (int)smsDbl;
+			sms = (int)((smsDbl % 1.0) * 1000);
+			return new DateTime(sY, sM, sD, sh, sm, ss, sms);
 		}
 	}
 }
