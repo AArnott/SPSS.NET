@@ -260,7 +260,7 @@ namespace Spss {
 		private void InitializeVariablesList() {
 			Debug.Assert(FileHandle >= 0, "Must be working with an open file.");
 			int initialSize;
-			SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetNumberofVariables(FileHandle, out initialSize), "SpssSafeWrapper");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetNumberofVariables(FileHandle, out initialSize), "spssGetNumberofVariables");
 			variables = new List<SpssVariable>(initialSize);
 			variablesLookup = new SpssVariableKeyedCollection();
 

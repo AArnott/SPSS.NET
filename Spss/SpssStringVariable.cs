@@ -95,7 +95,7 @@ namespace Spss {
 		internal new string Value {
 			get {
 				string v;
-				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueChar(FileHandle, Handle, out v), "SpssSafeWrapper");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueChar(FileHandle, Handle, out v), "spssGetValueChar");
 				return v;
 			}
 			set {

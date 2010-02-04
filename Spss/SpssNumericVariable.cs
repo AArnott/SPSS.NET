@@ -112,7 +112,7 @@ namespace Spss {
 		internal new double? Value {
 			get {
 				double v;
-				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumeric(FileHandle, Handle, out v), "SpssSafeWrapper");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumeric(FileHandle, Handle, out v), "spssGetValueNumeric");
 				if (v == SpssDataDocument.SystemMissingValue)
 					return null;
 				return v;
@@ -120,7 +120,7 @@ namespace Spss {
 
 			set {
 				if (!value.HasValue) value = SpssDataDocument.SystemMissingValue;
-				SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetValueNumeric(FileHandle, Handle, value.Value), "SpssSafeWrapper");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetValueNumeric(FileHandle, Handle, value.Value), "spssSetValueNumeric");
 			}
 		}
 

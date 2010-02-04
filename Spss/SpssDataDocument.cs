@@ -109,12 +109,12 @@ namespace Spss {
 		public bool IsCompressed {
 			get {
 				int compressed;
-				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetCompression(this.Handle, out compressed), "SpssSafeWrapper");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetCompression(this.Handle, out compressed), "spssGetCompression");
 				return compressed != 0;
 			}
 
 			set {
-				SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetCompression(this.Handle, value ? 1 : 0), "SpssSafeWrapper");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetCompression(this.Handle, value ? 1 : 0), "spssSetCompression");
 			}
 		}
 
@@ -240,7 +240,7 @@ namespace Spss {
 			this.EnsureAuthoringDictionary();
 			this.Variables.Commit();
 
-			SpssException.ThrowOnFailure(SpssSafeWrapper.spssCommitHeader(this.Handle), "SpssSafeWrapper");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssCommitHeader(this.Handle), "spssCommitHeader");
 
 			this.IsAuthoringDictionary = false;
 

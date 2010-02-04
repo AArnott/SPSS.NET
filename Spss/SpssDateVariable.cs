@@ -77,7 +77,7 @@ namespace Spss {
 		internal new DateTime? Value {
 			get {
 				double v;
-				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumeric(FileHandle, Handle, out v), "SpssSafeWrapper");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumeric(FileHandle, Handle, out v), "spssGetValueNumeric");
 				if (v == SpssDataDocument.SystemMissingValue) {
 					return null;
 				}
