@@ -36,7 +36,7 @@ v2	What is your name?	15	15	1	0	15	1	0	15				0
 			AssertEquals(dataTable, GetVariablesDataTable());
 		}
 
-		private void AssertEquals(DataTable expected, DataTable actual) {
+		internal static void AssertEquals(DataTable expected, DataTable actual) {
 			if (expected == actual) {
 				return;
 			}
@@ -49,9 +49,29 @@ v2	What is your name?	15	15	1	0	15	1	0	15				0
 			Assert.AreEqual(expected.Rows.Count, actual.Rows.Count, "Unequal number of rows in tables.");
 			for (var i = 0; i < expected.Rows.Count; i++) {
 				for (int j = 0; j < expected.Columns.Count; j++) {
-					Assert.AreEqual(expected.Rows[i][j], actual.Rows[i][j]);
+					Assert.AreEqual(TypeCoersion(expected.Rows[i][j]), TypeCoersion(actual.Rows[i][j]), "Row {0}, column {1} did not match.", i + 1, expected.Columns[j].ColumnName);
 				}
 			}
+		}
+
+		private static object TypeCoersion(object value) {
+			if (value == null || value == DBNull.Value) {
+				return DBNull.Value;
+			}
+
+			if (value is double) {
+				return value;
+			}
+
+			if (value is int) {
+				return (double)(int)value;
+			}
+
+			if (value is string) {
+				return ((string)value).TrimEnd();
+			}
+
+			return value;
 		}
 
 		private static SpssDataSet.VariablesDataTable GetVariablesDataTable() {
