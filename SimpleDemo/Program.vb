@@ -34,6 +34,7 @@ Module Program
 	Function GetFileName() As String
 		If File.Exists("..\..\demo.sav") Then Return "..\..\demo.sav"
 		If File.Exists("..\..\..\demo.sav") Then Return "..\..\..\demo.sav"
+		If File.Exists("..\..\..\..\demo.sav") Then Return "..\..\..\..\demo.sav"
 		If File.Exists("demo.sav") Then Return "demo.sav"
 		Throw New ApplicationException("Cannot find demo.sav file.")
 	End Function
