@@ -176,8 +176,10 @@ namespace Spss {
 						var = new SpssDateVariable();
 					else {
 						var = new SpssNumericVariable();
-						if (column.DataType == typeof(float) || column.DataType == typeof(double))
-							((SpssNumericVariable)var).DecimalPlaces = 2;
+						if (column.DataType == typeof(float) || column.DataType == typeof(double)) {
+							((SpssNumericVariable)var).PrintDecimal = 2;
+							((SpssNumericVariable)var).WriteDecimal = 2;
+						}
 					}
 
 					var.Name = GenerateColumnName(column.ColumnName);

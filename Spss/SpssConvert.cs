@@ -233,7 +233,7 @@ namespace Spss
 					//This is the variable that holds the characteristic whether the variable has discrete or continuous interval
 					int Dec;
 					if (var is SpssNumericVariable) {
-						Dec = ((SpssNumericVariable)var).DecimalPlaces;
+						Dec = ((SpssNumericVariable)var).PrintDecimal;
 						string interval = string.Empty;
 						if (Dec == 0) {
 							interval = "discrete";

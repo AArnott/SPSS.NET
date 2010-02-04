@@ -14,13 +14,17 @@ namespace Spss {
 	/// Represents an SPSS data variable that stores date information.
 	/// </summary>
 	public class SpssDateVariable : SpssVariable {
+		private FormatTypeCode writeFormat;
+		private FormatTypeCode printFormat;
+		private int writeWidth;
+		private int printWidth;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SpssDateVariable"/> class
 		/// for use when defining a new variable.
 		/// </summary>
 		public SpssDateVariable() {
 			this.WriteFormat = this.PrintFormat = FormatTypeCode.SPSS_FMT_DATE_TIME;
-			this.WriteDecimal = this.PrintDecimal = 4;
 			this.WriteWidth = this.PrintWidth = 28;
 			this.MissingValues = new List<DateTime>(3);
 		}
@@ -37,14 +41,18 @@ namespace Spss {
 		/// <param name="printFormat">The print format.</param>
 		/// <param name="printDecimal">The print decimal.</param>
 		/// <param name="printWidth">Width of the print.</param>
-		protected internal SpssDateVariable(SpssVariablesCollection variables, string varName, FormatTypeCode writeFormat, int writeDecimal, int writeWidth, FormatTypeCode printFormat, int printDecimal, int printWidth)
-			: base(variables, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth) {
+		protected internal SpssDateVariable(SpssVariablesCollection variables, string varName, FormatTypeCode writeFormat, int writeWidth, FormatTypeCode printFormat, int printWidth)
+			: base(variables, varName) {
 
 			MissingValueFormatCode formatCode;
 			double[] missingValues = new double[3];
 			ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNMissingValues(this.FileHandle, this.Name, out formatCode, out missingValues[0], out missingValues[1], out missingValues[2]), "spssGetVarNMissingValues");
 			this.MissingValueFormat = formatCode;
 			this.MissingValues = new List<DateTime>(missingValues.Take(Math.Abs((int)formatCode)).Select(v => ConvertDoubleToDateTime(v)));
+			this.writeFormat = writeFormat;
+			this.writeWidth = writeWidth;
+			this.printFormat = printFormat;
+			this.printWidth = printWidth;
 		}
 
 		/// <summary>
@@ -64,6 +72,62 @@ namespace Spss {
 		public override int SpssType {
 			get {
 				return 0; // date variables are numerics
+			}
+		}
+
+		public virtual FormatTypeCode WriteFormat {
+			get {
+				return this.writeFormat;
+			}
+
+			set {
+				if (!this.IsApplicableFormatTypeCode(value)) {
+					throw new ArgumentOutOfRangeException("value", "This value does not apply to this type of SPSS variable.");
+				}
+
+				this.writeFormat = value;
+			}
+		}
+
+		public virtual FormatTypeCode PrintFormat {
+			get {
+				return this.printFormat;
+			}
+
+			set {
+				if (!this.IsApplicableFormatTypeCode(value)) {
+					throw new ArgumentOutOfRangeException("value", "This value does not apply to this type of SPSS variable.");
+				}
+
+				this.printFormat = value;
+			}
+		}
+
+		public int WriteWidth {
+			get {
+				return this.writeWidth;
+			}
+
+			set {
+				if (value < 0) {
+					throw new ArgumentOutOfRangeException("value");
+				}
+
+				this.writeWidth = value;
+			}
+		}
+
+		public int PrintWidth {
+			get {
+				return this.printWidth;
+			}
+
+			set {
+				if (value < 0) {
+					throw new ArgumentOutOfRangeException("value");
+				}
+
+				this.printWidth = value;
 			}
 		}
 
@@ -118,6 +182,9 @@ namespace Spss {
 				missingValues[0],
 				missingValues[1],
 				missingValues[2]), "spssSetVarNMissingValues");
+
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarPrintFormat(FileHandle, Name, this.PrintFormat, 4, this.PrintWidth), "spssSetVarPrintFormat");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarWriteFormat(FileHandle, Name, this.WriteFormat, 4, this.WriteWidth), "spssSetVarWriteFormat");
 		}
 
 		protected internal static bool IsDateVariable(FormatTypeCode writeType) {

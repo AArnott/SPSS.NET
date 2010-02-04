@@ -40,8 +40,8 @@ namespace Spss {
 		/// <param name="printFormat">The print format.</param>
 		/// <param name="printDecimal">The print decimal.</param>
 		/// <param name="printWidth">Width of the print.</param>
-		protected internal SpssStringVariable(SpssVariablesCollection variables, string varName, int length, FormatTypeCode writeFormat, int writeDecimal, int writeWidth, FormatTypeCode printFormat, int printDecimal, int printWidth)
-			: base(variables, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth) {
+		protected internal SpssStringVariable(SpssVariablesCollection variables, string varName, int length)
+			: base(variables, varName) {
 			this.valueLabels = new SpssStringVariableValueLabelsDictionary(this);
 			this.length = length;
 

@@ -13,10 +13,13 @@ namespace Spss {
 	/// </remarks>
 	public class SpssNumericVariable : SpssVariable {
 		private const int DecimalPlacesDefault = 0;
-
-		private int decimalPlaces = -1;
-
 		private readonly SpssNumericVariableValueLabelsDictionary valueLabels;
+		private FormatTypeCode writeFormat;
+		private FormatTypeCode printFormat;
+		private int writeWidth;
+		private int printWidth;
+		private int writeDecimal;
+		private int printDecimal;
 
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssNumericVariable"/> class,
@@ -43,7 +46,7 @@ namespace Spss {
 		/// <param name="printDecimal">The print decimal.</param>
 		/// <param name="printWidth">Width of the print.</param>
 		protected internal SpssNumericVariable(SpssVariablesCollection variables, string varName, FormatTypeCode writeFormat, int writeDecimal, int writeWidth, FormatTypeCode printFormat, int printDecimal, int printWidth)
-			: base(variables, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth) {
+			: base(variables, varName) {
 			this.valueLabels = new SpssNumericVariableValueLabelsDictionary(this);
 
 			MissingValueFormatCode formatCode;
@@ -51,6 +54,12 @@ namespace Spss {
 			ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNMissingValues(this.FileHandle, this.Name, out formatCode, out missingValues[0], out missingValues[1], out missingValues[2]), "spssGetVarNMissingValues");
 			this.MissingValueFormat = formatCode;
 			this.MissingValues = new List<double>(missingValues.Take(Math.Abs((int)formatCode)));
+			this.writeDecimal = writeDecimal;
+			this.writeWidth = writeWidth;
+			this.writeFormat = writeFormat;
+			this.printDecimal = printDecimal;
+			this.printWidth = printWidth;
+			this.printFormat = printFormat;
 		}
 
 		/// <summary>
@@ -73,25 +82,87 @@ namespace Spss {
 			}
 		}
 
-		/// <summary>
-		/// The number of decimal places to reserve for the variable.
-		/// </summary>
-		public int DecimalPlaces {
+		public virtual FormatTypeCode WriteFormat {
 			get {
-				// If this variable was read from an existing file, and 
-				// decimal places has not yet been retrieved, get it.
-				if (decimalPlaces < 0 && IsCommitted) {
-					FormatTypeCode code;
-					int width;
-					// just throw away code and width
-					SpssSafeWrapper.spssGetVarWriteFormat(FileHandle, Name, out code, out decimalPlaces, out width);
-				}
-				return decimalPlaces >= 0 ? decimalPlaces : DecimalPlacesDefault;
+				return this.writeFormat;
 			}
 
 			set {
-				decimalPlaces = value;
-				Update();
+				if (!this.IsApplicableFormatTypeCode(value)) {
+					throw new ArgumentOutOfRangeException("value", "This value does not apply to this type of SPSS variable.");
+				}
+
+				this.writeFormat = value;
+			}
+		}
+
+		public virtual FormatTypeCode PrintFormat {
+			get {
+				return this.printFormat;
+			}
+
+			set {
+				if (!this.IsApplicableFormatTypeCode(value)) {
+					throw new ArgumentOutOfRangeException("value", "This value does not apply to this type of SPSS variable.");
+				}
+
+				this.printFormat = value;
+			}
+		}
+
+		public int WriteWidth {
+			get {
+				return this.writeWidth;
+			}
+
+			set {
+				if (value < 0) {
+					throw new ArgumentOutOfRangeException("value");
+				}
+
+				this.writeWidth = value;
+			}
+		}
+
+		public int PrintWidth {
+			get {
+				return this.printWidth;
+			}
+
+			set {
+				if (value < 0) {
+					throw new ArgumentOutOfRangeException("value");
+				}
+
+				this.printWidth = value;
+			}
+		}
+
+		public int WriteDecimal {
+			get {
+				return this.writeDecimal;
+			}
+
+			set {
+				if (value < 0) {
+					throw new ArgumentOutOfRangeException("value");
+				}
+
+				this.writeDecimal = value;
+			}
+		}
+
+		public int PrintDecimal {
+			get {
+				return this.printDecimal;
+			}
+
+			set {
+				if (value < 0) {
+					throw new ArgumentOutOfRangeException("value");
+				}
+
+				this.printDecimal = value;
 			}
 		}
 
@@ -144,6 +215,9 @@ namespace Spss {
 				missingValues[0],
 				missingValues[1],
 				missingValues[2]), "spssSetVarNMissingValues");
+
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarPrintFormat(FileHandle, Name, this.PrintFormat, this.PrintDecimal, this.PrintWidth), "spssSetVarPrintFormat");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarWriteFormat(FileHandle, Name, this.WriteFormat, this.WriteDecimal, this.WriteWidth), "spssSetVarWriteFormat");
 		}
 
 		public override SpssVariable Clone() {
@@ -155,9 +229,17 @@ namespace Spss {
 		protected override void CloneTo(SpssVariable spssVar) {
 			base.CloneTo(spssVar);
 			SpssNumericVariable other = spssVar as SpssNumericVariable;
-			if (other == null)
+			if (other == null) {
 				throw new ArgumentException("Must be of type " + GetType().Name + ".", "other");
-			other.DecimalPlaces = DecimalPlaces;
+			}
+			other.PrintDecimal = this.PrintDecimal;
+			other.PrintFormat = this.PrintFormat;
+			other.PrintWidth = this.PrintWidth;
+			other.WriteDecimal = this.WriteDecimal;
+			other.WriteFormat = this.WriteFormat;
+			other.WriteWidth = this.WriteWidth;
+			other.MissingValueFormat = this.MissingValueFormat;
+			other.MissingValues = new List<double>(this.MissingValues);
 			this.valueLabels.CopyTo(other.valueLabels);
 		}
 

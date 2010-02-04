@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace Spss
 {
@@ -10,13 +11,6 @@ namespace Spss
 	/// </summary>
 	public abstract class SpssVariable
 	{
-		private FormatTypeCode writeFormat;
-		private FormatTypeCode printFormat;
-		private int writeWidth;
-		private int printWidth;
-		private int writeDecimal;
-		private int printDecimal;
-
 		/// <summary>
 		/// Creates an instance of the <see cref="SpssNumericVariable"/> class.
 		/// </summary>
@@ -34,20 +28,13 @@ namespace Spss
 		/// <param name="printFormat">The print format.</param>
 		/// <param name="printDecimal">The print decimal.</param>
 		/// <param name="printWidth">Width of the print.</param>
-		protected SpssVariable(SpssVariablesCollection variables, string varName, FormatTypeCode writeFormat, int writeDecimal, int writeWidth, FormatTypeCode printFormat, int printDecimal, int printWidth)
+		protected SpssVariable(SpssVariablesCollection variables, string varName)
 		{
 			if( variables == null ) throw new ArgumentNullException("variables");
 			if( varName == null || varName.Length == 0 ) 
 				throw new ArgumentNullException("varName");
 
 			this.variables = variables;
-			this.writeDecimal = writeDecimal;
-			this.writeWidth = writeWidth;
-			this.writeFormat = writeFormat;
-			this.printDecimal = printDecimal;
-			this.printWidth = printWidth;
-			this.printFormat = printFormat;
-
 			AssumeIdentity(varName);
 		}
 		private void AssumeIdentity( string varName ) 
@@ -83,12 +70,13 @@ namespace Spss
 				case 0:
 					// This may be a date or a numeric
 					if (SpssDateVariable.IsDateVariable(writeFormat))
-						variable = new SpssDateVariable(parent, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth);
+						variable = new SpssDateVariable(parent, varName, writeFormat, writeWidth, printFormat, printWidth);
 					else
 						variable = new SpssNumericVariable(parent, varName, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth);
 					break;
 				default:
-					variable = new SpssStringVariable(parent, varName, varType, writeFormat, writeDecimal, writeWidth, printFormat, printDecimal, printWidth);
+					Debug.Assert(varType == printWidth);
+					variable = new SpssStringVariable(parent, varName, varType);
 					break;
 			}
 
@@ -245,90 +233,6 @@ namespace Spss
 			}
 		}
 
-		public virtual FormatTypeCode WriteFormat {
-			get {
-				return this.writeFormat;
-			}
-
-			set {
-				if (!this.IsApplicableFormatTypeCode(value)) {
-					throw new ArgumentOutOfRangeException("value", "This value does not apply to this type of SPSS variable.");
-				}
-
-				this.writeFormat = value;
-			}
-		}
-
-		public virtual FormatTypeCode PrintFormat {
-			get {
-				return this.printFormat;
-			}
-
-			set {
-				if (!this.IsApplicableFormatTypeCode(value)) {
-					throw new ArgumentOutOfRangeException("value", "This value does not apply to this type of SPSS variable.");
-				}
-
-				this.printFormat = value;
-			}
-		}
-
-		public int WriteWidth {
-			get {
-				return this.writeWidth;
-			}
-
-			set {
-				if (value < 0) {
-					throw new ArgumentOutOfRangeException("value");
-				}
-
-				this.writeWidth = value;
-			}
-		}
-
-		public int PrintWidth {
-			get {
-				return this.printWidth;
-			}
-
-			set {
-				if (value < 0) {
-					throw new ArgumentOutOfRangeException("value");
-				}
-
-				this.printWidth = value;
-			}
-		}
-
-		public int WriteDecimal {
-			get {
-				return this.writeDecimal;
-			}
-
-			set {
-				if (value < 0) {
-					throw new ArgumentOutOfRangeException("value");
-				}
-
-				this.writeDecimal = value;
-			}
-		}
-
-		public int PrintDecimal {
-			get {
-				return this.printDecimal;
-			}
-
-			set {
-				if (value < 0) {
-					throw new ArgumentOutOfRangeException("value");
-				}
-
-				this.printDecimal = value;
-			}
-		}
-
 		#endregion
 
 		#region Operations
@@ -396,12 +300,6 @@ namespace Spss
 
 			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarLabel(FileHandle, Name, Label), "spssSetVarLabel");
 			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarColumnWidth(FileHandle, Name, ColumnWidth), "spssSetVarColumnWidth");
-
-			// Set numeric-specific properties.
-			if (this.SpssType == 0) {
-				SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarPrintFormat(FileHandle, Name, this.PrintFormat, this.PrintDecimal, this.PrintWidth), "spssSetVarPrintFormat");
-				SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarWriteFormat(FileHandle, Name, this.WriteFormat, this.WriteDecimal, this.WriteWidth), "spssSetVarWriteFormat");
-			}
 		}
 		/// <summary>
 		/// Informs this variable that it is being added to a <see cref="SpssVariablesCollection"/>.

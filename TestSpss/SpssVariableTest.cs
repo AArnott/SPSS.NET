@@ -182,7 +182,7 @@ namespace Spss.Testing
 			{
 				SpssNumericVariable var = docRead.Variables[0] as SpssNumericVariable;
 				Assert.IsNotNull(var, "First variable expected to be numeric.");
-				Assert.AreEqual(2, var.DecimalPlaces);
+				Assert.AreEqual(2, var.WriteDecimal);
 			}
 		}
 		[TestMethod]
