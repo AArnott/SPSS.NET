@@ -590,9 +590,12 @@ namespace Spss
 		/// <remarks>
 		/// This function reports the value of the measurement level attribute of a variable.
 		/// </remarks>
-		public static ReturnCode spssGetVarMeasureLevel(int handle, string varName, out int measureLevel)
+		public static ReturnCode spssGetVarMeasureLevel(int handle, string varName, out MeasurementLevelCode measureLevel)
 		{
-			return spssGetVarMeasureLevel(handle, ref varName, out measureLevel);
+			int measureLevelInt;
+			ReturnCode status = spssGetVarMeasureLevel(handle, ref varName, out measureLevelInt);
+			measureLevel = (MeasurementLevelCode)measureLevelInt;
+			return status;
 		}
 		/// <summary>
 		/// Gets the missing values of a numeric variable.
@@ -1384,9 +1387,9 @@ namespace Spss
 		/// <remarks>
 		/// This function sets the value of the measurement level attribute of a variable.
 		/// </remarks>
-		public static ReturnCode spssSetVarMeasureLevel(int handle, string varName, int measureLevel)
+		public static ReturnCode spssSetVarMeasureLevel(int handle, string varName, MeasurementLevelCode measureLevel)
 		{
-			return spssSetVarMeasureLevel(handle, ref varName, measureLevel);
+			return spssSetVarMeasureLevel(handle, ref varName, (int)measureLevel);
 		}
 		/// <summary>
 		/// Sets the missing values for a numeric variable.

@@ -233,6 +233,47 @@ namespace Spss
 			}
 		}
 
+		private MeasurementLevelCode measurementLevel = MeasurementLevelCode.SPSS_MLVL_UNK;
+		/// <summary>
+		/// Gets or sets the measurement level.
+		/// </summary>
+		/// <value>The measurement level.</value>
+		public MeasurementLevelCode MeasurementLevel {
+			get {
+				// If this variable was read from an existing file, and 
+				// width has not yet been retrieved, get it.
+				if (measurementLevel == MeasurementLevelCode.SPSS_MLVL_UNK && Handle >= 0) {
+					SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarMeasureLevel(this.FileHandle, this.Name, out measurementLevel), "spssGetVarMeasureLevel");
+				}
+
+				return measurementLevel;
+			}
+		
+			set {
+				measurementLevel = value;
+			}
+		}
+
+		private AlignmentCode alignment = AlignmentCode.SPSS_ALIGN_LEFT;
+		/// <summary>
+		/// Gets or sets the alignment of the variable.
+		/// </summary>
+		/// <value>The alignment.</value>
+		public AlignmentCode Alignment {
+			get {
+				// If this variable was read from an existing file, get it.
+				if (this.Handle >= 0) {
+					SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarAlignment(this.FileHandle, this.Name, out alignment), "spssGetVarAlignment");
+				}
+
+				return alignment;
+			}
+
+			set {
+				alignment = value;
+			}
+		}
+
 		#endregion
 
 		#region Operations
@@ -300,6 +341,8 @@ namespace Spss
 
 			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarLabel(FileHandle, Name, Label), "spssSetVarLabel");
 			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarColumnWidth(FileHandle, Name, ColumnWidth), "spssSetVarColumnWidth");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarMeasureLevel(this.FileHandle, this.Name, this.MeasurementLevel), "spssSetVarMeasureLevel");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarAlignment(this.FileHandle, this.Name, this.Alignment), "spssSetVarAlignment");
 		}
 		/// <summary>
 		/// Informs this variable that it is being added to a <see cref="SpssVariablesCollection"/>.
