@@ -378,12 +378,12 @@ namespace Spss
 			}//end of extraction of metadata
 
 			//add data into the DataTable
+			var values = new object[doc.Variables.Count];
 			foreach (SpssCase rowCase in doc.Cases) {
-				List<object> values = new List<object>();
-				foreach (SpssVariable column in doc.Variables) {
-					values.Add(rowCase[column.Name]);
+				for (int i = 0; i < doc.Variables.Count; i++) {
+					values[i] = rowCase[i];
 				}
-				dataTable.Rows.Add(values.ToArray());
+				dataTable.Rows.Add(values);
 			}
 		}
 	}

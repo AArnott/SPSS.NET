@@ -56,14 +56,27 @@ namespace Spss {
 		public object this[string varName] {
 			get {
 				this.EnsureActiveCase();
-
 				return this.Variables[varName].Value;
 			}
 
 			set {
 				this.EnsureActiveCase();
-
 				this.Variables[varName].Value = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the value of some variable on this row.
+		/// </summary>
+		public object this[int columnIndex] {
+			get {
+				this.EnsureActiveCase();
+				return this.Variables[columnIndex].Value;
+			}
+
+			set {
+				this.EnsureActiveCase();
+				this.Variables[columnIndex].Value = value;
 			}
 		}
 
