@@ -22,12 +22,6 @@ namespace Spss
 		/// </summary>
 		/// <param name="variables">The containing collection.</param>
 		/// <param name="varName">The name of the variable.</param>
-		/// <param name="writeFormat">The write format.</param>
-		/// <param name="writeDecimal">The write decimal.</param>
-		/// <param name="writeWidth">Width of the write.</param>
-		/// <param name="printFormat">The print format.</param>
-		/// <param name="printDecimal">The print decimal.</param>
-		/// <param name="printWidth">Width of the print.</param>
 		protected SpssVariable(SpssVariablesCollection variables, string varName)
 		{
 			if( variables == null ) throw new ArgumentNullException("variables");

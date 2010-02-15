@@ -34,12 +34,6 @@ namespace Spss {
 		/// <param name="variables">The containing collection.</param>
 		/// <param name="varName">The name of the variable being loaded.</param>
 		/// <param name="length">The length of the string variable.  This is the same as SpssType</param>
-		/// <param name="writeFormat">The write format.</param>
-		/// <param name="writeDecimal">The write decimal.</param>
-		/// <param name="writeWidth">Width of the write.</param>
-		/// <param name="printFormat">The print format.</param>
-		/// <param name="printDecimal">The print decimal.</param>
-		/// <param name="printWidth">Width of the print.</param>
 		protected internal SpssStringVariable(SpssVariablesCollection variables, string varName, int length)
 			: base(variables, varName) {
 			this.valueLabels = new SpssStringVariableValueLabelsDictionary(this);
