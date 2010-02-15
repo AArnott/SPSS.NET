@@ -150,8 +150,5 @@ namespace Spss.Testing
 				SpssConvert.ToFile(dt, dt.Select(), filename, null);
 			}
 		}
-
 	}
-
-
 }
