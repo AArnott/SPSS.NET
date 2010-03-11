@@ -84,9 +84,7 @@
     <Compile Include="SpssCasesCollectionTest.cs" />
     <Compile Include="SpssConvertTest.cs" />
     <Compile Include="SpssDataDocumentTest.cs" />
-    <Compile Include="SpssDataSetAdapterTest.cs" />
     <Compile Include="SpssSafeWrapperTest.cs" />
-    <Compile Include="SpssTextFileAdapterTest.cs" />
     <Compile Include="SpssVariablesCollectionTest.cs" />
     <Compile Include="SpssVariableTest.cs" />
     <Compile Include="TestBase.cs" />
