@@ -91,10 +91,6 @@
     <Compile Include="VSCodeGenAccessors.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Spss.DataAdapter\Spss.DataAdapter.csproj">
-      <Project>{B65AEDFB-4C8B-46C6-905B-41D06B6B1719}</Project>
-      <Name>Spss.DataAdapter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Spss\Spss.csproj">
       <Project>{230E956E-FB2D-448E-AD4A-E90CB4BE2092}</Project>
       <Name>Spss</Name>

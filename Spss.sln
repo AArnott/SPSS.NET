@@ -14,8 +14,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSpss", "TestSpss\TestSp
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SimpleDemo", "SimpleDemo\SimpleDemo.vbproj", "{7D996EAE-1C78-4E18-954F-882BE7AA6E99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spss.DataAdapter", "Spss.DataAdapter\Spss.DataAdapter.csproj", "{B65AEDFB-4C8B-46C6-905B-41D06B6B1719}"
-EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Spss.vsmdi
@@ -44,12 +42,6 @@ Global
 		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|x86.Build.0 = Release|x86
 		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.SPSS test|x86.ActiveCfg = Release|x86
 		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.SPSS test|x86.Build.0 = Release|x86
-		{B65AEDFB-4C8B-46C6-905B-41D06B6B1719}.Debug|x86.ActiveCfg = Debug|x86
-		{B65AEDFB-4C8B-46C6-905B-41D06B6B1719}.Debug|x86.Build.0 = Debug|x86
-		{B65AEDFB-4C8B-46C6-905B-41D06B6B1719}.Release|x86.ActiveCfg = Release|x86
-		{B65AEDFB-4C8B-46C6-905B-41D06B6B1719}.Release|x86.Build.0 = Release|x86
-		{B65AEDFB-4C8B-46C6-905B-41D06B6B1719}.SPSS test|x86.ActiveCfg = Release|x86
-		{B65AEDFB-4C8B-46C6-905B-41D06B6B1719}.SPSS test|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
