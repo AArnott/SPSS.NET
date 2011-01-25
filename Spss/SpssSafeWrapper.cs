@@ -357,6 +357,11 @@ namespace Spss
 		{
 			value = new string(' ', SPSS_MAX_LONGSTRING+1); // leave room for null terminator
 			ReturnCode result = spssGetValueChar( handle, varHandle, ref value, value.Length );
+			if (result == ReturnCode.SPSS_BUFFER_SHORT) {
+				value = new string(' ', SPSS_MAX_VERYLONGSTRING + 1);
+				result = spssGetValueChar(handle, varHandle, ref value, value.Length);
+			}
+
 			value = (result == ReturnCode.SPSS_OK) ? value.Substring(0, value.IndexOf('\0')) : null;
 			return result;
 		}

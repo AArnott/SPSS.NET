@@ -741,9 +741,14 @@ namespace Spss
 		public const int SPSS_MAX_IDSTRING = 64 ; 
 
 		/// <summary>
-		/// Maximum length of a long string variable
+		/// (old) Maximum length of a long string variable
 		/// </summary>
-		public const int SPSS_MAX_LONGSTRING = 32767;
+		public const int SPSS_MAX_LONGSTRING = 255;
+
+		/// <summary>
+		/// Maximum length of a long string variable.
+		/// </summary>
+		public const int SPSS_MAX_VERYLONGSTRING = 32 * 1024;
 
 		/// <summary>
 		/// Maximum length of a value label
