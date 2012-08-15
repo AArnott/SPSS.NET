@@ -706,10 +706,10 @@ namespace Spss
 
     /// <summary>
     /// A very thin SpssSafeWrapper that provides access to all the functions 
-    /// exposed from the SpssIo32.dll library provided with SPSS 12.
+    /// exposed from the SPSSIO*.dll library provided with SPSS 20.
     /// </summary>
     // <remarks>
-    // <para>Each method in SPSSIO32.DLL is represented exactly once by this class.</para>
+    // <para>Each method in SPSSIO32/64.DLL is represented exactly once by this class.</para>
     // <para>Those methods that require the use of pointers for memory management 
     // reasons are marked <c>unsafe</c>, and have <c>protected</c> access for 
     // proper handling by a descending class.  
@@ -722,10 +722,10 @@ namespace Spss
     public class SpssThinWrapper
     {
         //Locations of the 32 bit spss and support dll's relative to the applications directory.
-        const String spssio32 = @"x86\spssio32.dll";
+        const String spssio32 = @"win32\spssio32.dll";
 
         //Location of the 64 bit spss and support dll's relative to the applications directory.
-        const String spssio64 = @"x64\spssio64.dll";
+        const String spssio64 = @"win64\spssio64.dll";
 
         #region Maximum lengths of SPSS data file objects
 
@@ -792,7 +792,6 @@ namespace Spss
         /// for appending cases using <see cref="spssOpenAppendDelegate"/>. The file handle handle becomes invalid
         /// and no further operations can be performed using it.
         /// </remarks>
-        // [DllImport(spssio, EntryPoint = "spssCloseAppend@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssCloseAppendDelegate(int handle);
         public static spssCloseAppendDelegate spssCloseAppend;
 
@@ -810,7 +809,6 @@ namespace Spss
         /// for reading using <see cref="spssOpenReadDelegate"/>. The file handle handle becomes 
         /// invalid and no further operations can be performed using it.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssCloseRead@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssCloseReadDelegate(int handle);
         public static spssCloseReadDelegate spssCloseRead;
 
@@ -830,7 +828,6 @@ namespace Spss
         /// for writing using <see cref="spssOpenWriteDelegate"/>. The file handle handle becomes invalid
         /// and no further operations can be performed using it.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssCloseWrite@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssCloseWriteDelegate(int handle);
         public static spssCloseWriteDelegate spssCloseWrite;
 
@@ -853,7 +850,6 @@ namespace Spss
         /// blanks if they are strings. Unless spssCommitCaseRecord is called, the case will not be
         /// written out.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssCommitCaseRecord@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssCommitCaseRecordDelegate(int handle);
         public static spssCommitCaseRecordDelegate spssCommitCaseRecord;
 
@@ -877,7 +873,6 @@ namespace Spss
         /// any case data can be written, the dictionary must be committed; once the dictionary has
         /// been committed, no further changes can be made to it.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssCommitHeader@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssCommitHeaderDelegate(int handle);
         public static spssCommitHeaderDelegate spssCommitHeader;
 
@@ -894,7 +889,6 @@ namespace Spss
         /// portion of the date variable to another value, use spssConvertTime and add the resulting
         /// value to *spssDate. Dates before October 15, 1582, are considered invalid.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssConvertDate@16", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssConvertDateDelegate(int day, int month, int year, out double spssDate);
         public static spssConvertDateDelegate spssConvertDate;
 
@@ -909,7 +903,6 @@ namespace Spss
         /// This function converts the date (as distinct from time) portion of a value in internal SPSS
         /// date format to Gregorian style.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssConvertSPSSDate@20", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssConvertSPSSDateDelegate(out int day, out int month, out int year, double spssDate);
         public static spssConvertSPSSDateDelegate spssConvertSPSSDate;
 
@@ -925,7 +918,6 @@ namespace Spss
         /// 14, 1582) plus the hour, minute, and second values. Note that the seconds value is
         /// stored in a double since it may have a fractional part.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssConvertSPSSTime@24", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssConvertSPSSTimeDelegate(out int day, out int hourh, out int minute, out double second, double spssDate);
         public static spssConvertSPSSTimeDelegate spssConvertSPSSTime;
 
@@ -942,7 +934,6 @@ namespace Spss
         /// zero, especially when this function is used in conjunction with spssConvertDate.
         /// Note that the seconds value is stored in a double since it may have a fractional part.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssConvertTime@24", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssConvertTimeDelegate(int day, int hour, int minute, double second, out double spssTime);
         public static spssConvertTimeDelegate spssConvertTime;
 
@@ -961,7 +952,6 @@ namespace Spss
         /// has documents, they are discarded. If the source file has no documents, the target
         /// will be set to have none, too.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssCopyDocuments@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssCopyDocumentsDelegate(int fromHandle, int toHandle);
         public static spssCopyDocumentsDelegate spssCopyDocuments;
 
@@ -977,7 +967,6 @@ namespace Spss
         /// <remarks>
         /// This function is called to return the memory allocated by <see cref="spssGetDateVariablesDelegate"/>.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssFreeDateVariables@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeDateVariablesDelegate(int* dateInfo);
         [CLSCompliant(false)]
@@ -995,7 +984,6 @@ namespace Spss
         /// <remarks>
         /// This function releases the memory which was acquired by <see cref="spssGetMultRespDefsDelegate"/>.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssFreeMultRespDefs@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeMultRespDefsDelegate(char* mrespDefs);
         [CLSCompliant(false)]
@@ -1021,7 +1009,6 @@ namespace Spss
         /// This function frees the two arrays and the value and label strings allocated on the heap
         /// by <see cref="spssGetVarCValueLabelsDelegate"/>.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssFreeVarCValueLabels", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeVarCValueLabelsDelegate(char** values, char** labels, int numLabels);
         [CLSCompliant(false)]
@@ -1039,7 +1026,6 @@ namespace Spss
         /// <remarks>
         /// This function is called to return the memory allocated by <see cref="spssGetVariableSetsDelegate"/>.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssFreeVariableSets@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeVariableSetsDelegate(char* varSets);
         [CLSCompliant(false)]
@@ -1065,7 +1051,6 @@ namespace Spss
         /// This function frees the two arrays and the name strings allocated on the heap by
         /// <see cref="spssGetVarNamesDelegate"/>.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssFreeVarNames", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeVarNamesDelegate(char** varNames, int* varTypes, int numVars);
         [CLSCompliant(false)]
@@ -1091,7 +1076,6 @@ namespace Spss
         /// This function frees the two arrays and the value and label strings allocated on the heap
         /// by <see cref="spssGetVarCValueLabelsDelegate"/>.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssFreeVarNValueLabels", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeVarNValueLabelsDelegate(double* values, char** labels, int numLabels);
         [CLSCompliant(false)]
@@ -1117,7 +1101,6 @@ namespace Spss
         /// case input/output procedures <see cref="spssWholeCaseInDelegate"/> and 
         /// <see cref="spssWholeCaseOutDelegate"/>.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetCaseSize@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssGetCaseSizeDelegate(int handle, out int caseSize);
         public static spssGetCaseSizeDelegate spssGetCaseSize;
 
@@ -1142,7 +1125,6 @@ namespace Spss
         /// up to <see cref="SPSS_MAX_VARNAME"/> characters in length, the size of the buffer 
         /// must be at least <see cref="SPSS_MAX_VARNAME"/>+1.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetCaseWeightVar@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetCaseWeightVarDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName);
         protected static spssGetCaseWeightVarDelegate spssGetCaseWeightVarImpl;
 
@@ -1163,7 +1145,6 @@ namespace Spss
         /// <remarks>
         /// This function reports the compression attribute of an SPSS data file.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetCompression@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssGetCompressionDelegate(int handle, out int compSwitch);
         public static spssGetCompressionDelegate spssGetCompression;
 
@@ -1194,7 +1175,6 @@ namespace Spss
         /// comprise the "fixed" information, followed by a sequence of one or more three-element
         /// groups.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetDateVariables@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetDateVariablesDelegate(int handle, out int numofElements, out int* dateInfo);
         [CLSCompliant(false)]
@@ -1229,7 +1209,6 @@ namespace Spss
         /// spssGetDEWInfo, spssGetDEWFirst will return SPSS_NO_DEW if the file was written
         /// with a byte order that is the reverse of that of the host.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetDEWFirst@16", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetDEWFirstDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string data, int maxData, out int nData);
         protected static spssGetDEWFirstDelegate spssGetDEWFirstImpl;
 
@@ -1254,7 +1233,6 @@ namespace Spss
         /// GUID. spssGetDEWGUID allows the client to read a file’s GUID, if any. The client
         /// supplies a 257 byte string in which the null-terminated GUID is returned.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetDEWGUID@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetDEWGUIDDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string asciiGUID);
         protected static spssGetDEWGUIDDelegate spssGetDEWGUIDImpl;
 
@@ -1285,7 +1263,6 @@ namespace Spss
         /// DEW information is discarded if the file has a byte order that is the reverse of that of
         /// the host, and calls to spssGetDEWInfo will return SPSS_NO_DEW.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetDEWInfo@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssGetDEWInfoDelegate(int handle, out int Length, out int HashTotal);
         public static spssGetDEWInfoDelegate spssGetDEWInfo;
 
@@ -1318,7 +1295,6 @@ namespace Spss
         /// <see cref="spssGetDEWInfoDelegate"/>, <see cref="spssGetDEWFirstDelegate"/> will return SPSS_NO_DEW if the file was written
         /// with a byte order that is the reverse of that of the host.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetDEWNext@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetDEWNextDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string data, int maxData, out int nData);
         protected static spssGetDEWNextDelegate spssGetDEWNextImpl;
 
@@ -1344,7 +1320,6 @@ namespace Spss
         /// function will return a precise number for uncompressed files and an estimate (based on
         /// overall file size) for compressed files. It cannot be used on files open for appending data.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetEstimatedNofCases@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssGetEstimatedNofCasesDelegate(int handle, out int caseCount);
         public static spssGetEstimatedNofCasesDelegate spssGetEstimatedNofCases;
 
@@ -1365,7 +1340,6 @@ namespace Spss
         /// <remarks>
         /// This function reports the number of cases present in a data file open for reading.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetNumberofCases@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssGetNumberofCasesDelegate(int handle, out int caseCount);
         public static spssGetNumberofCasesDelegate spssGetNumberofCases;
 
@@ -1389,7 +1363,6 @@ namespace Spss
         /// the handle, the label will be exactly 64 characters long, padded with blanks as
         /// necessary.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetIdString@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetIdStringDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string id);
         protected static spssGetIdStringDelegate spssGetIdStringImpl;
 
@@ -1416,7 +1389,6 @@ namespace Spss
         /// *mrespDefs is set to NULL, and the function returns the warning code
         /// <see cref="ReturnCode.SPSS_NO_MULTRESP"/>.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetMultRespDefs@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetMultRespDefsDelegate(int handle, out char* mrespDefs);
         [CLSCompliant(false)]
@@ -1440,7 +1412,6 @@ namespace Spss
         /// <remarks>
         /// This function reports the number of variables present in a data file.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetNumberofVariables@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssGetNumberofVariablesDelegate(int handle, out int numVars);
         public static spssGetNumberofVariablesDelegate spssGetNumberofVariables;
 
@@ -1468,7 +1439,6 @@ namespace Spss
         /// compression scheme code (5), big/little-endian code (6), and character representation
         /// code (7).
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetReleaseInfo@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetReleaseInfoDelegate(int handle, [MarshalAs(UnmanagedType.LPArray, SizeConst = 8)] int[] relInfo);
         protected static spssGetReleaseInfoDelegate spssGetReleaseInfoImpl;
 
@@ -1492,7 +1462,6 @@ namespace Spss
         /// <paramref>sysName</paramref> must be at least 41 bytes in length plus the 
         /// terminating null character.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetSystemString@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetSystemStringDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string sysName);
         protected static spssGetSystemStringDelegate spssGetSystemStringImpl;
 
@@ -1516,7 +1485,6 @@ namespace Spss
         /// If text data are not present in the file, the first character in 
         /// <paramref>textInfo</paramref> is set to NULL.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetTextInfo@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetTextInfoDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string textInfo);
         protected static spssGetTextInfoDelegate spssGetTextInfoImpl;
 
@@ -1543,7 +1511,6 @@ namespace Spss
         /// 8-byte character field in hh:mm:ss format (13:12:15), and the receiving field
         /// must be at least 9 bytes in length.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetTimeStamp@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetTimeStampDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string fileDate, [MarshalAs(UnmanagedType.VBByRefStr)] ref string fileTime);
         protected static spssGetTimeStampDelegate spssGetTimeStampImpl;
 
@@ -1578,7 +1545,6 @@ namespace Spss
         /// of the string variable. Argument valueSize is the allocated size of the buffer value,
         /// which must be at least the length of the variable plus 1.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetValueChar@20", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetValueCharDelegate(int handle, double varHandle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string value, int valueSize);
         protected static spssGetValueCharDelegate spssGetValueCharImpl;
         /// <summary>
@@ -1604,7 +1570,6 @@ namespace Spss
         /// This function gets the value of a numeric variable for the current case, which is the case
         /// read by the most recent call to <see cref="spssReadCaseRecordDelegate"/>.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetValueNumeric@16", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssGetValueNumericDelegate(int handle, double varHandle, out double value);
         public static spssGetValueNumericDelegate spssGetValueNumeric;
 
@@ -1632,7 +1597,6 @@ namespace Spss
         /// <remarks>
         /// This function reports the value of the alignment attribute of a variable.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarAlignment@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarAlignmentDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out AlignmentCode alignment);
         protected static spssGetVarAlignmentDelegate spssGetVarAlignmentImpl;
 
@@ -1675,7 +1639,6 @@ namespace Spss
         /// will be the length of the short string variable in question. Since the latter can be at most
         /// 8 characters long, 9-character buffers are adequate for any short string variable.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarCMissingValues@24", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarCMissingValuesDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out MissingValueFormatCode missingFormat, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal1, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal2, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal3);
         protected static spssGetVarCMissingValuesDelegate spssGetVarCMissingValuesImpl;
 
@@ -1702,7 +1665,6 @@ namespace Spss
         /// zero is special and means that the SPSS Data Editor, which is the primary user of this
         /// attribute, will set an appropriate width using its own algorithm.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarColumnWidth@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarColumnWidthDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out int columnWidth);
         protected static spssGetVarColumnWidthDelegate spssGetVarColumnWidthImpl;
 
@@ -1738,7 +1700,6 @@ namespace Spss
         /// hold the longest possible value label (60 characters plus the null terminator). To get value
         /// labels more than 60 characters long, use the <see cref="spssGetVarCValueLabelLongDelegate"/> function.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarCValueLabel@16", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarCValueLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string label);
         protected static spssGetVarCValueLabelDelegate spssGetVarCValueLabelImpl;
 
@@ -1781,7 +1742,6 @@ namespace Spss
         /// of data bytes (excluding the null terminator) actually stored. If an error is detected, the
         /// label is returned as a null string, and the length is returned as 0.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarCValueLabelLong@24", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarCValueLabelLongDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string labelBuff, int lenBuff, out int lenLabel);
         protected static spssGetVarCValueLabelLongDelegate spssGetVarCValueLabelLong;
 
@@ -1824,7 +1784,6 @@ namespace Spss
         /// The two arrays and the value and label strings are allocated on the heap. When they
         /// are no longer needed, <see cref="spssFreeVarCValueLabelsDelegate"/> should be called to free the memory.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarCValueLabels", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetVarCValueLabelsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out char** values, out char** labels, out int numLabels);
         [CLSCompliant(false)]
@@ -1857,7 +1816,6 @@ namespace Spss
         /// with an output file, the dictionary must be written with <see cref="spssCommitHeaderDelegate"/> 
         /// before variable handles can be obtained via spssGetVarHandle.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarHandle@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarHandleDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out double varHandle);
         protected static spssGetVarHandleDelegate spssGetVarHandleImpl;
 
@@ -1883,7 +1841,6 @@ namespace Spss
         /// on the heap, the caller should free
         /// it by calling <see cref="spssFreeVariableSetsDelegate"/> when it is no longer needed.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVariableSets@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetVariableSetsDelegate(int handle, out char* varSets);
         [CLSCompliant(false)]
@@ -1919,7 +1876,6 @@ namespace Spss
         /// null-terminated string. The type code is an integer in the range 0–255, 0 indicating a numeric
         /// variable and a positive value indicating a string variable of that size.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarInfo@16", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssGetVarInfoDelegate(int handle, int iVar, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out int varType);
         public static spssGetVarInfoDelegate spssGetVarInfoImpl;
 
@@ -1948,7 +1904,6 @@ namespace Spss
         /// size of the buffer should be at least 121. To get labels more than 120 characters long, use
         /// the spssGetVarLabelLong function.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarLabel@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         //! TODO Check if change of 3rd parameter works (changed out to ref as otherwise Marshal.GetDelegateForFunctionPointer fails).
         public delegate ReturnCode spssGetVarLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varLabel);
         public static spssGetVarLabelDelegate spssGetVarLabelImpl;
@@ -1985,7 +1940,6 @@ namespace Spss
         /// the number of data bytes (this time excluding the null terminator) stored. If an error is
         /// detected, the label is returned as a null string, and the length is returned as 0.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarLabelLong@20", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssGetVarLabelLongDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string labelBuff, int lenBuff, out int lenLabel);
         public static spssGetVarLabelLongDelegate spssGetVarLabelLong;
 
@@ -2014,7 +1968,6 @@ namespace Spss
         /// <remarks>
         /// This function reports the value of the measurement level attribute of a variable.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarMeasureLevel@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarMeasureLevelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out int measureLevel);
         protected static spssGetVarMeasureLevelDelegate spssGetVarMeasureLevelImpl;
 
@@ -2057,7 +2010,6 @@ namespace Spss
         /// values present. (The macros SPSS_NO_MISSVAL, SPSS_ONE_MISSVAL,
         /// SPSS_TWO_MISSVAL, and SPSS_THREE_MISSVAL may be used as synonyms for 0–3.)
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarNMissingValues@24", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarNMissingValuesDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out MissingValueFormatCode missingFormat, out double missingVal1, out double missingVal2, out double missingVal3);
         protected static spssGetVarNMissingValuesDelegate spssGetVarNMissingValuesImpl;
 
@@ -2091,7 +2043,6 @@ namespace Spss
         /// hold the longest possible value label (60 characters) plus the terminator. To get value labels
         /// more than 60 characters long, use the <see cref="spssGetVarNValueLabelLongDelegate"/> function.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarNValueLabel@20", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarNValueLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, double value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string label);
         protected static spssGetVarNValueLabelDelegate spssGetVarNValueLabelImpl;
 
@@ -2132,7 +2083,6 @@ namespace Spss
         /// actually stored. If an error is detected, the label is returned as a null string, and the
         /// length is returned as 0.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarNValueLabelLong@28", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarNValueLabelLongDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, double value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string labelBuff, int lenBuff, out int lenLabel);
         protected static spssGetVarNValueLabelLongDelegate spssGetVarNValueLabelLong;
 
@@ -2173,7 +2123,6 @@ namespace Spss
         /// The two arrays and the label strings are allocated on the heap. When they are no longer
         /// needed, <see cref="spssFreeVarNValueLabelsDelegate"/> should be called to free the memory.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarNValueLabels", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetVarNValueLabelsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out double* values, out char** labels, out int numLabels);
         [CLSCompliant(false)]
@@ -2209,7 +2158,6 @@ namespace Spss
         /// places, and field width are returned as *<paramref>printType</paramref>, 
         /// *<paramref>printDec</paramref>, and *<paramref>printWid</paramref>, respectively.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarPrintFormat@20", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarPrintFormatDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out FormatTypeCode printType, out int printDec, out int printWidth);
         protected static spssGetVarPrintFormatDelegate spssGetVarPrintFormatImpl;
 
@@ -2245,7 +2193,6 @@ namespace Spss
         /// The two arrays and the variable name strings are allocated on the heap. When they
         /// are no longer needed, <see cref="spssFreeVarNamesDelegate"/> should be called to free the memory.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarNames", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetVarNamesDelegate(int handle, out int numVars, out char** varNames, out int* varTypes);
         [CLSCompliant(false)]
@@ -2281,7 +2228,6 @@ namespace Spss
         /// places, and field width are returned as *writeType, *writeDec, and *writeWid,
         /// respectively.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssGetVarWriteFormat@20", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssGetVarWriteFormatDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out FormatTypeCode writeType, out int writeDec, out int writeWidth);
         protected static spssGetVarWriteFormatDelegate spssGetVarWriteFormatImpl;
 
@@ -2297,7 +2243,6 @@ namespace Spss
         /// being addressed is that not all languages return doubles from functions in the same
         /// fashion.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssHostSysmisVal@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate void spssHostSysmisValDelegate(out double missVal);
         public static spssHostSysmisValDelegate spssHostSysmisVal;
 
@@ -2314,7 +2259,6 @@ namespace Spss
         /// This function returns the "lowest" and "highest" values used for numeric missing value
         /// ranges on the host system. It may be called at any time.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssLowHighVal@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate void spssLowHighValDelegate(out double lowest, out double highest);
         public static spssLowHighValDelegate spssLowHighVal;
 
@@ -2342,7 +2286,6 @@ namespace Spss
         /// This function opens an SPSS data file for appending cases and returns a handle that
         /// should be used for subsequent operations on the file.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssOpenAppend@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssOpenAppendDelegate([MarshalAs(UnmanagedType.VBByRefStr)] ref string fileName, out int handle);
         protected static spssOpenAppendDelegate spssOpenAppendImpl;
 
@@ -2369,7 +2312,6 @@ namespace Spss
         /// This function opens an SPSS data file for reading and returns a handle that should be
         /// used for subsequent operations on the file.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssOpenRead@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssOpenReadDelegate([MarshalAs(UnmanagedType.VBByRefStr)] ref string fileName, out int handle);
         protected static spssOpenReadDelegate spssOpenReadImpl;
 
@@ -2392,7 +2334,6 @@ namespace Spss
         /// This function opens a file in preparation for creating a new SPSS data file and returns a
         /// handle that should be used for subsequent operations on the file.
         /// </remarks>
-        // [DllImport(spssio, EntryPoint = "spssOpenWrite", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssOpenWriteDelegate([MarshalAs(UnmanagedType.VBByRefStr)] ref string fileName, out int handle);
         protected static spssOpenWriteDelegate spssOpenWriteImpl;
 
@@ -2426,7 +2367,6 @@ namespace Spss
         /// new file initialized with a copy of the old file’s dictionary, then <see cref="spssOpenReadDelegate"/> (oldFile-
         /// Name, ...) to open the old file to access its data.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssOpenWriteCopy@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssOpenWriteCopyDelegate([MarshalAs(UnmanagedType.VBByRefStr)] ref string fileName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string dictFileName, out int handle);
         protected static spssOpenWriteCopyDelegate spssOpenWriteCopyImpl;
 
@@ -2462,7 +2402,6 @@ namespace Spss
         /// <item>Subtype 11. Measurement level, column width, and alignment for each variable</item>
         /// </list>
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssQueryType7@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssQueryType7Delegate(int fromHandle, int subType, out int bFound);
         public static spssQueryType7Delegate spssQueryType7;
 
@@ -2485,7 +2424,6 @@ namespace Spss
         /// <see cref="spssGetValueNumericDelegate"/> and
         /// <see cref="spssGetValueCharDelegate"/> procedures.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssReadCaseRecord@4", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssReadCaseRecordDelegate(int handle);
         public static spssReadCaseRecordDelegate spssReadCaseRecord;
         /// <summary>
@@ -2514,7 +2452,6 @@ namespace Spss
         /// number of cases in the file, the call to the input function will return 
         /// <see cref="ReturnCode.SPSS_FILE_END"/>.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSeekNextCase@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssSeekNextCaseDelegate(int handle, int caseNumber);
         public static spssSeekNextCaseDelegate spssSeekNextCase;
 
@@ -2541,7 +2478,6 @@ namespace Spss
         /// This function defines variable varName as the case weight variable for the data file
         /// specified by the handle.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetCaseWeightVar@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetCaseWeightVarDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName);
         protected static spssSetCaseWeightVarDelegate spssSetCaseWeightVarImpl;
 
@@ -2566,7 +2502,6 @@ namespace Spss
         /// on if compSwitch is one and off if it is zero. If this function is not called, the output file
         /// will be uncompressed by default.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetCompression@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssSetCompressionDelegate(int handle, int compSwitch);
         public static spssSetCompressionDelegate spssSetCompression;
 
@@ -2598,7 +2533,6 @@ namespace Spss
         /// is done on the input array, this function should be used with caution and is
         /// recommended only for copying Trends information from one file to another.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetDateVariables@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssSetDateVariablesDelegate(int handle, int numofElements, int* dateInfo);
         [CLSCompliant(false)]
@@ -2632,7 +2566,6 @@ namespace Spss
         /// subsequent segments are delivered by calling spssSetDEWNext as many times as
         /// necessary.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetDEWFirst@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetDEWFirstDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string data, int nBytes);
         protected static spssSetDEWFirstDelegate spssSetDEWFirstImpl;
 
@@ -2656,7 +2589,6 @@ namespace Spss
         /// This function stores the Data Entry for Windows uniqueness indicator on the data file.
         /// It should only be used by the DEW product.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetDEWGUID@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetDEWGUIDDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string asciiGUID);
         protected static spssSetDEWGUIDDelegate spssSetDEWGUIDImpl;
 
@@ -2688,7 +2620,6 @@ namespace Spss
         /// subsequent segments are delivered by calling spssSetDEWNext as many times as
         /// necessary.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetDEWNext12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetDEWNextDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string data, int nBytes);
         protected static spssSetDEWNextDelegate spssSetDEWNextImpl;
 
@@ -2712,7 +2643,6 @@ namespace Spss
         /// This function sets the file label of the output SPSS data file associated with handle to
         /// the given string id.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetIdString@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetIdStringDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string id);
         protected static spssSetIdStringDelegate spssSetIdStringImpl;
 
@@ -2738,7 +2668,6 @@ namespace Spss
         /// consist of a single null-terminated ascii string which is similar to that containing the
         /// variable set definitions.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetMultRespDefs@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetMultRespDefsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string mrespDefs);
         protected static spssSetMultRespDefsDelegate spssSetMultRespDefsImpl;
 
@@ -2763,7 +2692,6 @@ namespace Spss
         /// longer than 255 characters, only the first 255 are (quietly) used. If textInfo contains the
         /// empty string, existing text data, if any, is deleted.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetTextInfo@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetTextInfoDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string textInfo);
         protected static spssSetTextInfoDelegate spssSetTextInfoImpl;
 
@@ -2793,7 +2721,6 @@ namespace Spss
         /// This function sets the value of a string variable for the current case. The current case is
         /// not written out to the data file until <see cref="spssCommitCaseRecordDelegate"/> is called.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetValueChar@16", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetValueCharDelegate(int handle, double varHandle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string value);
         protected static spssSetValueCharDelegate spssSetValueCharImpl;
         /// <summary>
@@ -2819,7 +2746,6 @@ namespace Spss
         /// This function sets the value of a numeric variable for the current case. The current case
         /// is not written out to the data file until <see cref="spssCommitCaseRecordDelegate"/> is called.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetValueNumeric@20", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate ReturnCode spssSetValueNumericDelegate(int handle, double varHandle, double value);
         public static spssSetValueNumericDelegate spssSetValueNumeric;
 
@@ -2849,7 +2775,6 @@ namespace Spss
         /// <remarks>
         /// This function sets the value of the alignment attribute of a variable.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarAlignment@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarAlignmentDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, AlignmentCode alignment);
         protected static spssSetVarAlignmentDelegate spssSetVarAlignmentImpl;
 
@@ -2897,7 +2822,6 @@ namespace Spss
         /// made up of blanks, which are ignored. If the missing value is shorter than the length of
         /// the variable, trailing blanks are assumed.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarCMissingValues@24", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarCMissingValuesDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, MissingValueFormatCode missingFormat, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal1, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal2, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal3);
         protected static spssSetVarCMissingValuesDelegate spssSetVarCMissingValuesImpl;
 
@@ -2926,7 +2850,6 @@ namespace Spss
         /// is special and means that the SPSS Data Editor, which is the primary user of this
         /// attribute, is to set an appropriate width using its own algorithm.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarColumnWidth@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarColumnWidthDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, int columnWidth);
         protected static spssSetVarColumnWidthDelegate spssSetVarColumnWidthImpl;
 
@@ -2964,7 +2887,6 @@ namespace Spss
         /// variable. The label should be a null-terminated string not exceeding 60 characters in
         /// length.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarCValueLabel@16", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarCValueLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string label);
         protected static spssSetVarCValueLabelDelegate spssSetVarCValueLabelImpl;
 
@@ -2991,7 +2913,6 @@ namespace Spss
         /// on the supplied string beyond ensuring that its length is not 0. Any existing variable
         /// sets information is discarded.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVariableSets@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVariableSetsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varSets);
         protected static spssSetVariableSetsDelegate spssSetVariableSetsImpl;
 
@@ -3022,7 +2943,6 @@ namespace Spss
         /// <remarks>
         /// This function sets the label of a variable.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarLabel@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varLabel);
         protected static spssSetVarLabelDelegate spssSetVarLabelImpl;
 
@@ -3056,7 +2976,6 @@ namespace Spss
         /// <remarks>
         /// This function sets the value of the measurement level attribute of a variable.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarMeasureLevel@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarMeasureLevelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, int measureLevel);
         protected static spssSetVarMeasureLevelDelegate spssSetVarMeasureLevelImpl;
 
@@ -3120,7 +3039,6 @@ namespace Spss
         /// For better readability, macros SPSS_NUMERIC and SPSS_STRING( length) may be
         /// used as values for varLength.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarName@12", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarNameDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, int varType);
         protected static spssSetVarNameDelegate spssSetVarNameImpl;
 
@@ -3170,7 +3088,6 @@ namespace Spss
         /// SPSS_ONE_MISSVAL, SPSS_TWO_MISSVAL, and SPSS_THREE_MISSVAL may be
         /// used as synonyms for 0–3.)
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarNMissingValues@36", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarNMissingValuesDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, MissingValueFormatCode missingFormat, double missingVal1, double missingVal2, double missingVal3);
         protected static spssSetVarNMissingValuesDelegate spssSetVarNMissingValuesImpl;
 
@@ -3206,7 +3123,6 @@ namespace Spss
         /// variable. The label should be a null-terminated string not exceeding 60 characters in
         /// length.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarNValueLabel@20", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarNValueLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, double value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string label);
         protected static spssSetVarNValueLabelDelegate spssSetVarNValueLabelImpl;
 
@@ -3243,7 +3159,6 @@ namespace Spss
         /// <remarks>
         /// This function sets the print format of a variable.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarPrintFormat@20", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarPrintFormatDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, FormatTypeCode printType, int printDec, int printWidth);
         protected static spssSetVarPrintFormatDelegate spssSetVarPrintFormatImpl;
 
@@ -3279,7 +3194,6 @@ namespace Spss
         /// <remarks>
         /// This function sets the write format of a variable.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSetVarWriteFormat@20", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssSetVarWriteFormatDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, FormatTypeCode writeType, int writeDec, int writeWidth);
         protected static spssSetVarWriteFormatDelegate spssSetVarWriteFormatImpl;
 
@@ -3293,7 +3207,6 @@ namespace Spss
         /// This function returns the SPSS system-missing value for the host system. It may be
         /// called at any time.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssSysmisVal@0", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public delegate double spssSysmisValDelegate();
         public static spssSysmisValDelegate spssSysmisVal;
 
@@ -3319,7 +3232,6 @@ namespace Spss
         /// low-level function whose use should not be mixed with calls to <see cref="spssReadCaseRecordDelegate"/>
         /// using the same file handle because both procedures read a new case from the data file.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssWholeCaseIn@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssWholeCaseInDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string caseRec);
         protected static spssWholeCaseInDelegate spssWholeCaseInImpl;
 
@@ -3346,7 +3258,6 @@ namespace Spss
         /// to <see cref="spssCommitCaseRecordDelegate"/> using the same file handle because both procedures write a
         /// new case to the data file.
         /// </remarks>
-        // [DllImport("spssio32.dll", EntryPoint = "spssWholeCaseOut@8", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         protected delegate ReturnCode spssWholeCaseOutDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string caseRec);
         protected static spssWholeCaseOutDelegate spssWholeCaseOutImpl;
 
@@ -3368,7 +3279,7 @@ namespace Spss
         /// <summary>
         /// Allow only a single thread to enter.
         /// 
-        /// <seealso href="http://archive.msdn.microsoft.com/DynamicDllLoading/Wiki/Print.aspx?title=Home&version=5&action=Print"/>
+        /// <seealso href="http://archive.msdn.microsoft.com/DynamicDllLoading/Wiki/Print.aspx?title=Home&amp;version=5&amp;action=Print"/>
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal static void LoadSpssDll()

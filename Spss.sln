@@ -4,7 +4,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		demo.sav = demo.sav
 		localtestrun.testrunconfig = localtestrun.testrunconfig
-		Resources\SPSS 14.0 for Windows Developer's Guide.pdf = Resources\SPSS 14.0 for Windows Developer's Guide.pdf
 		Spss.vsmdi = Spss.vsmdi
 	EndProjectSection
 EndProject
@@ -19,29 +18,27 @@ Global
 		CategoryFile = Spss.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x86 = Debug|x86
-		Release|x86 = Release|x86
-		SPSS test|x86 = SPSS test|x86
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		SPSS test|Any CPU = SPSS test|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Debug|x86.ActiveCfg = Debug|x86
-		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Debug|x86.Build.0 = Debug|x86
-		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Release|x86.ActiveCfg = Release|x86
-		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Release|x86.Build.0 = Release|x86
-		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.SPSS test|x86.ActiveCfg = SPSS test|x86
-		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.SPSS test|x86.Build.0 = SPSS test|x86
-		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Debug|x86.ActiveCfg = Debug|x86
-		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Debug|x86.Build.0 = Debug|x86
-		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|x86.ActiveCfg = Release|x86
-		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|x86.Build.0 = Release|x86
-		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.SPSS test|x86.ActiveCfg = Release|x86
-		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.SPSS test|x86.Build.0 = Release|x86
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|x86.ActiveCfg = Debug|x86
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|x86.Build.0 = Debug|x86
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|x86.ActiveCfg = Release|x86
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|x86.Build.0 = Release|x86
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.SPSS test|x86.ActiveCfg = Release|x86
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.SPSS test|x86.Build.0 = Release|x86
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.SPSS test|Any CPU.ActiveCfg = SPSS test|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.SPSS test|Any CPU.Build.0 = SPSS test|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.SPSS test|Any CPU.ActiveCfg = Release|x86
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.SPSS test|Any CPU.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -229,34 +229,87 @@
     <EmbeddedResource Include="blankDdi.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Resources\documents\Input-Output Module.pdf">
+      <Link>documents\Input-Output Module.pdf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_cs.rtf">
+      <Link>license\LA_cs.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_de.rtf">
+      <Link>license\LA_de.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_el.rtf">
+      <Link>license\LA_el.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_en.rtf">
+      <Link>license\LA_en.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_es.rtf">
+      <Link>license\LA_es.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_fr.rtf">
+      <Link>license\LA_fr.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_it.rtf">
+      <Link>license\LA_it.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_ja.rtf">
+      <Link>license\LA_ja.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_ko.rtf">
+      <Link>license\LA_ko.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_lt.rtf">
+      <Link>license\LA_lt.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_pl.rtf">
+      <Link>license\LA_pl.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_pt.rtf">
+      <Link>license\LA_pt.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_ru.rtf">
+      <Link>license\LA_ru.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_sl.rtf">
+      <Link>license\LA_sl.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_tr.rtf">
+      <Link>license\LA_tr.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_zh.rtf">
+      <Link>license\LA_zh.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\LA_zh_TW.rtf">
+      <Link>license\LA_zh_TW.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\notices.rtf">
+      <Link>license\notices.rtf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\license\REDIST">
+      <Link>license\REDIST</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="NerdBank-public.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    
-    <Content Include="..\Resources\icudt32.dll">
-      <Link>x86\icudt32.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Resources\icuin32.dll">
-      <Link>x86\icuin32.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Resources\icuuc32.dll">
-      <Link>x86\icuuc32.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Resources\msvcp71.dll">
-      <Link>x86\msvcp71.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Resources\msvcr71.dll">
-      <Link>x86\msvcr71.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Resources\spssio32.dll">
-      <Link>x86\spssio32.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -274,6 +327,40 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Resources\win64\icudt38.dll">
+      <Link>win64\icudt38.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\win64\icuin38.dll">
+      <Link>win64\icuin38.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\win64\icuuc38.dll">
+      <Link>win64\icuuc38.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\win64\spssio64.dll">
+      <Link>win64\spssio64.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\win32\icudt38.dll">
+      <Link>win32\icudt38.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\win32\icuin38.dll">
+      <Link>win32\icuin38.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\win32\icuuc38.dll">
+      <Link>win32\icuuc38.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Resources\win32\spssio32.dll">
+      <Link>win32\spssio32.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

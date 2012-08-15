@@ -9,8 +9,9 @@ namespace Spss.Testing
 	/// Summary description for SpssVariableTest
 	/// </summary>
 	[TestClass]
-	[DeploymentItem("spssio32.dll"), DeploymentItem("msvcp71.dll"), DeploymentItem("msvcr71.dll"), DeploymentItem("icuuc32.dll"), DeploymentItem("icudt32.dll"), DeploymentItem("icuin32.dll")]
-	public class SpssVariableTest
+    [DeploymentItem("x86", "x86")]
+    [DeploymentItem("x64", "x64")]
+    public class SpssVariableTest
 	{
 		public SpssVariableTest()
 		{
