@@ -232,28 +232,29 @@
     <None Include="NerdBank-public.snk" />
   </ItemGroup>
   <ItemGroup>
+    
     <Content Include="..\Resources\icudt32.dll">
-      <Link>icudt32.dll</Link>
+      <Link>x86\icudt32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Resources\icuin32.dll">
-      <Link>icuin32.dll</Link>
+      <Link>x86\icuin32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Resources\icuuc32.dll">
-      <Link>icuuc32.dll</Link>
+      <Link>x86\icuuc32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Resources\msvcp71.dll">
-      <Link>msvcp71.dll</Link>
+      <Link>x86\msvcp71.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Resources\msvcr71.dll">
-      <Link>msvcr71.dll</Link>
+      <Link>x86\msvcr71.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Resources\spssio32.dll">
-      <Link>spssio32.dll</Link>
+      <Link>x86\spssio32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

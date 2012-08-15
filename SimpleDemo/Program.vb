@@ -71,8 +71,10 @@ Module Program
 		Dim case2 As SpssCase = doc.Cases.[New]()
 		case2("v1") = "Cindy"
 		case2("v2") = 21
-		case2("v3") = 2
-		case2("v4") = DateTime.Parse("12/31/2002")
+        case2("v3") = 2
+        ' SW - datetime parse fails on any non-US locale system changed
+        ' to international date format
+        case2("v4") = DateTime.Parse("2002-12-31")
 		case2.Commit()
 	End Sub
 	Sub MetaDataCallback(ByVal var As SpssVariable)
