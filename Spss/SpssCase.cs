@@ -107,7 +107,7 @@ namespace Spss {
 			if (this.Cases.IsReadOnly) {
 				throw new InvalidOperationException("Not available when in read-only mode.");
 			}
-			SpssSafeWrapper.spssCommitCaseRecord(this.Cases.FileHandle);
+			SpssSafeWrapper.spssCommitCaseRecordImpl(this.Cases.FileHandle);
 			this.Cases.OnCaseCommitted();
 		}
 

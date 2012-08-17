@@ -180,7 +180,6 @@ namespace Spss {
 		public bool TryGetValue(TKey key, out string value) {
 			return this.ValuesLabels.TryGetValue(key, out value);
 		}
-
 		public ICollection<string> Values {
 			get { return this.ValuesLabels.Values; }
 		}

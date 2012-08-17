@@ -109,7 +109,7 @@ namespace Spss {
 		public bool IsCompressed {
 			get {
 				int compressed;
-				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetCompression(this.Handle, out compressed), "spssGetCompression");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetCompressionImpl(this.Handle, out compressed), "spssGetCompression");
 				return compressed != 0;
 			}
 
@@ -140,7 +140,7 @@ namespace Spss {
 		/// </remarks>
 		protected internal static double SystemMissingValue {
 			get {
-				return SpssThinWrapper.spssSysmisVal();
+				return SpssThinWrapper.spssSysmisValImpl();
 			}
 		}
 
@@ -240,7 +240,7 @@ namespace Spss {
 			this.EnsureAuthoringDictionary();
 			this.Variables.Commit();
 
-			SpssException.ThrowOnFailure(SpssSafeWrapper.spssCommitHeader(this.Handle), "spssCommitHeader");
+			SpssException.ThrowOnFailure(SpssSafeWrapper.spssCommitHeaderImpl(this.Handle), "spssCommitHeader");
 
 			this.IsAuthoringDictionary = false;
 

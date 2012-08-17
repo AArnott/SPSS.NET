@@ -139,7 +139,7 @@ namespace Spss {
 		internal new DateTime? Value {
 			get {
 				double v;
-				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumeric(FileHandle, Handle, out v), "spssGetValueNumeric");
+				SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumericImpl(FileHandle, Handle, out v), "spssGetValueNumeric");
 				if (v == SpssDataDocument.SystemMissingValue) {
 					return null;
 				}
@@ -201,9 +201,9 @@ namespace Spss {
 
 		private static double ConvertDateTimeToDouble(DateTime value) {
 			double d, t = 0;
-			SpssSafeWrapper.spssConvertDate(value.Day, value.Month, value.Year, out d);
+			SpssSafeWrapper.spssConvertDateImpl(value.Day, value.Month, value.Year, out d);
 			double seconds = (double)(value.Second) + (value.Millisecond / 1000.0);
-			SpssSafeWrapper.spssConvertTime(0, value.Hour, value.Minute, seconds, out t);
+			SpssSafeWrapper.spssConvertTimeImpl(0, value.Hour, value.Minute, seconds, out t);
 
 			double total = d + t;
 			return total;
@@ -212,8 +212,8 @@ namespace Spss {
 		private static DateTime ConvertDoubleToDateTime(double v) {
 			int sD, sM, sY, sd, sh, sm, ss, sms;
 			double smsDbl;
-			SpssSafeWrapper.spssConvertSPSSDate(out sD, out sM, out sY, v);
-			SpssSafeWrapper.spssConvertSPSSTime(out sd, out sh, out sm, out smsDbl, v);
+			SpssSafeWrapper.spssConvertSPSSDateImpl(out sD, out sM, out sY, v);
+			SpssSafeWrapper.spssConvertSPSSTimeImpl(out sd, out sh, out sm, out smsDbl, v);
 			ss = (int)smsDbl;
 			sms = (int)((smsDbl % 1.0) * 1000);
 			return new DateTime(sY, sM, sD, sh, sm, ss, sms);
