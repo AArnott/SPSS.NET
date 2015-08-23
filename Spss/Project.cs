@@ -5,13 +5,15 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Spss {
-	using System;
+namespace Spss
+{
+    using System;
 
-	/// <summary>
-	/// Summary description for Project.
-	/// </summary>
-	internal static class Project {
-		public const string DefaultNamespace = "Spss";
-	}
+    /// <summary>
+    /// Summary description for Project.
+    /// </summary>
+    internal static class Project
+    {
+        public const string DefaultNamespace = "Spss";
+    }
 }

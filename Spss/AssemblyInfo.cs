@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Ottawa")]
 [assembly: AssemblyCopyright("Copyright (C) 2003-2010")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]		
+[assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
