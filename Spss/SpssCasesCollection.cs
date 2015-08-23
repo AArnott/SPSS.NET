@@ -222,9 +222,9 @@ namespace Spss
 
         private class SpssCasesCollectionEnumerator : IEnumerator
         {
-            SpssCasesCollection Cases;
+            private SpssCasesCollection Cases;
 
-            int position;
+            private int position;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="SpssCasesCollectionEnumerator"/> class.

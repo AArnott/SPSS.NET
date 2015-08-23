@@ -179,6 +179,4 @@ namespace Spss.Testing
             Assert.Equal("fattening", var.ValueLabels[1]);
         }
     }
-
-
 }

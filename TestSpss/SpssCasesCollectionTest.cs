@@ -9,7 +9,7 @@ namespace Spss.Testing
     [DeploymentItem("x64", "x64")]
     public class SpssCasesCollectionTest : TestBase
     {
-        const int expectedRowCount = 138;
+        private const int expectedRowCount = 138;
         [Fact]
         public void Count()
         {
@@ -92,6 +92,4 @@ namespace Spss.Testing
             Assert.Equal(15d, dt.Rows[137][1]);
         }
     }
-
-
 }

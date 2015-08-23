@@ -722,10 +722,10 @@ namespace Spss
     public class SpssThinWrapper
     {
         //Locations of the 32 bit spss and support dll's relative to the applications directory.
-        const String spssio32 = @"win32\spssio32.dll";
+        private const String spssio32 = @"win32\spssio32.dll";
 
         //Location of the 64 bit spss and support dll's relative to the applications directory.
-        const String spssio64 = @"win64\spssio64.dll";
+        private const String spssio64 = @"win64\spssio64.dll";
 
         #region Maximum lengths of SPSS data file objects
 
@@ -3419,7 +3419,7 @@ namespace Spss
             spssWholeCaseOutImpl = (spssWholeCaseOutDelegate)GetSpssDelegate("spssWholeCaseOut", typeof(spssWholeCaseOutDelegate));
         }
 
-        static IntPtr spssDllHandle = IntPtr.Zero;
+        private static IntPtr spssDllHandle = IntPtr.Zero;
 
         private static readonly object _lock = new object();
 
@@ -3454,7 +3454,7 @@ namespace Spss
         internal static extern IntPtr LoadLibrary(string fileName);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool FreeLibrary(IntPtr hModule);
+        private static extern bool FreeLibrary(IntPtr hModule);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
         internal static extern IntPtr GetProcAddress(IntPtr hModule, string procName);

@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace Spss
 {
-
     /// <summary>
     /// Very thin SpssSafeWrapper class for functions exposed by spssio32.dll.
     /// </summary>

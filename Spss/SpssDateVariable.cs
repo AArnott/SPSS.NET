@@ -45,7 +45,6 @@ namespace Spss
         protected internal SpssDateVariable(SpssVariablesCollection variables, string varName, FormatTypeCode writeFormat, int writeWidth, FormatTypeCode printFormat, int printWidth)
             : base(variables, varName)
         {
-
             MissingValueFormatCode formatCode;
             double[] missingValues = new double[3];
             ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNMissingValues(this.FileHandle, this.Name, out formatCode, out missingValues[0], out missingValues[1], out missingValues[2]), "spssGetVarNMissingValues");

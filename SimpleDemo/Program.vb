@@ -1,6 +1,6 @@
-Module Program
+Friend Module Program
 
-    Sub Main()
+    Public Sub Main()
         Console.WriteLine("SPSS file writing demo:")
         If File.Exists("example.sav") Then File.Delete("example.sav")
         Using doc As SpssDataDocument = SpssDataDocument.Create("example.sav")
@@ -31,14 +31,14 @@ Module Program
 
     End Sub
 
-    Function GetFileName() As String
+    Public Function GetFileName() As String
         If File.Exists("..\..\demo.sav") Then Return "..\..\demo.sav"
         If File.Exists("..\..\..\demo.sav") Then Return "..\..\..\demo.sav"
         If File.Exists("..\..\..\..\demo.sav") Then Return "..\..\..\..\demo.sav"
         If File.Exists("demo.sav") Then Return "demo.sav"
         Throw New ApplicationException("Cannot find demo.sav file.")
     End Function
-    Sub CreateMetaData(ByVal doc As SpssDataDocument)
+    Public Sub CreateMetaData(ByVal doc As SpssDataDocument)
         ' Define dictionary
         Dim v1 As New SpssStringVariable()
         v1.Name = "v1"
@@ -61,7 +61,7 @@ Module Program
         ' Add some data
         doc.CommitDictionary()
     End Sub
-    Sub CreateData(ByVal doc As SpssDataDocument)
+    Public Sub CreateData(ByVal doc As SpssDataDocument)
         Dim case1 As SpssCase = doc.Cases.[New]()
         case1("v1") = "Andrew"
         case1("v2") = 24
@@ -77,7 +77,7 @@ Module Program
         case2("v4") = DateTime.Parse("2002-12-31")
         case2.Commit()
     End Sub
-    Sub MetaDataCallback(ByVal var As SpssVariable)
+    Public Sub MetaDataCallback(ByVal var As SpssVariable)
         ' In a real application, you would probably draw this metadata out of 
         ' some repository of your own rather than hard-coding the labels.
         Select Case var.Name
@@ -96,7 +96,7 @@ Module Program
         End Select
     End Sub
 
-    Sub PrintMetaData(ByVal doc As SpssDataDocument)
+    Public Sub PrintMetaData(ByVal doc As SpssDataDocument)
         Console.WriteLine("Variables:")
         For Each var As SpssVariable In doc.Variables
             Console.WriteLine("{0}" & vbTab & "{1}", var.Name, var.Label)
@@ -108,7 +108,7 @@ Module Program
             End If
         Next
     End Sub
-    Sub PrintData(ByVal doc As SpssDataDocument)
+    Public Sub PrintData(ByVal doc As SpssDataDocument)
         For Each var As SpssVariable In doc.Variables
             Console.Write(var.Name & vbTab)
         Next

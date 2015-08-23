@@ -205,7 +205,6 @@ namespace Spss
         /// </returns>
         public static XmlDocument ToDdi(string spssSavFilename)
         {
-
             const string ddiNamespace = "http://www.icpsr.umich.edu/DDI";
             if (spssSavFilename == null) throw new ArgumentNullException("spssSavFilename");
             XmlDocument ddi = new XmlDocument();
@@ -297,7 +296,6 @@ namespace Spss
                     variable.AppendChild(varFormat);
 
                     nData.AppendChild(variable);
-
                 }
 
                 //end of extraction of each variable and now we have put all the variable data into ndata

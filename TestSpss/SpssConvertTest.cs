@@ -27,7 +27,7 @@ namespace Spss.Testing
             tblTest.Rows.Add(values);
         }
 
-        DataTable tblTest;
+        private DataTable tblTest;
 
         [Fact]
         public void toDdiNull()

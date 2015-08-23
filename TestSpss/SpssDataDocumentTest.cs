@@ -64,6 +64,4 @@ namespace Spss.Testing
             }
         }
     }
-
-
 }

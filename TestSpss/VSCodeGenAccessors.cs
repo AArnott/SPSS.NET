@@ -4,7 +4,6 @@ namespace Spss.Testing
 {
     public class BaseAccessor
     {
-
         protected Microsoft.VisualStudio.TestTools.UnitTesting.PrivateObject m_privateObject;
 
         public BaseAccessor(object target, Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType type)
@@ -43,7 +42,6 @@ namespace Spss.Testing
 
     public class Spss_SpssConvertAccessor : BaseAccessor
     {
-
         protected static Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType m_privateType = new Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType(typeof(global::Spss.SpssConvert));
 
         public Spss_SpssConvertAccessor(global::Spss.SpssConvert target) :
@@ -92,7 +90,6 @@ namespace Spss.Testing
     }
     public class Spss_SpssCasesCollectionAccessor : BaseAccessor
     {
-
         protected static Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType m_privateType = new Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType(typeof(global::Spss.SpssCasesCollection));
 
         public Spss_SpssCasesCollectionAccessor(global::Spss.SpssCasesCollection target) :
@@ -159,7 +156,6 @@ namespace Spss.Testing
     }
     public class Spss_SpssVariablesCollectionAccessor : BaseAccessor
     {
-
         protected static Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType m_privateType = new Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType(typeof(global::Spss.SpssVariablesCollection));
 
         public Spss_SpssVariablesCollectionAccessor(global::Spss.SpssVariablesCollection target) :

@@ -24,7 +24,7 @@ namespace Spss.Testing
 
         protected internal static readonly string[] Test1VarNames = new string[] { "numLabels", "num", "charLabels", "noLabels", "longStr" };
 
-        int handle = 0;
+        private int handle = 0;
 
         [Fact]
         public void spssConvertDate()
@@ -108,6 +108,4 @@ namespace Spss.Testing
             Assert.Equal(0, relInfo[7]);
         }
     }
-
-
 }
