@@ -1,45 +1,17 @@
 ﻿using System;
-using System.Data;
 using System.CodeDom.Compiler;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Data;
+using System.IO;
+using Xunit;
+using DeploymentItemAttribute = Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute;
 
 namespace Spss.Testing
 {
-    /// <summary>
-    ///This is a test class for Spss.SpssConvert and is intended
-    ///to contain all Spss.SpssConvert Unit Tests
-    ///</summary>
-    [TestClass()]
     [DeploymentItem("x86", "x86")]
     [DeploymentItem("x64", "x64")]
     public class SpssConvertTest
     {
-
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        /// <summary>
-        ///Initialize() is called once during test execution before
-        ///test methods in this test class are executed.
-        ///</summary>
-        [TestInitialize()]
-        public void Initialize()
+        public SpssConvertTest()
         {
             tblTest = new DataTable();
             DataColumn cID = tblTest.Columns.Add("ID", typeof(int));
@@ -55,54 +27,47 @@ namespace Spss.Testing
             tblTest.Rows.Add(values);
         }
 
-        /// <summary>
-        ///Cleanup() is called once during test execution after
-        ///test methods in this class have executed unless
-        ///this test class' Initialize() method throws an exception.
-        ///</summary>
-        [TestCleanup()]
-        public void Cleanup()
-        {
-        }
-
         DataTable tblTest;
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void toDdiNull()
         {
-            SpssConvert.ToDdi((string)null);
+            Assert.Throws<ArgumentNullException>(() => SpssConvert.ToDdi((string)null));
         }
 
-        [Ignore]
-        [TestMethod]
+        [SkippableFact]
         public void testT1()
         {
-            SpssConvert.ToDdi(@"C:\Program Files\SPSS\T1.sav");
+            const string fileName = @"C:\Program Files\SPSS\T1.sav";
+            Skip.IfNot(File.Exists(fileName));
+            SpssConvert.ToDdi(fileName);
         }
 
-        [Ignore]
-        [TestMethod]
+        [SkippableFact]
         public void testlistSurveys()
         {
-            SpssConvert.ToDdi(@"C:\Program Files\SPSS\listsurveys.sav");
+            const string fileName = @"C:\Program Files\SPSS\listsurveys.sav";
+            Skip.IfNot(File.Exists(fileName));
+            SpssConvert.ToDdi(fileName);
         }
 
-        [Ignore]
-        [TestMethod]
+        [SkippableFact]
         public void smoking()
         {
-            SpssConvert.ToDdi(@"C:\Program Files\SPSS\smoking.sav");
+            const string fileName = @"C:\Program Files\SPSS\smoking.sav";
+            Skip.IfNot(File.Exists(fileName));
+            SpssConvert.ToDdi(fileName);
         }
 
-        [Ignore]
-        [TestMethod]
+        [SkippableFact]
         public void anorectic()
         {
-            SpssConvert.ToDdi(@"C:\Program Files\SPSS\anorectic.sav");
+            const string fileName = @"C:\Program Files\SPSS\anorectic.sav";
+            Skip.IfNot(File.Exists(fileName));
+            SpssConvert.ToDdi(fileName);
         }
 
-        [TestMethod]
+        [Fact]
         public void MetaData()
         {
             string SAVfilename;
@@ -138,7 +103,7 @@ namespace Spss.Testing
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ToFile()
         {
             DataTable dt = new DataTable();

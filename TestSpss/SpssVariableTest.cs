@@ -1,14 +1,11 @@
 using System;
 using System.Linq;
 using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
+using DeploymentItemAttribute = Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute;
 
 namespace Spss.Testing
 {
-    /// <summary>
-    /// Summary description for SpssVariableTest
-    /// </summary>
-    [TestClass]
     [DeploymentItem("x86", "x86")]
     [DeploymentItem("x64", "x64")]
     public class SpssVariableTest
@@ -17,82 +14,79 @@ namespace Spss.Testing
         {
         }
 
-        [TestMethod]
+        [Fact]
         public void NewStringVariable()
         {
             SpssStringVariable var = new SpssStringVariable();
             var.Name = "new string";
         }
 
-        [TestMethod]
+        [Fact]
         public void NewNumericVariable()
         {
             SpssNumericVariable var = new SpssNumericVariable();
             var.Name = "new numeric";
         }
 
-        [TestMethod]
+        [Fact]
         public void NewDateVariable()
         {
             SpssDateVariable var = new SpssDateVariable();
             var.Name = "new date";
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Fact]
         public void VarNameTooLong()
         {
             SpssVariable var = new SpssStringVariable();
-            var.Name = new string('a', SpssSafeWrapper.SPSS_MAX_VARNAME + 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => var.Name = new string('a', SpssSafeWrapper.SPSS_MAX_VARNAME + 1));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void VarNameToNull()
         {
             SpssVariable var = new SpssStringVariable();
-            var.Name = null;
+            Assert.Throws<ArgumentNullException>(() => var.Name = null);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Fact]
         public void VarLabelTooLong()
         {
             SpssVariable var = new SpssStringVariable();
-            var.Label = new string('a', SpssSafeWrapper.SPSS_MAX_VARLABEL + 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => var.Label = new string('a', SpssSafeWrapper.SPSS_MAX_VARLABEL + 1));
         }
 
-        [TestMethod]
+        [Fact]
         public void VarLabelNeverNull()
         {
             SpssVariable var = new SpssStringVariable();
-            Assert.IsNotNull(var.Label);
+            Assert.NotNull(var.Label);
             var.Label = null;
-            Assert.IsNotNull(var.Label);
-            Assert.AreEqual(string.Empty, var.Label);
+            Assert.NotNull(var.Label);
+            Assert.Equal(string.Empty, var.Label);
         }
-        [TestMethod]
+        [Fact]
         public void SetStringValueLabels()
         {
             SpssStringVariable var = new SpssStringVariable();
             var.ValueLabels.Add("h", "hello");
             var.ValueLabels.Add("H", "hi");
             var.ValueLabels.Add("b", "bye");
-            Assert.AreEqual("hello", var.ValueLabels["h"]);
-            Assert.AreEqual("hi", var.ValueLabels["H"]);
-            Assert.AreEqual(3, var.ValueLabels.Count);
+            Assert.Equal("hello", var.ValueLabels["h"]);
+            Assert.Equal("hi", var.ValueLabels["H"]);
+            Assert.Equal(3, var.ValueLabels.Count);
         }
-        [TestMethod]
+        [Fact]
         public void GetLongStringValueLabels()
         {
             using (SpssDataDocument docRead = SpssDataDocument.Open(TestBase.GoodFilename, SpssFileAccess.Read))
             {
                 SpssStringVariable var = (SpssStringVariable)docRead.Variables["longStr"];
                 // long strings can never have value labels
-                Assert.AreEqual(0, var.ValueLabels.Count);
+                Assert.Equal(0, var.ValueLabels.Count);
             }
         }
-        [TestMethod]
+        [Fact]
         public void SetNumericValueLabels()
         {
             SpssNumericVariable var = new SpssNumericVariable();
@@ -101,17 +95,16 @@ namespace Spss.Testing
             var.ValueLabels.Add(3, "Sometimes");
             var.ValueLabels.Add(4, "Often");
             var.ValueLabels.Add(5, "Very Often");
-            Assert.AreEqual(5, var.ValueLabels.Count);
-            Assert.AreEqual("Sometimes", var.ValueLabels[3]);
-            Assert.AreEqual("Rarely", var.ValueLabels[2]);
+            Assert.Equal(5, var.ValueLabels.Count);
+            Assert.Equal("Sometimes", var.ValueLabels[3]);
+            Assert.Equal("Rarely", var.ValueLabels[2]);
 
             var.ValueLabels.Remove(4);
-            Assert.IsFalse(var.ValueLabels.ContainsKey(4));
-            Assert.AreEqual(4, var.ValueLabels.Count);
+            Assert.False(var.ValueLabels.ContainsKey(4));
+            Assert.Equal(4, var.ValueLabels.Count);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Fact]
         public void SetStringTooLong()
         {
             using (SpssDataDocument docAppend = SpssDataDocument.Open(TestBase.AppendFilename, SpssFileAccess.Append))
@@ -119,10 +112,10 @@ namespace Spss.Testing
                 SpssStringVariable var = (SpssStringVariable)docAppend.Variables["charLabels"];
                 Debug.Assert(var.Length == 8);
                 SpssCase row = docAppend.Cases.New();
-                row["charLabels"] = new string('a', var.Length + 1);
+                Assert.Throws<ArgumentOutOfRangeException>(() => row["charLabels"] = new string('a', var.Length + 1));
             }
         }
-        [TestMethod]
+        [Fact]
         public void SetMissingValueNumeric()
         {
             int rowIndex;
@@ -137,10 +130,10 @@ namespace Spss.Testing
             {
                 SpssCase row = docAppend.Cases[rowIndex];
                 double val = (double)row["num"];
-                Assert.AreEqual(double.NaN, val);
+                Assert.Equal(double.NaN, val);
             }
         }
-        [TestMethod]
+        [Fact]
         public void SetMissingValueNumericByNull()
         {
             int rowIndex;
@@ -155,10 +148,10 @@ namespace Spss.Testing
             {
                 SpssCase row = docAppend.Cases[rowIndex];
                 double? val = (double?)row["num"];
-                Assert.IsFalse(val.HasValue);
+                Assert.False(val.HasValue);
             }
         }
-        [TestMethod]
+        [Fact]
         public void SetMissingValueDateByNull()
         {
             int rowIndex;
@@ -173,44 +166,44 @@ namespace Spss.Testing
             {
                 SpssCase row = docAppend.Cases[rowIndex];
                 DateTime? val = (DateTime?)row["dateVar"];
-                Assert.IsFalse(val.HasValue);
+                Assert.False(val.HasValue);
             }
         }
-        [TestMethod]
+        [Fact]
         public void ReadDecimalPlaces()
         {
             using (SpssDataDocument docRead = SpssDataDocument.Open(TestBase.GoodFilename, SpssFileAccess.Read))
             {
                 SpssNumericVariable var = docRead.Variables[0] as SpssNumericVariable;
-                Assert.IsNotNull(var, "First variable expected to be numeric.");
-                Assert.AreEqual(2, var.WriteDecimal);
+                Assert.NotNull(var); // First variable expected to be numeric.
+                Assert.Equal(2, var.WriteDecimal);
             }
         }
-        [TestMethod]
+        [Fact]
         public void ReadLabel()
         {
             using (SpssDataDocument docRead = SpssDataDocument.Open(TestBase.GoodFilename, SpssFileAccess.Read))
             {
                 SpssVariable var = docRead.Variables[0];
-                Assert.AreEqual("on butter", var.Label);
+                Assert.Equal("on butter", var.Label);
             }
         }
-        [TestMethod]
+        [Fact]
         public void ReadNullLabel()
         {
             using (SpssDataDocument docRead = SpssDataDocument.Open(TestBase.GoodFilename, SpssFileAccess.Read))
             {
                 SpssVariable var = docRead.Variables[3];
-                Assert.AreEqual(string.Empty, var.Label);
+                Assert.Equal(string.Empty, var.Label);
             }
         }
-        [TestMethod]
+        [Fact]
         public void ReadNullValueLabels()
         {
             using (SpssDataDocument docRead = SpssDataDocument.Open(TestBase.GoodFilename, SpssFileAccess.Read))
             {
                 SpssVariable var = docRead.Variables[3];
-                Assert.IsFalse(var.GetValueLabels().Any());
+                Assert.False(var.GetValueLabels().Any());
             }
         }
     }

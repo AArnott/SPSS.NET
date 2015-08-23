@@ -1,44 +1,52 @@
 using System;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Spss.Testing
 {
     /// <summary>
     /// Summary description for TestBase.
     /// </summary>
-    public class TestBase
+    public class TestBase : IDisposable
     {
-        public TestBase()
-        {
-        }
-
-        public const string GoodFilename = @"test1.sav";
-        public const string AppendFilename = @"test2.sav";
+        public const string GoodFilename = @"SAVs\test1.sav";
+        public const string AppendFilename = @"SAVs\test2.sav";
         public const string DisposableFilename = @"__temptest.sav";
 
         protected SpssDataDocument docRead;
         protected SpssDataDocument docAppend;
         protected SpssDataDocument docWrite;
 
-        [TestInitialize]
-        public virtual void Initialize()
+        public TestBase()
         {
-            docRead = SpssDataDocument.Open(GoodFilename, SpssFileAccess.Read);
-            docAppend = SpssDataDocument.Open(AppendFilename, SpssFileAccess.Append);
-            if (File.Exists(DisposableFilename))
-                File.Delete(DisposableFilename);
-            docWrite = SpssDataDocument.Create(DisposableFilename);
+            try
+            {
+                docRead = SpssDataDocument.Open(GoodFilename, SpssFileAccess.Read);
+                docAppend = SpssDataDocument.Open(AppendFilename, SpssFileAccess.Append);
+                if (File.Exists(DisposableFilename))
+                    File.Delete(DisposableFilename);
+                docWrite = SpssDataDocument.Create(DisposableFilename);
+            }
+            catch
+            {
+                docRead?.Dispose();
+                docAppend?.Dispose();
+                docWrite?.Dispose();
+                throw;
+            }
         }
 
-        [TestCleanup]
-        public virtual void Cleanup()
+        public void Dispose()
+        {
+            this.Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             docWrite.Close();
             File.Delete(DisposableFilename);
             docRead.Dispose();
             docAppend.Dispose();
         }
-
     }
 }
