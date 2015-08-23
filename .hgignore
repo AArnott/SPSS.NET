@@ -1,8 +1,0 @@
-^TestResults$
-^_UpgradeReport_Files$
-^UpgradeLog
-obj
-bin
-\.suo$
-\.user$
-\.Cache$
