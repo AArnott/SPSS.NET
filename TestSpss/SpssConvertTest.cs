@@ -88,12 +88,14 @@ namespace Spss.Testing
 			SpssConvert.ToDdi(@"C:\Program Files\SPSS\listsurveys.sav");
 		}
 
+		[Ignore]
 		[TestMethod]
 		public void smoking()
 		{
 			SpssConvert.ToDdi(@"C:\Program Files\SPSS\smoking.sav");
 		}
 
+		[Ignore]
 		[TestMethod]
 		public void anorectic()
 		{
