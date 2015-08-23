@@ -68,7 +68,7 @@ namespace Spss {
 				// New documents aren't allowed to query cases count, and appended docs
 				// report the # of cases there were when the file was first opened.
 				if (this.Document.AccessMode != SpssFileAccess.Create) {
-					SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetNumberofCasesImpl(this.FileHandle, out casecount), "spssGetNumberofCases");
+					SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetNumberofCases(this.FileHandle, out casecount), "spssGetNumberofCases");
 				}
 
 				return casecount + this.caseCountInWriteMode;

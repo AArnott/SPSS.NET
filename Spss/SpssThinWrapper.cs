@@ -810,7 +810,7 @@ namespace Spss
 		/// invalid and no further operations can be performed using it.
 		/// </remarks>
 		public delegate ReturnCode spssCloseReadDelegate(int handle);
-		public static spssCloseReadDelegate spssCloseReadImpl;
+		public static spssCloseReadDelegate spssCloseRead;
 
 		/// <summary>
 		/// Closes an SPSS file that was opened using <see cref="spssOpenWriteDelegate"/>.
@@ -890,7 +890,7 @@ namespace Spss
 		/// value to *spssDate. Dates before October 15, 1582, are considered invalid.
 		/// </remarks>
 		public delegate ReturnCode spssConvertDateDelegate(int day, int month, int year, out double spssDate);
-		public static spssConvertDateDelegate spssConvertDateImpl;
+		public static spssConvertDateDelegate spssConvertDate;
 
 		/// <summary>
 		/// Extracts the date from an SPSS date field.
@@ -1341,7 +1341,7 @@ namespace Spss
 		/// This function reports the number of cases present in a data file open for reading.
 		/// </remarks>
 		public delegate ReturnCode spssGetNumberofCasesDelegate(int handle, out int caseCount);
-		public static spssGetNumberofCasesDelegate spssGetNumberofCasesImpl;
+		public static spssGetNumberofCasesDelegate spssGetNumberofCases;
 
 		/// <summary>
 		/// Gets the file label of a data file.
@@ -3328,11 +3328,11 @@ namespace Spss
 			SetDllDirectory(null);
 
 			spssCloseAppendImpl = (spssCloseAppendDelegate)GetSpssDelegate("spssCloseAppend", typeof(spssCloseAppendDelegate));
-			spssCloseReadImpl = (spssCloseReadDelegate)GetSpssDelegate("spssCloseRead", typeof(spssCloseReadDelegate));
+			spssCloseRead = (spssCloseReadDelegate)GetSpssDelegate("spssCloseRead", typeof(spssCloseReadDelegate));
 			spssCloseWriteImpl = (spssCloseWriteDelegate)GetSpssDelegate("spssCloseWrite", typeof(spssCloseWriteDelegate));
 			spssCommitCaseRecordImpl = (spssCommitCaseRecordDelegate)GetSpssDelegate("spssCommitCaseRecord", typeof(spssCommitCaseRecordDelegate));
 			spssCommitHeaderImpl = (spssCommitHeaderDelegate)GetSpssDelegate("spssCommitHeader", typeof(spssCommitHeaderDelegate));
-			spssConvertDateImpl = (spssConvertDateDelegate)GetSpssDelegate("spssConvertDate", typeof(spssConvertDateDelegate));
+			spssConvertDate = (spssConvertDateDelegate)GetSpssDelegate("spssConvertDate", typeof(spssConvertDateDelegate));
 			spssConvertSPSSDateImpl = (spssConvertSPSSDateDelegate)GetSpssDelegate("spssConvertSPSSDate", typeof(spssConvertSPSSDateDelegate));
 			spssConvertSPSSTimeImpl = (spssConvertSPSSTimeDelegate)GetSpssDelegate("spssConvertSPSSTime", typeof(spssConvertSPSSTimeDelegate));
 			spssConvertTimeImpl = (spssConvertTimeDelegate)GetSpssDelegate("spssConvertTime", typeof(spssConvertTimeDelegate));
@@ -3352,7 +3352,7 @@ namespace Spss
 			spssGetDEWInfoImpl = (spssGetDEWInfoDelegate)GetSpssDelegate("spssGetDEWInfo", typeof(spssGetDEWInfoDelegate));
 			spssGetDEWNextImpl = (spssGetDEWNextDelegate)GetSpssDelegate("spssGetDEWNext", typeof(spssGetDEWNextDelegate));
 			spssGetEstimatedNofCasesImpl = (spssGetEstimatedNofCasesDelegate)GetSpssDelegate("spssGetEstimatedNofCases", typeof(spssGetEstimatedNofCasesDelegate));
-			spssGetNumberofCasesImpl = (spssGetNumberofCasesDelegate)GetSpssDelegate("spssGetNumberofCases", typeof(spssGetNumberofCasesDelegate));
+			spssGetNumberofCases = (spssGetNumberofCasesDelegate)GetSpssDelegate("spssGetNumberofCases", typeof(spssGetNumberofCasesDelegate));
 			spssGetIdStringImpl = (spssGetIdStringDelegate)GetSpssDelegate("spssGetIdString", typeof(spssGetIdStringDelegate));
 			spssGetMultRespDefsImpl = (spssGetMultRespDefsDelegate)GetSpssDelegate("spssGetMultRespDefs", typeof(spssGetMultRespDefsDelegate));
 			spssGetNumberofVariables = (spssGetNumberofVariablesDelegate)GetSpssDelegate("spssGetNumberofVariables", typeof(spssGetNumberofVariablesDelegate));

@@ -43,7 +43,7 @@ namespace Spss {
 		protected override bool ReleaseHandle() {
 			switch (this.accessMode) {
 				case SpssFileAccess.Read:
-					ReturnCode result = SpssSafeWrapper.spssCloseReadImpl(handle.ToInt32());
+					ReturnCode result = SpssSafeWrapper.spssCloseRead(handle.ToInt32());
 					return result == ReturnCode.SPSS_OK;
 				case SpssFileAccess.Append:
 					result = SpssSafeWrapper.spssCloseAppendImpl(handle.ToInt32());

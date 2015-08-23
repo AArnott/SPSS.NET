@@ -201,7 +201,7 @@ namespace Spss {
 
 		private static double ConvertDateTimeToDouble(DateTime value) {
 			double d, t = 0;
-			SpssSafeWrapper.spssConvertDateImpl(value.Day, value.Month, value.Year, out d);
+			SpssSafeWrapper.spssConvertDate(value.Day, value.Month, value.Year, out d);
 			double seconds = (double)(value.Second) + (value.Millisecond / 1000.0);
 			SpssSafeWrapper.spssConvertTimeImpl(0, value.Hour, value.Minute, seconds, out t);
 
