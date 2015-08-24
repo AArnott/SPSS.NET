@@ -6,6 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		demo.sav = demo.sav
 		..\nuget.config = ..\nuget.config
+		..\version.txt = ..\version.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spss", "Spss\Spss.csproj", "{230E956E-FB2D-448E-AD4A-E90CB4BE2092}"
