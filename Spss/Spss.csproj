@@ -363,10 +363,5 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
+  <Import Project="..\packages\NuProj.0.10.0-beta-gfdf934ba23\tools\Microsoft.Common.NuProj.targets" Condition=" Exists('..\packages\NuProj.0.10.0-beta-gfdf934ba23\tools\Microsoft.Common.NuProj.targets') " />
 </Project>
