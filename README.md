@@ -1,4 +1,5 @@
-# SPSS
+# SPSS .NET Interop library
+
 A .NET library for read/writing SPSS Data (.sav) files. This wraps the functionality exposed by the spssio32.dll native library that comes with SPSS.
 
 [SPSS][1] is a statistical software application popular among students and researchers.
