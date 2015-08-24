@@ -38,28 +38,28 @@
     <ProjectReference Include="..\Spss\Spss.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Resources\win32\icudt38.dll">
+    <Content Include="..\..\lib\win32\icudt38.dll">
       <Link>NativeBinaries\win32\icudt38.dll</Link>
     </Content>
-    <Content Include="..\Resources\win32\icuin38.dll">
+    <Content Include="..\..\lib\win32\icuin38.dll">
       <Link>NativeBinaries\win32\icuin38.dll</Link>
     </Content>
-    <Content Include="..\Resources\win32\icuuc38.dll">
+    <Content Include="..\..\lib\win32\icuuc38.dll">
       <Link>NativeBinaries\win32\icuuc38.dll</Link>
     </Content>
-    <Content Include="..\Resources\win32\spssio32.dll">
+    <Content Include="..\..\lib\win32\spssio32.dll">
       <Link>NativeBinaries\win32\spssio32.dll</Link>
     </Content>
-    <Content Include="..\Resources\win64\icudt38.dll">
+    <Content Include="..\..\lib\win64\icudt38.dll">
       <Link>NativeBinaries\win64\icudt38.dll</Link>
     </Content>
-    <Content Include="..\Resources\win64\icuin38.dll">
+    <Content Include="..\..\lib\win64\icuin38.dll">
       <Link>NativeBinaries\win64\icuin38.dll</Link>
     </Content>
-    <Content Include="..\Resources\win64\icuuc38.dll">
+    <Content Include="..\..\lib\win64\icuuc38.dll">
       <Link>NativeBinaries\win64\icuuc38.dll</Link>
     </Content>
-    <Content Include="..\Resources\win64\spssio64.dll">
+    <Content Include="..\..\lib\win64\spssio64.dll">
       <Link>NativeBinaries\win64\spssio64.dll</Link>
     </Content>
     <Content Include="IBM SPSSIO DLL License.rtf" />

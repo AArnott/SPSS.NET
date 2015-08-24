@@ -40,16 +40,17 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <BaseIntermediateOutputPath>..\..\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\Debug\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>bin\Debug\Spss.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Debug\Spss.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -62,14 +63,14 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\Release\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\Release\Spss.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Release\Spss.xml</DocumentationFile>
     <DebugSymbols>false</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -83,7 +84,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'SPSS test|AnyCPU' ">
-    <OutputPath>bin\SPSS test\</OutputPath>
+    <OutputPath>..\..\bin\SPSS test\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -91,7 +92,7 @@
     </ConfigurationOverrideFile>
     <DefineConstants>
     </DefineConstants>
-    <DocumentationFile>SPSS.net.xml</DocumentationFile>
+    <DocumentationFile>..\..\SPSS.net.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -229,83 +230,83 @@
     <EmbeddedResource Include="blankDdi.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Resources\documents\Input-Output Module.pdf">
+    <Content Include="..\..\lib\documents\Input-Output Module.pdf">
       <Link>documents\Input-Output Module.pdf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_cs.rtf">
+    <Content Include="..\..\lib\license\LA_cs.rtf">
       <Link>license\LA_cs.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_de.rtf">
+    <Content Include="..\..\lib\license\LA_de.rtf">
       <Link>license\LA_de.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_el.rtf">
+    <Content Include="..\..\lib\license\LA_el.rtf">
       <Link>license\LA_el.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_en.rtf">
+    <Content Include="..\..\lib\license\LA_en.rtf">
       <Link>license\LA_en.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_es.rtf">
+    <Content Include="..\..\lib\license\LA_es.rtf">
       <Link>license\LA_es.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_fr.rtf">
+    <Content Include="..\..\lib\license\LA_fr.rtf">
       <Link>license\LA_fr.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_it.rtf">
+    <Content Include="..\..\lib\license\LA_it.rtf">
       <Link>license\LA_it.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_ja.rtf">
+    <Content Include="..\..\lib\license\LA_ja.rtf">
       <Link>license\LA_ja.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_ko.rtf">
+    <Content Include="..\..\lib\license\LA_ko.rtf">
       <Link>license\LA_ko.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_lt.rtf">
+    <Content Include="..\..\lib\license\LA_lt.rtf">
       <Link>license\LA_lt.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_pl.rtf">
+    <Content Include="..\..\lib\license\LA_pl.rtf">
       <Link>license\LA_pl.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_pt.rtf">
+    <Content Include="..\..\lib\license\LA_pt.rtf">
       <Link>license\LA_pt.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_ru.rtf">
+    <Content Include="..\..\lib\license\LA_ru.rtf">
       <Link>license\LA_ru.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_sl.rtf">
+    <Content Include="..\..\lib\license\LA_sl.rtf">
       <Link>license\LA_sl.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_tr.rtf">
+    <Content Include="..\..\lib\license\LA_tr.rtf">
       <Link>license\LA_tr.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_zh.rtf">
+    <Content Include="..\..\lib\license\LA_zh.rtf">
       <Link>license\LA_zh.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\LA_zh_TW.rtf">
+    <Content Include="..\..\lib\license\LA_zh_TW.rtf">
       <Link>license\LA_zh_TW.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\notices.rtf">
+    <Content Include="..\..\lib\license\notices.rtf">
       <Link>license\notices.rtf</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\license\REDIST">
+    <Content Include="..\..\lib\license\REDIST">
       <Link>license\REDIST</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -329,39 +330,39 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Resources\win64\icudt38.dll">
+    <Content Include="..\..\lib\win64\icudt38.dll">
       <Link>win64\icudt38.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\win64\icuin38.dll">
+    <Content Include="..\..\lib\win64\icuin38.dll">
       <Link>win64\icuin38.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\win64\icuuc38.dll">
+    <Content Include="..\..\lib\win64\icuuc38.dll">
       <Link>win64\icuuc38.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\win64\spssio64.dll">
+    <Content Include="..\..\lib\win64\spssio64.dll">
       <Link>win64\spssio64.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\win32\icudt38.dll">
+    <Content Include="..\..\lib\win32\icudt38.dll">
       <Link>win32\icudt38.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\win32\icuin38.dll">
+    <Content Include="..\..\lib\win32\icuin38.dll">
       <Link>win32\icuin38.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\win32\icuuc38.dll">
+    <Content Include="..\..\lib\win32\icuuc38.dll">
       <Link>win32\icuuc38.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\win32\spssio32.dll">
+    <Content Include="..\..\lib\win32\spssio32.dll">
       <Link>win32\spssio32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\NuProj.0.10.0-beta-gfdf934ba23\tools\Microsoft.Common.NuProj.targets" Condition=" Exists('..\packages\NuProj.0.10.0-beta-gfdf934ba23\tools\Microsoft.Common.NuProj.targets') " />
+  <Import Project="..\..\packages\NuProj.0.10.0-beta-gfdf934ba23\tools\Microsoft.Common.NuProj.targets" Condition=" Exists('..\..\packages\NuProj.0.10.0-beta-gfdf934ba23\tools\Microsoft.Common.NuProj.targets') " />
 </Project>

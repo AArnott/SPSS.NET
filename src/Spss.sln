@@ -5,9 +5,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A3031523-E511-4728-87FF-0E012D1BCB84}"
 	ProjectSection(SolutionItems) = preProject
 		demo.sav = demo.sav
-		localtestrun.testrunconfig = localtestrun.testrunconfig
-		nuget.config = nuget.config
-		Spss.vsmdi = Spss.vsmdi
+		..\nuget.config = ..\nuget.config
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spss", "Spss\Spss.csproj", "{230E956E-FB2D-448E-AD4A-E90CB4BE2092}"
