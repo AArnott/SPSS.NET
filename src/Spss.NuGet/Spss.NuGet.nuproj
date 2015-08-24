@@ -16,6 +16,8 @@
   <PropertyGroup>
     <NuProjPath>..\..\packages\NuProj.0.10.0-beta-gfdf934ba23\tools\</NuProjPath>
     <VersionDependsOn>$(VersionDependsOn);GetNuPkgVersion</VersionDependsOn>
+    <OutDir>..\..\bin\$(Configuration)\</OutDir>
+    <IntermediateOutputPath>..\..\obj\$(MSBuildProjectName)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
