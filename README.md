@@ -1,6 +1,6 @@
 # SPSS .NET Interop library
 
-[![Build status](https://ci.appveyor.com/api/projects/status/9b4wxncod4krpsa8?svg=true)](https://ci.appveyor.com/project/AArnott/spss-net)
+[![Build status](https://andrewarnott.visualstudio.com/DefaultCollection/_apis/public/build/definitions/c4c7c7c9-74aa-4d88-9a4b-6f4b9e79002a/2/badge)](https://andrewarnott.visualstudio.com/DefaultCollection/GitHub/_build#)
 
 A .NET library for read/writing SPSS Data (.sav) files. This wraps the functionality exposed by the spssio32.dll native library that comes with SPSS.
 
