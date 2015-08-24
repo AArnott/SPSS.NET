@@ -120,7 +120,6 @@
     <Compile Include="SpssVariablesCollectionTest.cs" />
     <Compile Include="SpssVariableTest.cs" />
     <Compile Include="TestBase.cs" />
-    <Compile Include="VSCodeGenAccessors.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spss\Spss.csproj">
