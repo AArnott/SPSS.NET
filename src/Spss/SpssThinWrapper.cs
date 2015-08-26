@@ -3130,6 +3130,40 @@ namespace Spss
         protected static spssSetVarNValueLabelDelegate spssSetVarNValueLabelImpl;
 
         /// <summary>
+        /// Defines a set of value labels for numeric variables.
+        /// </summary>
+        /// <param name="handle">Handle to the data file.</param>
+        /// <param name="varNames">Array of pointers to variable names.</param>
+        /// <param name="numVars">Number of variables.</param>
+        /// <param name="values">Array of values.</param>
+        /// <param name="labels">Array of pointers to labels.</param>
+        /// <param name="numLabels">Number of labels or values.</param>
+        /// <returns>
+        /// <see cref="ReturnCode.SPSS_OK"/>,
+        /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
+        /// <see cref="ReturnCode.SPSS_OPEN_RDMODE"/>,
+        /// <see cref="ReturnCode.SPSS_DICT_COMMIT"/>,
+        /// <see cref="ReturnCode.SPSS_NO_VARIABLES"/>,
+        /// <see cref="ReturnCode.SPSS_NO_LABELS"/>,
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
+        /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>,
+        /// <see cref="ReturnCode.SPSS_NUME_EXP"/>,
+        /// <see cref="ReturnCode.SPSS_DUP_VALUE"/>,
+        /// <see cref="ReturnCode.SPSS_NO_MEMORY"/>, or
+        /// <see cref="ReturnCode.SPSS_INTERNAL_VLABS"/>.
+        /// </returns>
+        /// <remarks>
+        /// This function defines a set of value labels for one or more numeric variables.
+        /// Value labels already defined for any of the given variable(s), if any,
+        /// are discarded (if the labels are shared with other variables, 
+        /// they remain associated with those variables). 
+        /// </remarks>
+        [CLSCompliant(false)]
+        unsafe protected delegate ReturnCode spssSetVarNValueLabelsDelegate(int handle, char** varNames, int numVars, double* values, char** labels, int numLabels);
+        [CLSCompliant(false)]
+        protected static spssSetVarNValueLabelsDelegate spssSetVarNValueLabelsImpl;
+
+        /// <summary>
         /// Sets the print format of a variable.
         /// </summary>
         /// <param name="handle">
@@ -3412,6 +3446,7 @@ namespace Spss
             spssSetVarNameImpl = (spssSetVarNameDelegate)GetSpssDelegate("spssSetVarName", typeof(spssSetVarNameDelegate));
             spssSetVarNMissingValuesImpl = (spssSetVarNMissingValuesDelegate)GetSpssDelegate("spssSetVarNMissingValues", typeof(spssSetVarNMissingValuesDelegate));
             spssSetVarNValueLabelImpl = (spssSetVarNValueLabelDelegate)GetSpssDelegate("spssSetVarNValueLabel", typeof(spssSetVarNValueLabelDelegate));
+            spssSetVarNValueLabelsImpl = (spssSetVarNValueLabelsDelegate)GetSpssDelegate("spssSetVarNValueLabels", typeof(spssSetVarNValueLabelsDelegate));
             spssSetVarPrintFormatImpl = (spssSetVarPrintFormatDelegate)GetSpssDelegate("spssSetVarPrintFormat", typeof(spssSetVarPrintFormatDelegate));
             spssSetVarWriteFormatImpl = (spssSetVarWriteFormatDelegate)GetSpssDelegate("spssSetVarWriteFormat", typeof(spssSetVarWriteFormatDelegate));
             spssSysmisValImpl = (spssSysmisValDelegate)GetSpssDelegate("spssSysmisVal", typeof(spssSysmisValDelegate));
