@@ -1357,6 +1357,57 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetVarCValueLabelImpl(handle, ref varName, ref value, ref label);
         }
+
+        /// <summary>
+        /// Defines a set of value labels for string variables.
+        /// </summary>
+        /// <param name="handle">Handle to the data file.</param>
+        /// <param name="varNames">Variable names.</param>
+        /// <param name="values">Values.</param>
+        /// <param name="labels">Labels.</param>
+        /// <returns>
+        /// <see cref="ReturnCode.SPSS_OK"/>,
+        /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
+        /// <see cref="ReturnCode.SPSS_OPEN_RDMODE"/>,
+        /// <see cref="ReturnCode.SPSS_DICT_COMMIT"/>,
+        /// <see cref="ReturnCode.SPSS_NO_VARIABLES"/>,
+        /// <see cref="ReturnCode.SPSS_NO_LABELS"/>,
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
+        /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>,
+        /// <see cref="ReturnCode.SPSS_STR_EXP"/>,
+        /// <see cref="ReturnCode.SPSS_SHORTSTR_EXP"/>,
+        /// <see cref="ReturnCode.SPSS_EXC_STRVALUE"/>,
+        /// <see cref="ReturnCode.SPSS_DUP_VALUE"/>,
+        /// <see cref="ReturnCode.SPSS_NO_MEMORY"/>, or
+        /// <see cref="ReturnCode.SPSS_INTERNAL_VLABS"/>.
+        /// </returns>
+        /// <remarks>
+        /// This function defines a set of value labels for one or more short string variables.
+        /// Value labels already defined for any of the given variable(s), if any, are discarded
+        /// (if the labels are shared with other variables, they remain associated).
+        /// </remarks>
+        public static ReturnCode spssSetVarCValueLabels(int handle, string[] varNames, string[] values, string[] labels)
+        {
+            unsafe
+            {
+                char** _vars = stackalloc char*[varNames.Length],
+                    _values = stackalloc char*[values.Length],
+                    _labels = stackalloc char*[labels.Length];
+
+                for (int i = 0; i < varNames.Length; i++) _vars[i] = (char*)Marshal.StringToHGlobalAnsi(varNames[i]);
+                for (int i = 0; i < varNames.Length; i++) _values[i] = (char*)Marshal.StringToHGlobalAnsi(values[i]);
+                for (int i = 0; i < labels.Length; i++) _labels[i] = (char*)Marshal.StringToHGlobalAnsi(labels[i]);
+
+                ReturnCode result = SpssThinWrapper.spssSetVarCValueLabelsImpl(handle, _vars, varNames.Length, _values, _labels, labels.Length);
+
+                for (int i = 0; i < varNames.Length; i++) Marshal.FreeHGlobal((IntPtr)_vars[i]);
+                for (int i = 0; i < values.Length; i++) Marshal.FreeHGlobal((IntPtr)_values[i]);
+                for (int i = 0; i < labels.Length; i++) Marshal.FreeHGlobal((IntPtr)_labels[i]);
+
+                return result;
+            }
+        }
+
         /// <summary>
         /// Sets the variable sets information in a data file.
         /// </summary>

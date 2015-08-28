@@ -2894,6 +2894,41 @@ namespace Spss
         protected static spssSetVarCValueLabelDelegate spssSetVarCValueLabelImpl;
 
         /// <summary>
+        /// Defines a set of value labels for string variables.
+        /// </summary>
+        /// <param name="handle">Handle to the data file.</param>
+        /// <param name="varNames">Array of pointers to variable names.</param>
+        /// <param name="numVars">Number of variables.</param>
+        /// <param name="values">Array of pointers to values.</param>
+        /// <param name="labels">Array of pointers to labels.</param>
+        /// <param name="numLabels">Number of labels or values.</param>
+        /// <returns>
+        /// <see cref="ReturnCode.SPSS_OK"/>,
+        /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
+        /// <see cref="ReturnCode.SPSS_OPEN_RDMODE"/>,
+        /// <see cref="ReturnCode.SPSS_DICT_COMMIT"/>,
+        /// <see cref="ReturnCode.SPSS_NO_VARIABLES"/>,
+        /// <see cref="ReturnCode.SPSS_NO_LABELS"/>,
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
+        /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>,
+        /// <see cref="ReturnCode.SPSS_STR_EXP"/>,
+        /// <see cref="ReturnCode.SPSS_SHORTSTR_EXP"/>,
+        /// <see cref="ReturnCode.SPSS_EXC_STRVALUE"/>,
+        /// <see cref="ReturnCode.SPSS_DUP_VALUE"/>,
+        /// <see cref="ReturnCode.SPSS_NO_MEMORY"/>, or
+        /// <see cref="ReturnCode.SPSS_INTERNAL_VLABS"/>.
+        /// </returns>
+        /// <remarks>
+        /// This function defines a set of value labels for one or more short string variables.
+        /// Value labels already defined for any of the given variable(s), if any, are discarded
+        /// (if the labels are shared with other variables, they remain associated).
+        /// </remarks>
+        [CLSCompliant(false)]
+        unsafe protected delegate ReturnCode spssSetVarCValueLabelsDelegate(int handle, char** varNames, int numVars, char** values, char** labels, int numLabels);
+        [CLSCompliant(false)]
+        protected static spssSetVarCValueLabelsDelegate spssSetVarCValueLabelsImpl;
+
+        /// <summary>
         /// Sets the variable sets information in a data file.
         /// </summary>
         /// <param name="handle">
@@ -3440,6 +3475,7 @@ namespace Spss
             spssSetVarCMissingValuesImpl = (spssSetVarCMissingValuesDelegate)GetSpssDelegate("spssSetVarCMissingValues", typeof(spssSetVarCMissingValuesDelegate));
             spssSetVarColumnWidthImpl = (spssSetVarColumnWidthDelegate)GetSpssDelegate("spssSetVarColumnWidth", typeof(spssSetVarColumnWidthDelegate));
             spssSetVarCValueLabelImpl = (spssSetVarCValueLabelDelegate)GetSpssDelegate("spssSetVarCValueLabel", typeof(spssSetVarCValueLabelDelegate));
+            spssSetVarCValueLabelsImpl = (spssSetVarCValueLabelsDelegate)GetSpssDelegate("spssSetVarCValueLabels", typeof(spssSetVarCValueLabelsDelegate));
             spssSetVariableSetsImpl = (spssSetVariableSetsDelegate)GetSpssDelegate("spssSetVariableSets", typeof(spssSetVariableSetsDelegate));
             spssSetVarLabelImpl = (spssSetVarLabelDelegate)GetSpssDelegate("spssSetVarLabel", typeof(spssSetVarLabelDelegate));
             spssSetVarMeasureLevelImpl = (spssSetVarMeasureLevelDelegate)GetSpssDelegate("spssSetVarMeasureLevel", typeof(spssSetVarMeasureLevelDelegate));
