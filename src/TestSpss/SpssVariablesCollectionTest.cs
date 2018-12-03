@@ -116,7 +116,7 @@ namespace Spss.Testing
             SpssVariable var = new SpssStringVariable();
             var.Name = "var1";
             docWrite.Variables.Add(var);
-            Assert.Equal(1, docWrite.Variables.Count);
+            Assert.Single(docWrite.Variables);
         }
         [SkippableFact]
         public void CommitVariableToNewFile()

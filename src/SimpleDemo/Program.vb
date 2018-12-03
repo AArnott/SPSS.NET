@@ -1,3 +1,6 @@
+Imports System.IO
+Imports Spss
+
 Friend Module Program
 
     Public Sub Main()

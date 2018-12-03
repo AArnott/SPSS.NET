@@ -1,21 +1,22 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A3031523-E511-4728-87FF-0E012D1BCB84}"
 	ProjectSection(SolutionItems) = preProject
 		demo.sav = demo.sav
-		..\nuget.config = ..\nuget.config
-		..\version.txt = ..\version.txt
+		Directory.Build.props = Directory.Build.props
+		nuget.config = nuget.config
+		stylecop.json = stylecop.json
+		version.json = version.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spss", "Spss\Spss.csproj", "{230E956E-FB2D-448E-AD4A-E90CB4BE2092}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spss", "Spss\Spss.csproj", "{230E956E-FB2D-448E-AD4A-E90CB4BE2092}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSpss", "TestSpss\TestSpss.csproj", "{87954EEF-2A60-444B-A1D0-1E94C2C663F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSpss", "TestSpss\TestSpss.csproj", "{87954EEF-2A60-444B-A1D0-1E94C2C663F1}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SimpleDemo", "SimpleDemo\SimpleDemo.vbproj", "{7D996EAE-1C78-4E18-954F-882BE7AA6E99}"
-EndProject
-Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "Spss.NuGet", "Spss.NuGet\Spss.NuGet.nuproj", "{1789BA74-560B-4696-A1A7-B7A4FC2E47D0}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SimpleDemo", "SimpleDemo\SimpleDemo.vbproj", "{7D996EAE-1C78-4E18-954F-882BE7AA6E99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,27 +29,26 @@ Global
 		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.Release|Any CPU.Build.0 = Release|Any CPU
-		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.SPSS test|Any CPU.ActiveCfg = SPSS test|Any CPU
-		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.SPSS test|Any CPU.Build.0 = SPSS test|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.SPSS test|Any CPU.ActiveCfg = Release|Any CPU
+		{230E956E-FB2D-448E-AD4A-E90CB4BE2092}.SPSS test|Any CPU.Build.0 = Release|Any CPU
 		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.SPSS test|Any CPU.ActiveCfg = Release|x86
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.SPSS test|Any CPU.ActiveCfg = Release|Any CPU
+		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.SPSS test|Any CPU.Build.0 = Release|Any CPU
 		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.SPSS test|Any CPU.ActiveCfg = Release|x86
-		{1789BA74-560B-4696-A1A7-B7A4FC2E47D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1789BA74-560B-4696-A1A7-B7A4FC2E47D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1789BA74-560B-4696-A1A7-B7A4FC2E47D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1789BA74-560B-4696-A1A7-B7A4FC2E47D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1789BA74-560B-4696-A1A7-B7A4FC2E47D0}.SPSS test|Any CPU.ActiveCfg = Debug|Any CPU
-		{1789BA74-560B-4696-A1A7-B7A4FC2E47D0}.SPSS test|Any CPU.Build.0 = Debug|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.SPSS test|Any CPU.ActiveCfg = Release|Any CPU
+		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.SPSS test|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D41D3C7-8DE2-42CC-9B10-232F927D954B}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Spss.vsmdi
