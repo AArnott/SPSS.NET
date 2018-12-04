@@ -98,13 +98,7 @@ namespace Spss
         /// <summary>
         /// Gets the original <see cref="ReturnCode">SPSS error code</see> returned that caused this exception.
         /// </summary>
-        public ReturnCode SpssResultCode
-        {
-            get
-            {
-                return spssResultCode;
-            }
-        }
+        public ReturnCode SpssResultCode => spssResultCode;
         #endregion
     }
 }

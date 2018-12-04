@@ -1,15 +1,10 @@
 using System;
-using System.Data;
-using System.Data.SqlClient;
-using System.IO;
-using System.Threading;
-using System.Diagnostics;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Xml;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 
 namespace Spss
 {
@@ -22,7 +17,7 @@ namespace Spss
         /// <summary>
         /// The callback method for when the process is complete.
         /// </summary>
-        protected EventHandler NotifyDoneCallback { get { return notifyDoneCallback; } }
+        protected EventHandler NotifyDoneCallback => notifyDoneCallback;
 
         #region Construction
         /// <summary>

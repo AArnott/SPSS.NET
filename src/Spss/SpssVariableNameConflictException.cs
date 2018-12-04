@@ -64,12 +64,12 @@ namespace Spss
         /// <summary>
         /// The original variable name that was acceptable, if applicable.
         /// </summary>
-        public string OldVarName { get { return oldVarName; } }
+        public string OldVarName => oldVarName;
         private readonly string newVarName;
         /// <summary>
         /// The new name of the variable being changed, which caused the conflict.
         /// </summary>
-        public string NewVarName { get { return newVarName; } }
+        public string NewVarName => newVarName;
         #endregion
     }
 }

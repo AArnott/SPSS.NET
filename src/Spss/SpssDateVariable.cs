@@ -70,13 +70,7 @@ namespace Spss
         /// <summary>
         /// Gets the SPSS type for the variable.
         /// </summary>
-        public override int SpssType
-        {
-            get
-            {
-                return 0; // date variables are numerics
-            }
-        }
+        public override int SpssType => 0; // date variables are numerics
 
         public virtual FormatTypeCode WriteFormat
         {

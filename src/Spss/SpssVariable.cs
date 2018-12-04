@@ -81,20 +81,20 @@ namespace Spss
 
         #region Attributes
         private bool committedThisSession = false;
-        internal bool CommittedThisSession { get { return committedThisSession; } }
+        internal bool CommittedThisSession => committedThisSession;
         /// <summary>
         /// Gets a value indicating whether this variable has been added to a collection yet.
         /// </summary>
-        protected internal bool IsInCollection { get { return Variables != null; } }
+        protected internal bool IsInCollection => Variables != null;
         /// <summary>
         /// Gets a value indicating whether this variable has been committed to the SPSS data file.
         /// </summary>
-        protected internal bool IsCommitted { get { return Handle >= 0; } }
+        protected internal bool IsCommitted => Handle >= 0;
         private SpssVariablesCollection variables;
         /// <summary>
         /// The collection of variables to which this one belongs.
         /// </summary>
-        public SpssVariablesCollection Variables { get { return variables; } }
+        public SpssVariablesCollection Variables => variables;
         /// <summary>
         /// The file handle of the SPSS data document whose variables are being managed.
         /// </summary>
@@ -111,13 +111,7 @@ namespace Spss
         /// <summary>
         /// The variable handle assigned by SPSS for this variable.
         /// </summary>
-        protected double Handle
-        {
-            get
-            {
-                return variableHandle;
-            }
-        }
+        protected double Handle => variableHandle;
         private string name;
         /// <summary>
         /// Gets the name of the variable.

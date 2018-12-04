@@ -21,7 +21,7 @@ namespace Spss
         /// <summary>
         /// The variable hosting this collection.
         /// </summary>
-        protected new SpssStringVariable Variable { get { return (SpssStringVariable)base.Variable; } }
+        protected new SpssStringVariable Variable => (SpssStringVariable)base.Variable;
 
         /// <summary>
         /// Gets a value indicating whether this string variable can have value labels.
@@ -31,13 +31,7 @@ namespace Spss
         /// <see cref="SpssThinWrapper.SPSS_MAX_SHORTSTRING"/> characters
         /// in length..
         /// </remarks>
-        public bool Applies
-        {
-            get
-            {
-                return Variable.Length <= SpssSafeWrapper.SPSS_MAX_SHORTSTRING;
-            }
-        }
+        public bool Applies => Variable.Length <= SpssSafeWrapper.SPSS_MAX_SHORTSTRING;
         #endregion
 
         #region Operations

@@ -48,13 +48,7 @@ namespace Spss
         /// <summary>
         /// Gets the variables in the document.
         /// </summary>
-        protected SpssVariablesCollection Variables
-        {
-            get
-            {
-                return Cases.Document.Variables;
-            }
-        }
+        protected SpssVariablesCollection Variables => Cases.Document.Variables;
 
         /// <summary>
         /// Gets or sets the value of some variable on this row.

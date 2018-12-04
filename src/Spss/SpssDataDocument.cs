@@ -103,13 +103,7 @@ namespace Spss
         /// <summary>
         /// Gets a value indicating whether this document has been closed.
         /// </summary>
-        public bool IsClosed
-        {
-            get
-            {
-                return this.Handle.IsClosed;
-            }
-        }
+        public bool IsClosed => this.Handle.IsClosed;
 
         /// <summary>
         /// Gets or sets a value indicating whether the SPSS file is compressed on disk.
@@ -149,13 +143,7 @@ namespace Spss
         /// Setting a numeric variable to this value is equivalent in purpose
         /// to setting DBNull.Value in a database.
         /// </remarks>
-        protected internal static double SystemMissingValue
-        {
-            get
-            {
-                return SpssThinWrapper.spssSysmisValImpl();
-            }
-        }
+        protected internal static double SystemMissingValue => SpssThinWrapper.spssSysmisValImpl();
 
         /// <summary>
         /// Gets the SPSS file handle for the open document.

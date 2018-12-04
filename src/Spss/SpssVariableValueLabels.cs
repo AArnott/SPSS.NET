@@ -39,13 +39,7 @@ namespace Spss
         /// <summary>
         /// Gets a value indicating whether this list of value labels is read only.
         /// </summary>
-        public bool IsReadOnly
-        {
-            get
-            {
-                return Variable.Variables != null && Variable.Variables.IsReadOnly;
-            }
-        }
+        public bool IsReadOnly => Variable.Variables != null && Variable.Variables.IsReadOnly;
 
         /// <summary>
         /// The variable whose labels are being listed.
@@ -55,13 +49,7 @@ namespace Spss
         /// <summary>
         /// Gets the SPSS file handle of the data document.
         /// </summary>
-        protected int FileHandle
-        {
-            get
-            {
-                return Variable.Variables.Document.Handle;
-            }
-        }
+        protected int FileHandle => Variable.Variables.Document.Handle;
 
         /// <summary>
         /// Gets or sets the response label for some response value.
@@ -194,19 +182,13 @@ namespace Spss
             return this.ValuesLabels.ContainsKey(key);
         }
 
-        public ICollection<TKey> Keys
-        {
-            get { return this.ValuesLabels.Keys; }
-        }
+        public ICollection<TKey> Keys => this.ValuesLabels.Keys;
 
         public bool TryGetValue(TKey key, out string value)
         {
             return this.ValuesLabels.TryGetValue(key, out value);
         }
-        public ICollection<string> Values
-        {
-            get { return this.ValuesLabels.Values; }
-        }
+        public ICollection<string> Values => this.ValuesLabels.Values;
 
         #endregion
 

@@ -87,13 +87,7 @@ namespace Spss
         /// <summary>
         /// Gets the SPSS type for the variable.
         /// </summary>
-        public override int SpssType
-        {
-            get
-            {
-                return Length;
-            }
-        }
+        public override int SpssType => Length;
 
         /// <summary>
         /// Gets or sets the data value of this variable within a specific case.
@@ -118,10 +112,7 @@ namespace Spss
         /// <summary>
         /// The set of value labels (response values and labels) that are defined.
         /// </summary>
-        public IDictionary<string, string> ValueLabels
-        {
-            get { return this.valueLabels; }
-        }
+        public IDictionary<string, string> ValueLabels => this.valueLabels;
 
         /// <summary>
         /// Updates the changed attributes of the variable within SPSS.

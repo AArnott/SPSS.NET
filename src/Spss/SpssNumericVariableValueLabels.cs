@@ -2,7 +2,6 @@ namespace Spss
 {
     using System;
     using System.Diagnostics;
-    using System.Collections;
 
     /// <summary>
     /// A collection of value labels for a <see cref="SpssNumericVariable"/>.

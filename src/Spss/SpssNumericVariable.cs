@@ -80,13 +80,7 @@ namespace Spss
         /// <summary>
         /// Gets the SPSS type for the variable.
         /// </summary>
-        public override int SpssType
-        {
-            get
-            {
-                return 0; // 0 = numeric to SPSS
-            }
-        }
+        public override int SpssType => 0; // 0 = numeric to SPSS
 
         public virtual FormatTypeCode WriteFormat
         {
@@ -199,10 +193,7 @@ namespace Spss
         /// <summary>
         /// The set of value labels (response values and labels) that are defined.
         /// </summary>
-        public IDictionary<double, string> ValueLabels
-        {
-            get { return this.valueLabels; }
-        }
+        public IDictionary<double, string> ValueLabels => this.valueLabels;
 
         /// <summary>
         /// Gets or sets the data value of this variable within a specific case.

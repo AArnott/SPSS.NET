@@ -54,10 +54,7 @@ namespace Spss
         /// <summary>
         /// The file handle of the SPSS data document whose variables are being managed.
         /// </summary>
-        private Int32 FileHandle
-        {
-            get { return this.Document.Handle; }
-        }
+        private Int32 FileHandle => this.Document.Handle;
 
         /// <summary>
         /// Gets a value indicating whether a variable has been added to this document.
@@ -371,15 +368,9 @@ namespace Spss
             }
         }
 
-        public int Count
-        {
-            get { return this.variables.Count; }
-        }
+        public int Count => this.variables.Count;
 
-        public bool IsReadOnly
-        {
-            get { return !this.Document.IsAuthoringDictionary; }
-        }
+        public bool IsReadOnly => !this.Document.IsAuthoringDictionary;
 
         #endregion
 
