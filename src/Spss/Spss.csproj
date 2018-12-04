@@ -5,7 +5,6 @@
     <AssemblyOriginatorKeyFile>NerdBank-public.snk</AssemblyOriginatorKeyFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CodeAnalysisRuleSet>Spss.ruleset</CodeAnalysisRuleSet>
-    <NoWarn>$(NoWarn);NU5125</NoWarn>
 
     <PackageId>SPSS.NET</PackageId>
     <Description>Utilities for accessing SPSS .SAV files using managed code.</Description>
@@ -13,6 +12,7 @@
     <Company>Andrew Arnott</Company>
     <Authors>Andrew Arnott</Authors>
     <PackageProjectUrl>https://github.com/aarnott/spss.net</PackageProjectUrl>
+    <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
     <Copyright>© Andrew Arnott. All rights reserved.</Copyright>
   </PropertyGroup>
   <ItemGroup>
@@ -26,9 +26,4 @@
     </None>
     <None Include="..\..\lib\IBM SPSSIO DLL License.rtf" Pack="true" PackagePath="" />
   </ItemGroup>
-  <Target Name="SetNuSpecProperties" BeforeTargets="GenerateNuspec" DependsOnTargets="GetBuildVersion">
-    <PropertyGroup>
-      <PackageLicenseUrl>https://raw.githubusercontent.com/aarnott/spss.net/$(GitCommitIdShort)/LICENSE</PackageLicenseUrl>
-    </PropertyGroup>
-  </Target>
 </Project>
