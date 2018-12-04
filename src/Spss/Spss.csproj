@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.SDK">
+﻿<Project Sdk="Microsoft.NET.SDK">
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <SignAssembly>true</SignAssembly>
@@ -19,10 +19,14 @@
     <None Include="..\..\lib\win32\**">
       <LinkBase>win32</LinkBase>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>runtimes/win7-x86/native</PackagePath>
     </None>
     <None Include="..\..\lib\win64\**">
       <LinkBase>win64</LinkBase>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>runtimes/win7-x64/native</PackagePath>
     </None>
     <None Include="..\..\lib\IBM SPSSIO DLL License.rtf" Pack="true" PackagePath="" />
   </ItemGroup>
