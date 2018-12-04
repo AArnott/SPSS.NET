@@ -2,7 +2,7 @@
 
 [![Build Status](https://dev.azure.com/andrewarnott/OSS/_apis/build/status/SPSS.NET)](https://dev.azure.com/andrewarnott/OSS/_build/latest?definitionId=23&branchName=master)
 
-Unofficial [![NuGet package](https://img.shields.io/nuget/v/SPSS.NET.svg)](https://nuget.org/packages/SPSS.NET)
+[![NuGet package](https://img.shields.io/nuget/v/SPSS.NET.svg)](https://nuget.org/packages/SPSS.NET)
 
 A .NET library for read/writing SPSS Data (.sav) files. This wraps the functionality exposed by the spssio32.dll native library that comes with SPSS.
 
