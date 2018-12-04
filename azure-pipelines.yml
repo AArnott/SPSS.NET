@@ -1,0 +1,53 @@
+trigger:
+  branches:
+    include: ["master"]
+  paths:
+    exclude: ["doc", "*.md"]
+
+variables:
+  TreatWarningsAsErrors: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  BuildConfiguration: Release
+  BuildPlatform: Any CPU
+
+queue: Hosted VS2017
+
+steps:
+- script: |
+    dotnet tool install --tool-path . nbgv
+    .\nbgv cloud -p src
+  displayName: Set build number
+  condition: ne(variables['system.pullrequest.isfork'], true)
+
+- script: dotnet --info
+  displayName: Show dotnet SDK info
+
+- script: dotnet restore src
+  displayName: Restore packages
+
+- script: |
+    dotnet build src --no-restore -c $(BuildConfiguration)
+    dotnet pack src --no-build -c $(BuildConfiguration) -o "$(Build.ArtifactStagingDirectory)/deployables"
+  displayName: Build
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: $(Build.ArtifactStagingDirectory)/deployables
+    ArtifactName: deployables
+    ArtifactType: Container
+  displayName: Publish deployables artifacts
+  condition: and(succeeded(), ne(variables['system.pullrequest.isfork'], true))
+
+- task: DotNetCoreCLI@2
+  displayName: Test x86
+  inputs:
+    command: test
+    projects: src/TestSpss
+    arguments: -c $(BuildConfiguration) --no-restore /p:platform=x86 -v n
+
+- task: DotNetCoreCLI@2
+  displayName: Test x64
+  inputs:
+    command: test
+    projects: src/TestSpss
+    arguments: -c $(BuildConfiguration) --no-restore /p:platform=x64 -v n
