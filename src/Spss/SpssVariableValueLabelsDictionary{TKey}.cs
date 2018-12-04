@@ -1,16 +1,20 @@
+﻿// Copyright (c) Andrew Arnott. All rights reserved.
+
 namespace Spss
 {
     using System;
-    using System.Diagnostics;
     using System.Collections;
-    using System.Collections.Specialized;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.Diagnostics;
 
     /// <summary>
     /// A collection of value labels for a <see cref="SpssVariable"/>.
     /// </summary>
     public abstract class SpssVariableValueLabelsDictionary<TKey> : IDictionary<TKey, string>
     {
+        private readonly Dictionary<TKey, string> ValuesLabels;
+
         /// <summary>
         /// Tracks whether the value labels have been initialized from a data file yet.
         /// </summary>
@@ -18,10 +22,8 @@ namespace Spss
 
         private bool isLoading = false;
 
-        private readonly Dictionary<TKey, string> ValuesLabels;
-
         /// <summary>
-        /// Creates an instance of the <see cref="SpssVariableValueLabelsDictionary&lt;TKey&gt;"/> class.
+        /// Initializes a new instance of the <see cref="SpssVariableValueLabelsDictionary{TKey}"/> class.
         /// </summary>
         /// <param name="variable">The hosting variable</param>
         /// <param name="comparer">The comparer; may be <c>null</c>.</param>
@@ -39,17 +41,17 @@ namespace Spss
         /// <summary>
         /// Gets a value indicating whether this list of value labels is read only.
         /// </summary>
-        public bool IsReadOnly => Variable.Variables != null && Variable.Variables.IsReadOnly;
+        public bool IsReadOnly => this.Variable.Variables != null && this.Variable.Variables.IsReadOnly;
 
         /// <summary>
-        /// The variable whose labels are being listed.
+        /// Gets the variable whose labels are being listed.
         /// </summary>
         protected SpssVariable Variable { get; private set; }
 
         /// <summary>
         /// Gets the SPSS file handle of the data document.
         /// </summary>
-        protected int FileHandle => Variable.Variables.Document.Handle;
+        protected int FileHandle => this.Variable.Variables.Document.Handle;
 
         /// <summary>
         /// Gets or sets the response label for some response value.
@@ -109,13 +111,15 @@ namespace Spss
         protected abstract void LoadFromSpssFile();
 
         /// <summary>
-        /// Throws an <see cref="InvalidOperationException"/> if the list of 
+        /// Throws an <see cref="InvalidOperationException"/> if the list of
         /// value labels should not be altered at this state.
         /// </summary>
         protected void EnsureNotReadOnly()
         {
-            if (IsReadOnly && !isLoading)
+            if (this.IsReadOnly && !this.isLoading)
+            {
                 throw new InvalidOperationException("Cannot perform this operation after dictionary has been committed.");
+            }
         }
 
         /// <summary>
@@ -123,11 +127,20 @@ namespace Spss
         /// </summary>
         public void CopyTo(SpssVariableValueLabelsDictionary<TKey> array)
         {
-            if (array == null) throw new ArgumentNullException("array");
-            if (array.GetType() != GetType())
+            if (array == null)
+            {
+                throw new ArgumentNullException("array");
+            }
+
+            if (array.GetType() != this.GetType())
+            {
                 throw new ArgumentException("Copying value labels must be made to the same type of variable (not numeric to string or vice versa).", "array");
+            }
+
             foreach (var de in this)
+            {
                 array.ValuesLabels.Add(de.Key, de.Value);
+            }
         }
 
         #endregion
@@ -188,6 +201,7 @@ namespace Spss
         {
             return this.ValuesLabels.TryGetValue(key, out value);
         }
+
         public ICollection<string> Values => this.ValuesLabels.Values;
 
         #endregion

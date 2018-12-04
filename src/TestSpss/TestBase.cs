@@ -1,9 +1,11 @@
-using System;
-using System.IO;
-using Xunit;
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss.Testing
 {
+    using System;
+    using System.IO;
+    using Xunit;
+
     /// <summary>
     /// Summary description for TestBase.
     /// </summary>
@@ -21,17 +23,20 @@ namespace Spss.Testing
         {
             try
             {
-                docRead = SpssDataDocument.Open(GoodFilename, SpssFileAccess.Read);
-                docAppend = SpssDataDocument.Open(AppendFilename, SpssFileAccess.Append);
+                this.docRead = SpssDataDocument.Open(GoodFilename, SpssFileAccess.Read);
+                this.docAppend = SpssDataDocument.Open(AppendFilename, SpssFileAccess.Append);
                 if (File.Exists(DisposableFilename))
+                {
                     File.Delete(DisposableFilename);
-                docWrite = SpssDataDocument.Create(DisposableFilename);
+                }
+
+                this.docWrite = SpssDataDocument.Create(DisposableFilename);
             }
             catch
             {
-                docRead?.Dispose();
-                docAppend?.Dispose();
-                docWrite?.Dispose();
+                this.docRead?.Dispose();
+                this.docAppend?.Dispose();
+                this.docWrite?.Dispose();
                 throw;
             }
         }
@@ -43,10 +48,10 @@ namespace Spss.Testing
 
         protected virtual void Dispose(bool disposing)
         {
-            docWrite.Close();
+            this.docWrite.Close();
             File.Delete(DisposableFilename);
-            docRead.Dispose();
-            docAppend.Dispose();
+            this.docRead.Dispose();
+            this.docAppend.Dispose();
         }
     }
 }

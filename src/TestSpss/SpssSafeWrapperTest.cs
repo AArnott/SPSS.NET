@@ -1,26 +1,27 @@
-﻿using System;
-using Spss;
-using Xunit;
+﻿// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss.Testing
 {
+    using System;
+    using Spss;
+    using Xunit;
+
     public class SpssSafeWrapperTest : IDisposable
     {
         public SpssSafeWrapperTest()
         {
-            ReturnCode result = SpssSafeWrapper.spssOpenRead(TestBase.GoodFilename, out handle);
+            ReturnCode result = SpssSafeWrapper.spssOpenRead(TestBase.GoodFilename, out this.handle);
             Assert.Equal(ReturnCode.SPSS_OK, result); // Error opening SPSS file.
         }
 
         public void Dispose()
         {
-            if (handle != 0)
+            if (this.handle != 0)
             {
-                SpssSafeWrapper.spssCloseRead(handle);
-                handle = 0;
+                SpssSafeWrapper.spssCloseRead(this.handle);
+                this.handle = 0;
             }
         }
-
 
         protected internal static readonly string[] Test1VarNames = new string[] { "numLabels", "num", "charLabels", "noLabels", "longStr" };
 
@@ -34,13 +35,14 @@ namespace Spss.Testing
             SpssSafeWrapper.spssConvertDate(1, 1, 1982, out spssDate);
             Assert.Equal(expectedDate, spssDate);
         }
+
         [Fact]
         public void spssGetVarNValueLabels()
         {
             string varName = "numLabels";
             double[] values;
             string[] labels;
-            SpssSafeWrapper.spssGetVarNValueLabels(handle, varName, out values, out labels);
+            SpssSafeWrapper.spssGetVarNValueLabels(this.handle, varName, out values, out labels);
             Assert.Equal(23, values.Length);
             Assert.Equal(23, labels.Length);
 
@@ -57,7 +59,7 @@ namespace Spss.Testing
             string varName = "charLabels";
             string[] values;
             string[] labels;
-            SpssSafeWrapper.spssGetVarCValueLabels(handle, varName, out values, out labels);
+            SpssSafeWrapper.spssGetVarCValueLabels(this.handle, varName, out values, out labels);
             Assert.Equal(2, values.Length);
             Assert.Equal(2, labels.Length);
 
@@ -73,36 +75,41 @@ namespace Spss.Testing
         {
             string[] varNames;
             int[] formatTypes;
-            SpssSafeWrapper.spssGetVarNames(handle, out varNames, out formatTypes);
+            SpssSafeWrapper.spssGetVarNames(this.handle, out varNames, out formatTypes);
             Assert.Equal(Test1VarNames.Length, varNames.Length);
             Assert.Equal(Test1VarNames.Length, formatTypes.Length);
 
             for (int i = 0; i < Test1VarNames.Length; i++)
+            {
                 Assert.Equal(Test1VarNames[i], varNames[i]);
+            }
         }
+
         [Fact]
         public void spssGetNumberofCases()
         {
             int count = 0;
-            SpssSafeWrapper.spssGetNumberofCases(handle, out count);
+            SpssSafeWrapper.spssGetNumberofCases(this.handle, out count);
             Assert.Equal(138, count);
         }
+
         [Fact]
         public void spssGetVarInfo()
         {
             const int varIdx = 0;
             string varName = new string(' ', SpssSafeWrapper.SPSS_MAX_VARNAME + 1);
             int varType;
-            ReturnCode result = SpssSafeWrapper.spssGetVarInfo(handle, varIdx, out varName, out varType);
+            ReturnCode result = SpssSafeWrapper.spssGetVarInfo(this.handle, varIdx, out varName, out varType);
             Assert.Equal(ReturnCode.SPSS_OK, result);
             Assert.Equal(Test1VarNames[varIdx], varName);
             Assert.Equal(0, varType);
         }
+
         [Fact]
         public void spssGetReleaseInfo()
         {
             int[] relInfo;
-            ReturnCode result = SpssSafeWrapper.spssGetReleaseInfo(handle, out relInfo);
+            ReturnCode result = SpssSafeWrapper.spssGetReleaseInfo(this.handle, out relInfo);
             Assert.Equal(12, relInfo[0]);
             Assert.Equal(0, relInfo[1]);
             Assert.Equal(0, relInfo[7]);

@@ -1,10 +1,12 @@
-﻿using System;
-using System.IO;
-using Xunit;
-using DeploymentItemAttribute = Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute;
+﻿// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss.Testing
 {
+    using System;
+    using System.IO;
+    using Xunit;
+    using DeploymentItemAttribute = Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute;
+
     [DeploymentItem("x86", "x86")]
     [DeploymentItem("x64", "x64")]
     public class SpssDataDocumentTest : IDisposable
@@ -17,7 +19,6 @@ namespace Spss.Testing
         public void Dispose()
         {
         }
-
 
         [Fact]
         public void OpenExistingDocumentForRead()
@@ -46,7 +47,11 @@ namespace Spss.Testing
         [Fact]
         public void CreateDocument()
         {
-            if (File.Exists(TestBase.DisposableFilename)) File.Delete(TestBase.DisposableFilename);
+            if (File.Exists(TestBase.DisposableFilename))
+            {
+                File.Delete(TestBase.DisposableFilename);
+            }
+
             try
             {
                 using (SpssDataDocument doc = SpssDataDocument.Create(TestBase.DisposableFilename))
@@ -60,7 +65,10 @@ namespace Spss.Testing
             }
             finally
             {
-                if (File.Exists(TestBase.DisposableFilename)) File.Delete(TestBase.DisposableFilename);
+                if (File.Exists(TestBase.DisposableFilename))
+                {
+                    File.Delete(TestBase.DisposableFilename);
+                }
             }
         }
     }

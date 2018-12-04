@@ -1,9 +1,4 @@
-//-----------------------------------------------------------------------
-// <copyright file="Project.cs" company="Andrew Arnott">
-//     Copyright (c) Andrew Arnott. All rights reserved.
-//     Copyright (c) Brigham Young University
-// </copyright>
-//-----------------------------------------------------------------------
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {

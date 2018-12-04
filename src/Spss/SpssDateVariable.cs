@@ -1,9 +1,4 @@
-//-----------------------------------------------------------------------
-// <copyright file="SpssDateVariable.cs" company="Andrew Arnott">
-//     Copyright (c) Andrew Arnott. All rights reserved.
-//     Copyright (c) Brigham Young University
-// </copyright>
-//-----------------------------------------------------------------------
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
@@ -57,7 +52,7 @@ namespace Spss
         }
 
         /// <summary>
-        /// Gets or sets the missing values for this variable.
+        /// Gets the missing values for this variable.
         /// </summary>
         /// <value>The missing values.</value>
         /// <remarks>
@@ -148,7 +143,7 @@ namespace Spss
         /// Gets or sets the data value of this variable within a specific case.
         /// </summary>
         /// <remarks>
-        /// Null values are translated to and from 
+        /// Null values are translated to and from
         /// <see cref="SpssDataDocument.SystemMissingValue"/> transparently.
         /// </remarks>
         internal new DateTime? Value
@@ -156,7 +151,7 @@ namespace Spss
             get
             {
                 double v;
-                SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumericImpl(FileHandle, Handle, out v), "spssGetValueNumeric");
+                SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumericImpl(this.FileHandle, this.Handle, out v), "spssGetValueNumeric");
                 if (v == SpssDataDocument.SystemMissingValue)
                 {
                     return null;
@@ -176,14 +171,15 @@ namespace Spss
                 {
                     v = SpssDataDocument.SystemMissingValue;
                 }
-                SpssSafeWrapper.spssSetValueNumeric(FileHandle, Handle, v);
+
+                SpssSafeWrapper.spssSetValueNumeric(this.FileHandle, this.Handle, v);
             }
         }
 
         public override SpssVariable Clone()
         {
             SpssDateVariable other = new SpssDateVariable();
-            CloneTo(other);
+            this.CloneTo(other);
             return other;
         }
 
@@ -206,8 +202,8 @@ namespace Spss
                 missingValues[1],
                 missingValues[2]), "spssSetVarNMissingValues");
 
-            SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarPrintFormat(FileHandle, Name, this.PrintFormat, 4, this.PrintWidth), "spssSetVarPrintFormat");
-            SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarWriteFormat(FileHandle, Name, this.WriteFormat, 4, this.WriteWidth), "spssSetVarWriteFormat");
+            SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarPrintFormat(this.FileHandle, this.Name, this.PrintFormat, 4, this.PrintWidth), "spssSetVarPrintFormat");
+            SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarWriteFormat(this.FileHandle, this.Name, this.WriteFormat, 4, this.WriteWidth), "spssSetVarWriteFormat");
         }
 
         protected internal static bool IsDateVariable(FormatTypeCode writeType)
@@ -229,7 +225,7 @@ namespace Spss
         {
             double d, t = 0;
             SpssSafeWrapper.spssConvertDate(value.Day, value.Month, value.Year, out d);
-            double seconds = (double)(value.Second) + (value.Millisecond / 1000.0);
+            double seconds = (double)value.Second + (value.Millisecond / 1000.0);
             SpssSafeWrapper.spssConvertTimeImpl(0, value.Hour, value.Minute, seconds, out t);
 
             double total = d + t;

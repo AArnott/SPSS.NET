@@ -1,12 +1,15 @@
-using System;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Runtime.CompilerServices;
+    using System.Runtime.InteropServices;
+
     #region Enumerables
+
     /// <summary>
     /// Error/warning codes that calls to SPSS methods can return.
     /// </summary>
@@ -18,30 +21,37 @@ namespace Spss
         SPSS_OK = 0,
 
         #region Error codes that calls to SPSS methods can return.
+
         /// <summary>
         /// Error opening file
         /// </summary>
         SPSS_FILE_OERROR = 1,
+
         /// <summary>
         /// File write error
         /// </summary>
         SPSS_FILE_WERROR = 2,
+
         /// <summary>
         /// Error reading the file
         /// </summary>
         SPSS_FILE_RERROR = 3,
+
         /// <summary>
         /// File table full (too many open SPSS data files)
         /// </summary>
         SPSS_FITAB_FULL = 4,
+
         /// <summary>
         /// The file handle is not valid
         /// </summary>
         SPSS_INVALID_HANDLE = 5,
+
         /// <summary>
         /// Data file contains no variables
         /// </summary>
         SPSS_INVALID_FILE = 6,
+
         /// <summary>
         /// Insufficient memory
         /// </summary>
@@ -51,6 +61,7 @@ namespace Spss
         /// File is open for reading, not writing
         /// </summary>
         SPSS_OPEN_RDMODE = 8,
+
         /// <summary>
         /// The file is open for writing, not reading
         /// </summary>
@@ -60,18 +71,22 @@ namespace Spss
         /// The variable name is not valid
         /// </summary>
         SPSS_INVALID_VARNAME = 10,
+
         /// <summary>
         /// No variables defined in the dictionary
         /// </summary>
         SPSS_DICT_EMPTY = 11,
+
         /// <summary>
         /// A variable with the given name does not exist
         /// </summary>
         SPSS_VAR_NOTFOUND = 12,
+
         /// <summary>
         /// There is already a variable with the same name
         /// </summary>
         SPSS_DUP_VAR = 13,
+
         /// <summary>
         /// The variable is not numeric
         /// OR
@@ -80,14 +95,17 @@ namespace Spss
         /// The specified variable has string values
         /// </summary>
         SPSS_NUME_EXP = 14,
+
         /// <summary>
         /// The variable is numeric
         /// </summary>
         SPSS_STR_EXP = 15,
+
         /// <summary>
         /// The variable is a long string (length > 8)
         /// </summary>
         SPSS_SHORTSTR_EXP = 16,
+
         /// <summary>
         /// Invalid length code (varLength is negative or
         /// exceeds 255)
@@ -100,37 +118,43 @@ namespace Spss
         /// upper limit)
         /// </summary>
         SPSS_INVALID_MISSFOR = 18,
+
         /// <summary>
         /// Invalid compression switch (other than 0 or 1)
         /// </summary>
         SPSS_INVALID_COMPSW = 19,
+
         /// <summary>
         /// The print format specification is invalid or is
         /// incompatible with the variable type
         /// </summary>
         SPSS_INVALID_PRFOR = 20,
+
         /// <summary>
         /// The write format specification is invalid or is
         /// incompatible with the variable type
         /// </summary>
         SPSS_INVALID_WRFOR = 21,
+
         /// <summary>
-        /// Invalid date 
+        /// Invalid date
         /// OR
         /// The date value (spssDate) is negative
         /// </summary>
         SPSS_INVALID_DATE = 22,
+
         /// <summary>
         /// Invalid time
         /// </summary>
         SPSS_INVALID_TIME = 23,
 
         /// <summary>
-        /// Fewer than two variables in list 
+        /// Fewer than two variables in list
         /// OR
         /// Number of variables ( numVars) is zero or negative
         /// </summary>
         SPSS_NO_VARIABLES = 24,
+
         /// <summary>
         /// The list of values contains duplicates
         /// </summary>
@@ -142,11 +166,13 @@ namespace Spss
         /// of the DLL and should never occur.
         /// </summary>
         SPSS_INVALID_CASEWGT = 28,
+
         /// <summary>
         /// Dictionary has already been written with
         /// spssCommitHeader
         /// </summary>
         SPSS_DICT_COMMIT = 30,
+
         /// <summary>
         /// Dictionary of the output file has not yet been written
         /// with <see cref="SpssThinWrapper.spssCommitHeaderDelegate"/>.
@@ -157,34 +183,41 @@ namespace Spss
         /// File is not a valid SPSS data file (no type 2 record)
         /// </summary>
         SPSS_NO_TYPE2 = 33,
+
         /// <summary>
         /// There is no type7, subtype3 record present. This
         /// code should be regarded as a warning even though
         /// it is positive. Files without this record are valid.
         /// </summary>
         SPSS_NO_TYPE73 = 41,
+
         /// <summary>
         /// The date variable information is invalid
         /// </summary>
         SPSS_INVALID_DATEINFO = 45,
+
         /// <summary>
         /// File is not a valid SPSS data file (missing type 999
         /// record)
         /// </summary>
         SPSS_NO_TYPE999 = 46,
+
         /// <summary>
         /// The value is longer than the length of the variable
         /// </summary>
         SPSS_EXC_STRVALUE = 47,
+
         /// <summary>
         /// Unable to free because arguments are illegal or
         /// inconsistent (for example, negative numLabels)
         /// </summary>
         SPSS_CANNOT_FREE = 48,
+
         /// <summary>
         /// Buffer value is too short to hold the value
         /// </summary>
         SPSS_BUFFER_SHORT = 49,
+
         /// <summary>
         /// Current case is not valid. This may be because no
         /// spssReadCaseRecord calls have been made yet or
@@ -192,32 +225,39 @@ namespace Spss
         /// the end of file.
         /// </summary>
         SPSS_INVALID_CASE = 50,
+
         /// <summary>
         /// Internal data structures of the DLL are invalid. This
         /// signals an error in the DLL.
         /// </summary>
         SPSS_INTERNAL_VLABS = 51,
+
         /// <summary>
         /// File created on an incompatible system.
         /// </summary>
         SPSS_INCOMPAT_APPEND = 52,
+
         /// <summary>
         /// Undocumented by SPSS.
         /// </summary>
         SPSS_INTERNAL_D_A = 53,
+
         /// <summary>
         /// Error accessing the temporary file
         /// </summary>
         SPSS_FILE_BADTEMP = 54,
+
         /// <summary>
         /// spssGetDEWFirst was never called
         /// </summary>
         SPSS_DEW_NOFIRST = 55,
+
         /// <summary>
         /// measureLevel is not in the legal range, or is
         /// SPSS_MLVL_RAT and the variable is a string variable.
         /// </summary>
         SPSS_INVALID_MEASURELEVEL = 56,
+
         /// <summary>
         /// Parameter subtype not between 1 and
         /// MAX7SUBTYPE
@@ -228,14 +268,17 @@ namespace Spss
         /// Existing multiple response set definitions are invalid
         /// </summary>
         SPSS_INVALID_MRSETDEF = 70,
+
         /// <summary>
         /// The multiple response set name is invalid
         /// </summary>
         SPSS_INVALID_MRSETNAME = 71,
+
         /// <summary>
         /// The multiple response set name is a duplicate
         /// </summary>
         SPSS_DUP_MRSETNAME = 72,
+
         /// <summary>
         /// Undocumented by SPSS.
         /// </summary>
@@ -353,7 +396,7 @@ namespace Spss
         SPSS_THREE_MISSVAL = 3,
 
         /// <summary>
-        /// missingVal1 and missingVal2 are taken as the upper and lower limits, 
+        /// missingVal1 and missingVal2 are taken as the upper and lower limits,
         /// respectively, of the range, and missingVal3 is ignored
         /// </summary>
         SPSS_MISS_RANGE = -2,
@@ -557,7 +600,7 @@ namespace Spss
         SPSS_MLVL_UNK = 0,
 
         /// <summary>
-        /// Nominal 
+        /// Nominal
         /// </summary>
         SPSS_MLVL_NOM = 1,
 
@@ -571,6 +614,7 @@ namespace Spss
         /// </summary>
         SPSS_MLVL_RAT = 3,
     }
+
     /// <summary>
     /// Alignment codes
     /// </summary>
@@ -591,6 +635,7 @@ namespace Spss
         /// </summary>
         SPSS_ALIGN_CENTER = 2,
     }
+
     /// <summary>
     /// Diagnostics regarding var names
     /// </summary>
@@ -631,6 +676,7 @@ namespace Spss
         /// </summary>
         SPSS_NAME_BADFIRST = 6,
     }
+
     /// <summary>
     /// Definitions of "type 7" records
     /// </summary>
@@ -705,27 +751,27 @@ namespace Spss
     #endregion
 
     /// <summary>
-    /// A very thin SpssSafeWrapper that provides access to all the functions 
+    /// A very thin SpssSafeWrapper that provides access to all the functions
     /// exposed from the SPSSIO*.dll library provided with SPSS 20.
     /// </summary>
     // <remarks>
     // <para>Each method in SPSSIO32/64.DLL is represented exactly once by this class.</para>
-    // <para>Those methods that require the use of pointers for memory management 
-    // reasons are marked <c>unsafe</c>, and have <c>protected</c> access for 
-    // proper handling by a descending class.  
+    // <para>Those methods that require the use of pointers for memory management
+    // reasons are marked <c>unsafe</c>, and have <c>protected</c> access for
+    // proper handling by a descending class.
     // Those methods that require string marshaling are marked <c>protected</c>,
     // because they require special string buffers to be created and trimmed for
-    // correct access.  
-    // Both types of protected methods should be wrapped and appropriately 
+    // correct access.
+    // Both types of protected methods should be wrapped and appropriately
     // handled by a <see cref="SpssSafeWrapper"/>descending class</see>.</para>
     // </remarks>
     public class SpssThinWrapper
     {
-        //Locations of the 32 bit spss and support dll's relative to the applications directory.
-        private const String spssio32 = @"win32\spssio32.dll";
+        // Locations of the 32 bit spss and support dll's relative to the applications directory.
+        private const string spssio32 = @"win32\spssio32.dll";
 
-        //Location of the 64 bit spss and support dll's relative to the applications directory.
-        private const String spssio64 = @"win64\spssio64.dll";
+        // Location of the 64 bit spss and support dll's relative to the applications directory.
+        private const string spssio64 = @"win64\spssio64.dll";
 
         #region Maximum lengths of SPSS data file objects
 
@@ -782,7 +828,7 @@ namespace Spss
         /// Handle to the data file.
         /// </param>
         /// <returns>
-        /// <see cref="ReturnCode.SPSS_OK"/>, 
+        /// <see cref="ReturnCode.SPSS_OK"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
         /// <see cref="ReturnCode.SPSS_OPEN_RDMODE"/>, or
         /// <see cref="ReturnCode.SPSS_FILE_WERROR"/>.
@@ -793,6 +839,7 @@ namespace Spss
         /// and no further operations can be performed using it.
         /// </remarks>
         public delegate ReturnCode spssCloseAppendDelegate(int handle);
+
         public static spssCloseAppendDelegate spssCloseAppendImpl;
 
         /// <summary>
@@ -806,10 +853,11 @@ namespace Spss
         /// </returns>
         /// <remarks>
         /// This function closes the data file associated with handle, which must have been opened
-        /// for reading using <see cref="spssOpenReadDelegate"/>. The file handle handle becomes 
+        /// for reading using <see cref="spssOpenReadDelegate"/>. The file handle handle becomes
         /// invalid and no further operations can be performed using it.
         /// </remarks>
         public delegate ReturnCode spssCloseReadDelegate(int handle);
+
         public static spssCloseReadDelegate spssCloseRead;
 
         /// <summary>
@@ -829,6 +877,7 @@ namespace Spss
         /// and no further operations can be performed using it.
         /// </remarks>
         public delegate ReturnCode spssCloseWriteDelegate(int handle);
+
         public static spssCloseWriteDelegate spssCloseWriteImpl;
 
         /// <summary>
@@ -844,17 +893,18 @@ namespace Spss
         /// </returns>
         /// <remarks>
         /// This function writes a case to the data file specified by the handle. It must be called after
-        /// setting the values of variables through <see cref="spssSetValueNumericDelegate"/> and 
+        /// setting the values of variables through <see cref="spssSetValueNumericDelegate"/> and
         /// <see cref="spssSetValueCharDelegate"/>.
         /// Any variables left unset will get the system-missing value if they are numeric and all
         /// blanks if they are strings. Unless spssCommitCaseRecord is called, the case will not be
         /// written out.
         /// </remarks>
         public delegate ReturnCode spssCommitCaseRecordDelegate(int handle);
+
         public static spssCommitCaseRecordDelegate spssCommitCaseRecordImpl;
 
         /// <summary>
-        /// Writes the data dictionary to the data file.  To be used after dictionary defining 
+        /// Writes the data dictionary to the data file.  To be used after dictionary defining
         /// functions are called, and before cases are written.
         /// </summary>
         /// <param name="handle"></param>
@@ -874,6 +924,7 @@ namespace Spss
         /// been committed, no further changes can be made to it.
         /// </remarks>
         public delegate ReturnCode spssCommitHeaderDelegate(int handle);
+
         public static spssCommitHeaderDelegate spssCommitHeaderImpl;
 
         /// <summary>
@@ -890,6 +941,7 @@ namespace Spss
         /// value to *spssDate. Dates before October 15, 1582, are considered invalid.
         /// </remarks>
         public delegate ReturnCode spssConvertDateDelegate(int day, int month, int year, out double spssDate);
+
         public static spssConvertDateDelegate spssConvertDate;
 
         /// <summary>
@@ -904,6 +956,7 @@ namespace Spss
         /// date format to Gregorian style.
         /// </remarks>
         public delegate ReturnCode spssConvertSPSSDateDelegate(out int day, out int month, out int year, double spssDate);
+
         public static spssConvertSPSSDateDelegate spssConvertSPSSDateImpl;
 
         /// <summary>
@@ -919,6 +972,7 @@ namespace Spss
         /// stored in a double since it may have a fractional part.
         /// </remarks>
         public delegate ReturnCode spssConvertSPSSTimeDelegate(out int day, out int hourh, out int minute, out double second, double spssDate);
+
         public static spssConvertSPSSTimeDelegate spssConvertSPSSTimeImpl;
 
         /// <summary>
@@ -935,6 +989,7 @@ namespace Spss
         /// Note that the seconds value is stored in a double since it may have a fractional part.
         /// </remarks>
         public delegate ReturnCode spssConvertTimeDelegate(int day, int hour, int minute, double second, out double spssTime);
+
         public static spssConvertTimeDelegate spssConvertTimeImpl;
 
         /// <summary>
@@ -953,6 +1008,7 @@ namespace Spss
         /// will be set to have none, too.
         /// </remarks>
         public delegate ReturnCode spssCopyDocumentsDelegate(int fromHandle, int toHandle);
+
         public static spssCopyDocumentsDelegate spssCopyDocumentsImpl;
 
         /// <summary>
@@ -967,7 +1023,8 @@ namespace Spss
         /// <remarks>
         /// This function is called to return the memory allocated by <see cref="spssGetDateVariablesDelegate"/>.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssFreeDateVariablesDelegate(int* dateInfo);
+        protected unsafe delegate ReturnCode spssFreeDateVariablesDelegate(int* dateInfo);
+
         protected static spssFreeDateVariablesDelegate spssFreeDateVariablesImpl;
 
         /// <summary>
@@ -982,7 +1039,8 @@ namespace Spss
         /// <remarks>
         /// This function releases the memory which was acquired by <see cref="spssGetMultRespDefsDelegate"/>.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssFreeMultRespDefsDelegate(char* mrespDefs);
+        protected unsafe delegate ReturnCode spssFreeMultRespDefsDelegate(char* mrespDefs);
+
         protected static spssFreeMultRespDefsDelegate spssFreeMultRespDefsImpl;
 
         /// <summary>
@@ -1005,7 +1063,8 @@ namespace Spss
         /// This function frees the two arrays and the value and label strings allocated on the heap
         /// by <see cref="spssGetVarCValueLabelsDelegate"/>.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssFreeVarCValueLabelsDelegate(char** values, char** labels, int numLabels);
+        protected unsafe delegate ReturnCode spssFreeVarCValueLabelsDelegate(char** values, char** labels, int numLabels);
+
         protected static spssFreeVarCValueLabelsDelegate spssFreeVarCValueLabelsImpl;
 
         /// <summary>
@@ -1020,7 +1079,8 @@ namespace Spss
         /// <remarks>
         /// This function is called to return the memory allocated by <see cref="spssGetVariableSetsDelegate"/>.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssFreeVariableSetsDelegate(char* varSets);
+        protected unsafe delegate ReturnCode spssFreeVariableSetsDelegate(char* varSets);
+
         protected static spssFreeVariableSetsDelegate spssFreeVariableSetsImpl;
 
         /// <summary>
@@ -1043,7 +1103,8 @@ namespace Spss
         /// This function frees the two arrays and the name strings allocated on the heap by
         /// <see cref="spssGetVarNamesDelegate"/>.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssFreeVarNamesDelegate(char** varNames, int* varTypes, int numVars);
+        protected unsafe delegate ReturnCode spssFreeVarNamesDelegate(char** varNames, int* varTypes, int numVars);
+
         protected static spssFreeVarNamesDelegate spssFreeVarNamesImpl;
 
         /// <summary>
@@ -1066,7 +1127,8 @@ namespace Spss
         /// This function frees the two arrays and the value and label strings allocated on the heap
         /// by <see cref="spssGetVarCValueLabelsDelegate"/>.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssFreeVarNValueLabelsDelegate(double* values, char** labels, int numLabels);
+        protected unsafe delegate ReturnCode spssFreeVarNValueLabelsDelegate(double* values, char** labels, int numLabels);
+
         protected static spssFreeVarNValueLabelsDelegate spssFreeVarNValueLabels;
 
         /// <summary>
@@ -1086,10 +1148,11 @@ namespace Spss
         /// <remarks>
         /// This function reports the size of a raw case record for the file associated with handle.
         /// The case size is reported in bytes and is meant to be used in conjunction with the lowlevel
-        /// case input/output procedures <see cref="spssWholeCaseInDelegate"/> and 
+        /// case input/output procedures <see cref="spssWholeCaseInDelegate"/> and
         /// <see cref="spssWholeCaseOutDelegate"/>.
         /// </remarks>
         public delegate ReturnCode spssGetCaseSizeDelegate(int handle, out int caseSize);
+
         public static spssGetCaseSizeDelegate spssGetCaseSizeImpl;
 
         /// <summary>
@@ -1110,10 +1173,11 @@ namespace Spss
         /// <remarks>
         /// This function reports the name of the case weight variable. The name is copied to the
         /// buffer pointed to by varName as a null-terminated string. Since a variable name can be
-        /// up to <see cref="SPSS_MAX_VARNAME"/> characters in length, the size of the buffer 
+        /// up to <see cref="SPSS_MAX_VARNAME"/> characters in length, the size of the buffer
         /// must be at least <see cref="SPSS_MAX_VARNAME"/>+1.
         /// </remarks>
         protected delegate ReturnCode spssGetCaseWeightVarDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName);
+
         protected static spssGetCaseWeightVarDelegate spssGetCaseWeightVarImpl;
 
         /// <summary>
@@ -1134,6 +1198,7 @@ namespace Spss
         /// This function reports the compression attribute of an SPSS data file.
         /// </remarks>
         public delegate ReturnCode spssGetCompressionDelegate(int handle, out int compSwitch);
+
         public static spssGetCompressionDelegate spssGetCompressionImpl;
 
         /// <summary>
@@ -1163,7 +1228,8 @@ namespace Spss
         /// comprise the "fixed" information, followed by a sequence of one or more three-element
         /// groups.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssGetDateVariablesDelegate(int handle, out int numofElements, out int* dateInfo);
+        protected unsafe delegate ReturnCode spssGetDateVariablesDelegate(int handle, out int numofElements, out int* dateInfo);
+
         protected static spssGetDateVariablesDelegate spssGetDateVariablesImpl;
 
         /// <summary>
@@ -1196,6 +1262,7 @@ namespace Spss
         /// with a byte order that is the reverse of that of the host.
         /// </remarks>
         protected delegate ReturnCode spssGetDEWFirstDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string data, int maxData, out int nData);
+
         protected static spssGetDEWFirstDelegate spssGetDEWFirstImpl;
 
         /// <summary>
@@ -1220,6 +1287,7 @@ namespace Spss
         /// supplies a 257 byte string in which the null-terminated GUID is returned.
         /// </remarks>
         protected delegate ReturnCode spssGetDEWGUIDDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string asciiGUID);
+
         protected static spssGetDEWGUIDDelegate spssGetDEWGUIDImpl;
 
         /// <summary>
@@ -1250,6 +1318,7 @@ namespace Spss
         /// the host, and calls to spssGetDEWInfo will return SPSS_NO_DEW.
         /// </remarks>
         public delegate ReturnCode spssGetDEWInfoDelegate(int handle, out int Length, out int HashTotal);
+
         public static spssGetDEWInfoDelegate spssGetDEWInfoImpl;
 
         /// <summary>
@@ -1282,10 +1351,11 @@ namespace Spss
         /// with a byte order that is the reverse of that of the host.
         /// </remarks>
         protected delegate ReturnCode spssGetDEWNextDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string data, int maxData, out int nData);
+
         protected static spssGetDEWNextDelegate spssGetDEWNextImpl;
 
         /// <summary>
-        /// Estimates number of cases in a data file.  
+        /// Estimates number of cases in a data file.
         /// </summary>
         /// <param name="handle">
         /// Handle to the data file
@@ -1307,6 +1377,7 @@ namespace Spss
         /// overall file size) for compressed files. It cannot be used on files open for appending data.
         /// </remarks>
         public delegate ReturnCode spssGetEstimatedNofCasesDelegate(int handle, out int caseCount);
+
         public static spssGetEstimatedNofCasesDelegate spssGetEstimatedNofCasesImpl;
 
         /// <summary>
@@ -1327,6 +1398,7 @@ namespace Spss
         /// This function reports the number of cases present in a data file open for reading.
         /// </remarks>
         public delegate ReturnCode spssGetNumberofCasesDelegate(int handle, out int caseCount);
+
         public static spssGetNumberofCasesDelegate spssGetNumberofCases;
 
         /// <summary>
@@ -1350,6 +1422,7 @@ namespace Spss
         /// necessary.
         /// </remarks>
         protected delegate ReturnCode spssGetIdStringDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string id);
+
         protected static spssGetIdStringDelegate spssGetIdStringImpl;
 
         /// <summary>
@@ -1375,7 +1448,8 @@ namespace Spss
         /// *mrespDefs is set to NULL, and the function returns the warning code
         /// <see cref="ReturnCode.SPSS_NO_MULTRESP"/>.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssGetMultRespDefsDelegate(int handle, out char* mrespDefs);
+        protected unsafe delegate ReturnCode spssGetMultRespDefsDelegate(int handle, out char* mrespDefs);
+
         protected static spssGetMultRespDefsDelegate spssGetMultRespDefsImpl;
 
         /// <summary>
@@ -1397,6 +1471,7 @@ namespace Spss
         /// This function reports the number of variables present in a data file.
         /// </remarks>
         public delegate ReturnCode spssGetNumberofVariablesDelegate(int handle, out int numVars);
+
         public static spssGetNumberofVariablesDelegate spssGetNumberofVariables;
 
         /// <summary>
@@ -1424,6 +1499,7 @@ namespace Spss
         /// code (7).
         /// </remarks>
         protected delegate ReturnCode spssGetReleaseInfoDelegate(int handle, [MarshalAs(UnmanagedType.LPArray, SizeConst = 8)] int[] relInfo);
+
         protected static spssGetReleaseInfoDelegate spssGetReleaseInfoImpl;
 
         /// <summary>
@@ -1442,11 +1518,12 @@ namespace Spss
         /// <remarks>
         /// This function returns the name of the system under which the file was created. It is a
         /// 40-byte blank-padded character field corresponding to the last 40 bytes of record type
-        /// 1. Thus, in order to accommodate the information, the parameter 
-        /// <paramref>sysName</paramref> must be at least 41 bytes in length plus the 
+        /// 1. Thus, in order to accommodate the information, the parameter
+        /// <paramref>sysName</paramref> must be at least 41 bytes in length plus the
         /// terminating null character.
         /// </remarks>
         protected delegate ReturnCode spssGetSystemStringDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string sysName);
+
         protected static spssGetSystemStringDelegate spssGetSystemStringImpl;
 
         /// <summary>
@@ -1464,12 +1541,13 @@ namespace Spss
         /// </returns>
         /// <remarks>
         /// This function places the text data created by TextSmart as a null-terminated string in
-        /// the user-supplied buffer <paramref>textInfo</paramref>. The buffer is assumed to be 
-        /// at least 256 characters long; the text data may be up to 255 characters long. 
-        /// If text data are not present in the file, the first character in 
+        /// the user-supplied buffer <paramref>textInfo</paramref>. The buffer is assumed to be
+        /// at least 256 characters long; the text data may be up to 255 characters long.
+        /// If text data are not present in the file, the first character in
         /// <paramref>textInfo</paramref> is set to NULL.
         /// </remarks>
         protected delegate ReturnCode spssGetTextInfoDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string textInfo);
+
         protected static spssGetTextInfoDelegate spssGetTextInfoImpl;
 
         /// <summary>
@@ -1496,6 +1574,7 @@ namespace Spss
         /// must be at least 9 bytes in length.
         /// </remarks>
         protected delegate ReturnCode spssGetTimeStampDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string fileDate, [MarshalAs(UnmanagedType.VBByRefStr)] ref string fileTime);
+
         protected static spssGetTimeStampDelegate spssGetTimeStampImpl;
 
         /// <summary>
@@ -1523,14 +1602,16 @@ namespace Spss
         /// </returns>
         /// <remarks>
         /// This function gets the value of a string variable for the current case, which is the case
-        /// read by the most recent call to <see cref="spssReadCaseRecordDelegate"/>. 
+        /// read by the most recent call to <see cref="spssReadCaseRecordDelegate"/>.
         /// The value is returned as a null-terminated
         /// string in the caller-provided buffer value; the length of the string is the length
         /// of the string variable. Argument valueSize is the allocated size of the buffer value,
         /// which must be at least the length of the variable plus 1.
         /// </remarks>
         protected delegate ReturnCode spssGetValueCharDelegate(int handle, double varHandle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string value, int valueSize);
+
         protected static spssGetValueCharDelegate spssGetValueCharImpl;
+
         /// <summary>
         /// Gets the numeric value of a variable.
         /// </summary>
@@ -1555,6 +1636,7 @@ namespace Spss
         /// read by the most recent call to <see cref="spssReadCaseRecordDelegate"/>.
         /// </remarks>
         public delegate ReturnCode spssGetValueNumericDelegate(int handle, double varHandle, out double value);
+
         public static spssGetValueNumericDelegate spssGetValueNumericImpl;
 
         /// <summary>
@@ -1567,9 +1649,9 @@ namespace Spss
         /// Variable name
         /// </param>
         /// <param name="alignment">
-        /// Pointer to alignment. 
+        /// Pointer to alignment.
         /// Set to <see cref="AlignmentCode.SPSS_ALIGN_LEFT"/>,
-        /// <see cref="AlignmentCode.SPSS_ALIGN_RIGHT"/>, or 
+        /// <see cref="AlignmentCode.SPSS_ALIGN_RIGHT"/>, or
         /// <see cref="AlignmentCode.SPSS_ALIGN_CENTER"/>
         /// </param>
         /// <returns>
@@ -1582,6 +1664,7 @@ namespace Spss
         /// This function reports the value of the alignment attribute of a variable.
         /// </remarks>
         protected delegate ReturnCode spssGetVarAlignmentDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out AlignmentCode alignment);
+
         protected static spssGetVarAlignmentDelegate spssGetVarAlignmentImpl;
 
         /// <summary>
@@ -1608,22 +1691,23 @@ namespace Spss
         /// <returns>
         /// <see cref="ReturnCode.SPSS_OK"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
-        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, 
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>,
         /// <see cref="ReturnCode.SPSS_STR_EXP"/>, or
         /// <see cref="ReturnCode.SPSS_SHORTSTR_EXP"/>.
         /// </returns>
         /// <remarks>
         /// This function reports the missing values of a short string variable. The value of
-        /// *<paramref>missingFormat</paramref> will be in the range 0–3, indicating 
+        /// *<paramref>missingFormat</paramref> will be in the range 0–3, indicating
         /// the number of missing values. The
         /// appropriate number of missing values is copied to the buffers <paramref>missingVal1</paramref>,
-        /// <paramref>missingVal2</paramref>, and <paramref>missingVal3</paramref>. 
+        /// <paramref>missingVal2</paramref>, and <paramref>missingVal3</paramref>.
         /// The lengths of the null-terminated missing value strings
         /// will be the length of the short string variable in question. Since the latter can be at most
         /// 8 characters long, 9-character buffers are adequate for any short string variable.
         /// </remarks>
         protected delegate ReturnCode spssGetVarCMissingValuesDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out MissingValueFormatCode missingFormat, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal1, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal2, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal3);
+
         protected static spssGetVarCMissingValuesDelegate spssGetVarCMissingValuesImpl;
 
         /// <summary>
@@ -1650,6 +1734,7 @@ namespace Spss
         /// attribute, will set an appropriate width using its own algorithm.
         /// </remarks>
         protected delegate ReturnCode spssGetVarColumnWidthDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out int columnWidth);
+
         protected static spssGetVarColumnWidthDelegate spssGetVarColumnWidthImpl;
 
         /// <summary>
@@ -1685,6 +1770,7 @@ namespace Spss
         /// labels more than 60 characters long, use the <see cref="spssGetVarCValueLabelLongDelegate"/> function.
         /// </remarks>
         protected delegate ReturnCode spssGetVarCValueLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string label);
+
         protected static spssGetVarCValueLabelDelegate spssGetVarCValueLabelImpl;
 
         /// <summary>
@@ -1727,6 +1813,7 @@ namespace Spss
         /// label is returned as a null string, and the length is returned as 0.
         /// </remarks>
         protected delegate ReturnCode spssGetVarCValueLabelLongDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string labelBuff, int lenBuff, out int lenLabel);
+
         protected static spssGetVarCValueLabelLongDelegate spssGetVarCValueLabelLongImpl;
 
         /// <summary>
@@ -1768,7 +1855,8 @@ namespace Spss
         /// The two arrays and the value and label strings are allocated on the heap. When they
         /// are no longer needed, <see cref="spssFreeVarCValueLabelsDelegate"/> should be called to free the memory.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssGetVarCValueLabelsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out char** values, out char** labels, out int numLabels);
+        protected unsafe delegate ReturnCode spssGetVarCValueLabelsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out char** values, out char** labels, out int numLabels);
+
         protected static spssGetVarCValueLabelsDelegate spssGetVarCValueLabelsImpl;
 
         /// <summary>
@@ -1795,10 +1883,11 @@ namespace Spss
         /// <remarks>
         /// This function returns a handle for a variable, which can then be used to read or write
         /// (depending on how the file was opened) values of the variable. If handle is associated
-        /// with an output file, the dictionary must be written with <see cref="spssCommitHeaderDelegate"/> 
+        /// with an output file, the dictionary must be written with <see cref="spssCommitHeaderDelegate"/>
         /// before variable handles can be obtained via spssGetVarHandle.
         /// </remarks>
         protected delegate ReturnCode spssGetVarHandleDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out double varHandle);
+
         protected static spssGetVarHandleDelegate spssGetVarHandleImpl;
 
         /// <summary>
@@ -1819,11 +1908,12 @@ namespace Spss
         /// <remarks>
         /// This function reports the variable sets information in the data file. Variable sets
         /// information is stored in a null-terminated string and a pointer to the string is returned
-        /// in *<paramref>varSets</paramref>. Since the variable sets string is allocated 
+        /// in *<paramref>varSets</paramref>. Since the variable sets string is allocated
         /// on the heap, the caller should free
         /// it by calling <see cref="spssFreeVariableSetsDelegate"/> when it is no longer needed.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssGetVariableSetsDelegate(int handle, out char* varSets);
+        protected unsafe delegate ReturnCode spssGetVariableSetsDelegate(int handle, out char* varSets);
+
         protected static spssGetVariableSetsDelegate spssGetVariableSetsImpl;
 
         /// <summary>
@@ -1857,6 +1947,7 @@ namespace Spss
         /// variable and a positive value indicating a string variable of that size.
         /// </remarks>
         public delegate ReturnCode spssGetVarInfoDelegate(int handle, int iVar, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out int varType);
+
         public static spssGetVarInfoDelegate spssGetVarInfoImpl;
 
         /// <summary>
@@ -1873,7 +1964,7 @@ namespace Spss
         /// </param>
         /// <returns>
         /// <see cref="ReturnCode.SPSS_OK"/>,
-        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>, 
+        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, or
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>.
@@ -1884,8 +1975,9 @@ namespace Spss
         /// size of the buffer should be at least 121. To get labels more than 120 characters long, use
         /// the spssGetVarLabelLong function.
         /// </remarks>
-        //! TODO Check if change of 3rd parameter works (changed out to ref as otherwise Marshal.GetDelegateForFunctionPointer fails).
+        // ! TODO Check if change of 3rd parameter works (changed out to ref as otherwise Marshal.GetDelegateForFunctionPointer fails).
         public delegate ReturnCode spssGetVarLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varLabel);
+
         public static spssGetVarLabelDelegate spssGetVarLabelImplImpl;
 
         /// <summary>
@@ -1908,7 +2000,7 @@ namespace Spss
         /// </param>
         /// <returns>
         /// <see cref="ReturnCode.SPSS_OK"/>,
-        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>, 
+        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, or
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>.
@@ -1921,6 +2013,7 @@ namespace Spss
         /// detected, the label is returned as a null string, and the length is returned as 0.
         /// </remarks>
         public delegate ReturnCode spssGetVarLabelLongDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string labelBuff, int lenBuff, out int lenLabel);
+
         public static spssGetVarLabelLongDelegate spssGetVarLabelLongImpl;
 
         /// <summary>
@@ -1933,10 +2026,10 @@ namespace Spss
         /// Variable name
         /// </param>
         /// <param name="measureLevel">
-        /// Pointer to measurement level. Set to 
+        /// Pointer to measurement level. Set to
         /// <see cref="MeasurementLevelCode.SPSS_MLVL_NOM"/>,
-        /// <see cref="MeasurementLevelCode.SPSS_MLVL_ORD"/>, or 
-        /// <see cref="MeasurementLevelCode.SPSS_MLVL_RAT"/>, 
+        /// <see cref="MeasurementLevelCode.SPSS_MLVL_ORD"/>, or
+        /// <see cref="MeasurementLevelCode.SPSS_MLVL_RAT"/>,
         /// for nominal, ordinal, and scale (ratio), respectively
         /// </param>
         /// <returns>
@@ -1949,6 +2042,7 @@ namespace Spss
         /// This function reports the value of the measurement level attribute of a variable.
         /// </remarks>
         protected delegate ReturnCode spssGetVarMeasureLevelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out int measureLevel);
+
         protected static spssGetVarMeasureLevelDelegate spssGetVarMeasureLevelImpl;
 
         /// <summary>
@@ -1975,7 +2069,7 @@ namespace Spss
         /// <returns>
         /// <see cref="ReturnCode.SPSS_OK"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
-        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, 
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>, or
         /// <see cref="ReturnCode.SPSS_NUME_EXP"/>.
         /// </returns>
@@ -1991,6 +2085,7 @@ namespace Spss
         /// SPSS_TWO_MISSVAL, and SPSS_THREE_MISSVAL may be used as synonyms for 0–3.)
         /// </remarks>
         protected delegate ReturnCode spssGetVarNMissingValuesDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out MissingValueFormatCode missingFormat, out double missingVal1, out double missingVal2, out double missingVal3);
+
         protected static spssGetVarNMissingValuesDelegate spssGetVarNMissingValuesImpl;
 
         /// <summary>
@@ -2011,9 +2106,9 @@ namespace Spss
         /// <returns>
         /// <see cref="ReturnCode.SPSS_OK"/>,
         /// <see cref="ReturnCode.SPSS_NO_LABELS"/>,
-        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>, 
+        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
-        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, 
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>, or
         /// <see cref="ReturnCode.SPSS_NUME_EXP"/>.
         /// </returns>
@@ -2024,6 +2119,7 @@ namespace Spss
         /// more than 60 characters long, use the <see cref="spssGetVarNValueLabelLongDelegate"/> function.
         /// </remarks>
         protected delegate ReturnCode spssGetVarNValueLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, double value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string label);
+
         protected static spssGetVarNValueLabelDelegate spssGetVarNValueLabelImpl;
 
         /// <summary>
@@ -2050,9 +2146,9 @@ namespace Spss
         /// <returns>
         /// <see cref="ReturnCode.SPSS_OK"/>,
         /// <see cref="ReturnCode.SPSS_NO_LABELS"/>,
-        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>, 
+        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
-        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, 
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>, or
         /// <see cref="ReturnCode.SPSS_NUME_EXP"/>.
         /// </returns>
@@ -2064,6 +2160,7 @@ namespace Spss
         /// length is returned as 0.
         /// </remarks>
         protected delegate ReturnCode spssGetVarNValueLabelLongDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, double value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string labelBuff, int lenBuff, out int lenLabel);
+
         protected static spssGetVarNValueLabelLongDelegate spssGetVarNValueLabelLong;
 
         /// <summary>
@@ -2088,7 +2185,7 @@ namespace Spss
         /// <see cref="ReturnCode.SPSS_OK"/>,
         /// <see cref="ReturnCode.SPSS_NO_LABELS"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
-        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, 
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>,
         /// <see cref="ReturnCode.SPSS_NUME_EXP"/>, or
         /// <see cref="ReturnCode.SPSS_NO_MEMORY"/>.
@@ -2103,7 +2200,8 @@ namespace Spss
         /// The two arrays and the label strings are allocated on the heap. When they are no longer
         /// needed, <see cref="spssFreeVarNValueLabelsDelegate"/> should be called to free the memory.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssGetVarNValueLabelsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out double* values, out char** labels, out int numLabels);
+        protected unsafe delegate ReturnCode spssGetVarNValueLabelsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out double* values, out char** labels, out int numLabels);
+
         protected static spssGetVarNValueLabelsDelegate spssGetVarNValueLabelsImpl;
 
         /// <summary>
@@ -2133,10 +2231,11 @@ namespace Spss
         /// </returns>
         /// <remarks>
         /// This function reports the print format of a variable. Format type, number of decimal
-        /// places, and field width are returned as *<paramref>printType</paramref>, 
+        /// places, and field width are returned as *<paramref>printType</paramref>,
         /// *<paramref>printDec</paramref>, and *<paramref>printWid</paramref>, respectively.
         /// </remarks>
         protected delegate ReturnCode spssGetVarPrintFormatDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out FormatTypeCode printType, out int printDec, out int printWidth);
+
         protected static spssGetVarPrintFormatDelegate spssGetVarPrintFormatImpl;
 
         /// <summary>
@@ -2171,7 +2270,8 @@ namespace Spss
         /// The two arrays and the variable name strings are allocated on the heap. When they
         /// are no longer needed, <see cref="spssFreeVarNamesDelegate"/> should be called to free the memory.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssGetVarNamesDelegate(int handle, out int numVars, out char** varNames, out int* varTypes);
+        protected unsafe delegate ReturnCode spssGetVarNamesDelegate(int handle, out int numVars, out char** varNames, out int* varTypes);
+
         protected static spssGetVarNamesDelegate spssGetVarNamesImpl;
 
         /// <summary>
@@ -2205,6 +2305,7 @@ namespace Spss
         /// respectively.
         /// </remarks>
         protected delegate ReturnCode spssGetVarWriteFormatDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out FormatTypeCode writeType, out int writeDec, out int writeWidth);
+
         protected static spssGetVarWriteFormatDelegate spssGetVarWriteFormatImpl;
 
         /// <summary>
@@ -2220,6 +2321,7 @@ namespace Spss
         /// fashion.
         /// </remarks>
         public delegate void spssHostSysmisValDelegate(out double missVal);
+
         public static spssHostSysmisValDelegate spssHostSysmisValImpl;
 
         /// <summary>
@@ -2236,6 +2338,7 @@ namespace Spss
         /// ranges on the host system. It may be called at any time.
         /// </remarks>
         public delegate void spssLowHighValDelegate(out double lowest, out double highest);
+
         public static spssLowHighValDelegate spssLowHighValImpl;
 
         /// <summary>
@@ -2263,6 +2366,7 @@ namespace Spss
         /// should be used for subsequent operations on the file.
         /// </remarks>
         protected delegate ReturnCode spssOpenAppendDelegate([MarshalAs(UnmanagedType.VBByRefStr)] ref string fileName, out int handle);
+
         protected static spssOpenAppendDelegate spssOpenAppendImpl;
 
         /// <summary>
@@ -2289,6 +2393,7 @@ namespace Spss
         /// used for subsequent operations on the file.
         /// </remarks>
         protected delegate ReturnCode spssOpenReadDelegate([MarshalAs(UnmanagedType.VBByRefStr)] ref string fileName, out int handle);
+
         protected static spssOpenReadDelegate spssOpenReadImpl;
 
         /// <summary>
@@ -2311,6 +2416,7 @@ namespace Spss
         /// handle that should be used for subsequent operations on the file.
         /// </remarks>
         protected delegate ReturnCode spssOpenWriteDelegate([MarshalAs(UnmanagedType.VBByRefStr)] ref string fileName, out int handle);
+
         /// <summary>
         /// <see cref="spssOpenWriteDelegate"/>
         /// </summary>
@@ -2347,6 +2453,7 @@ namespace Spss
         /// Name, ...) to open the old file to access its data.
         /// </remarks>
         protected delegate ReturnCode spssOpenWriteCopyDelegate([MarshalAs(UnmanagedType.VBByRefStr)] ref string fileName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string dictFileName, out int handle);
+
         protected static spssOpenWriteCopyDelegate spssOpenWriteCopyImpl;
 
         /// <summary>
@@ -2382,6 +2489,7 @@ namespace Spss
         /// </list>
         /// </remarks>
         public delegate ReturnCode spssQueryType7Delegate(int fromHandle, int subType, out int bFound);
+
         public static spssQueryType7Delegate spssQueryType7Impl;
 
         /// <summary>
@@ -2399,12 +2507,14 @@ namespace Spss
         /// </returns>
         /// <remarks>
         /// This function reads the next case from a data file into internal buffers. Values of individual
-        /// variables for the case may then be obtained by calling the 
+        /// variables for the case may then be obtained by calling the
         /// <see cref="spssGetValueNumericDelegate"/> and
         /// <see cref="spssGetValueCharDelegate"/> procedures.
         /// </remarks>
         public delegate ReturnCode spssReadCaseRecordDelegate(int handle);
+
         public static spssReadCaseRecordDelegate spssReadCaseRecord;
+
         /// <summary>
         /// Prepares SPSS to read data values from a specific case.
         /// </summary>
@@ -2425,13 +2535,14 @@ namespace Spss
         /// <remarks>
         /// This function sets the file pointer of an input file so that the next data case read will be
         /// the one specified via the caseNumber parameter. A zero origin scheme is used. That
-        /// is, the first case is number 0. The next case can be read by calling either 
-        /// <see cref="spssWholeCaseInDelegate"/> or <see cref="spssReadCaseRecordDelegate"/>. 
+        /// is, the first case is number 0. The next case can be read by calling either
+        /// <see cref="spssWholeCaseInDelegate"/> or <see cref="spssReadCaseRecordDelegate"/>.
         /// If the specified case is greater than or equal to the
-        /// number of cases in the file, the call to the input function will return 
+        /// number of cases in the file, the call to the input function will return
         /// <see cref="ReturnCode.SPSS_FILE_END"/>.
         /// </remarks>
         public delegate ReturnCode spssSeekNextCaseDelegate(int handle, int caseNumber);
+
         public static spssSeekNextCaseDelegate spssSeekNextCase;
 
         /// <summary>
@@ -2458,6 +2569,7 @@ namespace Spss
         /// specified by the handle.
         /// </remarks>
         protected delegate ReturnCode spssSetCaseWeightVarDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName);
+
         protected static spssSetCaseWeightVarDelegate spssSetCaseWeightVarImpl;
 
         /// <summary>
@@ -2482,6 +2594,7 @@ namespace Spss
         /// will be uncompressed by default.
         /// </remarks>
         public delegate ReturnCode spssSetCompressionDelegate(int handle, int compSwitch);
+
         public static spssSetCompressionDelegate spssSetCompression;
 
         /// <summary>
@@ -2512,7 +2625,8 @@ namespace Spss
         /// is done on the input array, this function should be used with caution and is
         /// recommended only for copying Trends information from one file to another.
         /// </remarks>
-        unsafe protected delegate ReturnCode spssSetDateVariablesDelegate(int handle, int numofElements, int* dateInfo);
+        protected unsafe delegate ReturnCode spssSetDateVariablesDelegate(int handle, int numofElements, int* dateInfo);
+
         protected static spssSetDateVariablesDelegate spssSetDateVariablesImpl;
 
         /// <summary>
@@ -2544,6 +2658,7 @@ namespace Spss
         /// necessary.
         /// </remarks>
         protected delegate ReturnCode spssSetDEWFirstDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string data, int nBytes);
+
         protected static spssSetDEWFirstDelegate spssSetDEWFirstImpl;
 
         /// <summary>
@@ -2567,6 +2682,7 @@ namespace Spss
         /// It should only be used by the DEW product.
         /// </remarks>
         protected delegate ReturnCode spssSetDEWGUIDDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string asciiGUID);
+
         protected static spssSetDEWGUIDDelegate spssSetDEWGUIDImpl;
 
         /// <summary>
@@ -2598,6 +2714,7 @@ namespace Spss
         /// necessary.
         /// </remarks>
         protected delegate ReturnCode spssSetDEWNextDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string data, int nBytes);
+
         protected static spssSetDEWNextDelegate spssSetDEWNextImpl;
 
         /// <summary>
@@ -2621,6 +2738,7 @@ namespace Spss
         /// the given string id.
         /// </remarks>
         protected delegate ReturnCode spssSetIdStringDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string id);
+
         protected static spssSetIdStringDelegate spssSetIdStringImpl;
 
         /// <summary>
@@ -2646,6 +2764,7 @@ namespace Spss
         /// variable set definitions.
         /// </remarks>
         protected delegate ReturnCode spssSetMultRespDefsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string mrespDefs);
+
         protected static spssSetMultRespDefsDelegate spssSetMultRespDefsImpl;
 
         /// <summary>
@@ -2670,6 +2789,7 @@ namespace Spss
         /// empty string, existing text data, if any, is deleted.
         /// </remarks>
         protected delegate ReturnCode spssSetTextInfoDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string textInfo);
+
         protected static spssSetTextInfoDelegate spssSetTextInfoImpl;
 
         /// <summary>
@@ -2699,7 +2819,9 @@ namespace Spss
         /// not written out to the data file until <see cref="spssCommitCaseRecordDelegate"/> is called.
         /// </remarks>
         protected delegate ReturnCode spssSetValueCharDelegate(int handle, double varHandle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string value);
+
         protected static spssSetValueCharDelegate spssSetValueCharImpl;
+
         /// <summary>
         /// Sets the value of a numeric variable.
         /// </summary>
@@ -2724,6 +2846,7 @@ namespace Spss
         /// is not written out to the data file until <see cref="spssCommitCaseRecordDelegate"/> is called.
         /// </remarks>
         public delegate ReturnCode spssSetValueNumericDelegate(int handle, double varHandle, double value);
+
         public static spssSetValueNumericDelegate spssSetValueNumeric;
 
         /// <summary>
@@ -2737,7 +2860,7 @@ namespace Spss
         /// </param>
         /// <param name="alignment">
         /// Alignment. Must be one of <see cref="AlignmentCode.SPSS_ALIGN_LEFT"/>,
-        /// <see cref="AlignmentCode.SPSS_ALIGN_RIGHT"/>, or 
+        /// <see cref="AlignmentCode.SPSS_ALIGN_RIGHT"/>, or
         /// <see cref="AlignmentCode.SPSS_ALIGN_CENTER"/>. If not a legal
         /// value, alignment is set to a type-appropriate default
         /// </param>
@@ -2753,6 +2876,7 @@ namespace Spss
         /// This function sets the value of the alignment attribute of a variable.
         /// </remarks>
         protected delegate ReturnCode spssSetVarAlignmentDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, AlignmentCode alignment);
+
         protected static spssSetVarAlignmentDelegate spssSetVarAlignmentImpl;
 
         /// <summary>
@@ -2800,6 +2924,7 @@ namespace Spss
         /// the variable, trailing blanks are assumed.
         /// </remarks>
         protected delegate ReturnCode spssSetVarCMissingValuesDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, MissingValueFormatCode missingFormat, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal1, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal2, [MarshalAs(UnmanagedType.VBByRefStr)] ref string missingVal3);
+
         protected static spssSetVarCMissingValuesDelegate spssSetVarCMissingValuesImpl;
 
         /// <summary>
@@ -2828,6 +2953,7 @@ namespace Spss
         /// attribute, is to set an appropriate width using its own algorithm.
         /// </remarks>
         protected delegate ReturnCode spssSetVarColumnWidthDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, int columnWidth);
+
         protected static spssSetVarColumnWidthDelegate spssSetVarColumnWidthImpl;
 
         /// <summary>
@@ -2865,6 +2991,7 @@ namespace Spss
         /// length.
         /// </remarks>
         protected delegate ReturnCode spssSetVarCValueLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string label);
+
         protected static spssSetVarCValueLabelDelegate spssSetVarCValueLabelImpl;
 
         /// <summary>
@@ -2891,6 +3018,7 @@ namespace Spss
         /// sets information is discarded.
         /// </remarks>
         protected delegate ReturnCode spssSetVariableSetsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varSets);
+
         protected static spssSetVariableSetsDelegate spssSetVariableSetsImpl;
 
         /// <summary>
@@ -2921,6 +3049,7 @@ namespace Spss
         /// This function sets the label of a variable.
         /// </remarks>
         protected delegate ReturnCode spssSetVarLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varLabel);
+
         protected static spssSetVarLabelDelegate spssSetVarLabelImpl;
 
         /// <summary>
@@ -2934,11 +3063,11 @@ namespace Spss
         /// </param>
         /// <param name="measureLevel">
         /// Measurement level. Must be one of <see cref="MeasurementLevelCode.SPSS_MLVL_NOM"/>,
-        /// <see cref="MeasurementLevelCode.SPSS_MLVL_ORD"/>, 
-        /// <see cref="MeasurementLevelCode.SPSS_MLVL_RAT"/>, or 
+        /// <see cref="MeasurementLevelCode.SPSS_MLVL_ORD"/>,
+        /// <see cref="MeasurementLevelCode.SPSS_MLVL_RAT"/>, or
         /// <see cref="MeasurementLevelCode.SPSS_MLVL_UNK"/> for
         /// nominal, ordinal, scale (ratio), and unknown, respectively. If
-        /// <see cref="MeasurementLevelCode.SPSS_MLVL_UNK"/>, 
+        /// <see cref="MeasurementLevelCode.SPSS_MLVL_UNK"/>,
         /// measurement level is set to a type-appropriate default.
         /// </param>
         /// <returns>
@@ -2954,6 +3083,7 @@ namespace Spss
         /// This function sets the value of the measurement level attribute of a variable.
         /// </remarks>
         protected delegate ReturnCode spssSetVarMeasureLevelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, int measureLevel);
+
         protected static spssSetVarMeasureLevelDelegate spssSetVarMeasureLevelImpl;
 
         /// <summary>
@@ -2975,37 +3105,37 @@ namespace Spss
         /// <description>Description</description>
         /// </listheader>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_OK"/></term>
-        ///		<description>No error</description>
+        ///     <term><see cref="ReturnCode.SPSS_OK"/></term>
+        ///     <description>No error</description>
         /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_INVALID_HANDLE"/></term>
-        ///		<description>The file handle is not valid</description>
+        ///     <term><see cref="ReturnCode.SPSS_INVALID_HANDLE"/></term>
+        ///     <description>The file handle is not valid</description>
         /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_OPEN_RDMODE"/></term>
-        ///		<description>File is open for reading, not writing</description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_OPEN_RDMODE"/></term>
+        ///     <description>File is open for reading, not writing</description>
+        /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_DICT_COMMIT"/></term>
-        ///		<description>Dictionary has already been written with <see cref="spssCommitHeaderDelegate"/></description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_DICT_COMMIT"/></term>
+        ///     <description>Dictionary has already been written with <see cref="spssCommitHeaderDelegate"/></description>
+        /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_INVALID_VARTYPE"/></term>
-        ///		<description>Invalid length code ( varLength is negative or exceeds 255)</description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_INVALID_VARTYPE"/></term>
+        ///     <description>Invalid length code ( varLength is negative or exceeds 255)</description>
+        /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_INVALID_VARNAME"/></term>
-        ///		<description>Variable name is invalid</description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_INVALID_VARNAME"/></term>
+        ///     <description>Variable name is invalid</description>
+        /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_DUP_VAR"/></term>
-        ///		<description>There is already a variable with the same name</description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_DUP_VAR"/></term>
+        ///     <description>There is already a variable with the same name</description>
+        /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_NO_MEMORY"/></term>
-        ///		<description>Insufficient memory</description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_NO_MEMORY"/></term>
+        ///     <description>Insufficient memory</description>
+        /// </item>
         /// </list>
         /// </returns>
         /// <remarks>
@@ -3017,6 +3147,7 @@ namespace Spss
         /// used as values for varLength.
         /// </remarks>
         protected delegate ReturnCode spssSetVarNameDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, int varType);
+
         protected static spssSetVarNameDelegate spssSetVarNameImpl;
 
         /// <summary>
@@ -3066,6 +3197,7 @@ namespace Spss
         /// used as synonyms for 0–3.)
         /// </remarks>
         protected delegate ReturnCode spssSetVarNMissingValuesDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, MissingValueFormatCode missingFormat, double missingVal1, double missingVal2, double missingVal3);
+
         protected static spssSetVarNMissingValuesDelegate spssSetVarNMissingValuesImpl;
 
         /// <summary>
@@ -3101,6 +3233,7 @@ namespace Spss
         /// length.
         /// </remarks>
         protected delegate ReturnCode spssSetVarNValueLabelDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, double value, [MarshalAs(UnmanagedType.VBByRefStr)] ref string label);
+
         protected static spssSetVarNValueLabelDelegate spssSetVarNValueLabelImpl;
 
         /// <summary>
@@ -3114,7 +3247,7 @@ namespace Spss
         /// </param>
         /// <param name="printType">
         /// Print format type code (file spssdio.h defines macros of the form
-        /// <see cref="FormatTypeCode">SPSS_FMT_...</see> for all 
+        /// <see cref="FormatTypeCode">SPSS_FMT_...</see> for all
         /// valid format type codes)
         /// </param>
         /// <param name="printDec">
@@ -3137,6 +3270,7 @@ namespace Spss
         /// This function sets the print format of a variable.
         /// </remarks>
         protected delegate ReturnCode spssSetVarPrintFormatDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, FormatTypeCode printType, int printDec, int printWidth);
+
         protected static spssSetVarPrintFormatDelegate spssSetVarPrintFormatImpl;
 
         /// <summary>
@@ -3172,6 +3306,7 @@ namespace Spss
         /// This function sets the write format of a variable.
         /// </remarks>
         protected delegate ReturnCode spssSetVarWriteFormatDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, FormatTypeCode writeType, int writeDec, int writeWidth);
+
         protected static spssSetVarWriteFormatDelegate spssSetVarWriteFormatImpl;
 
         /// <summary>
@@ -3185,6 +3320,7 @@ namespace Spss
         /// called at any time.
         /// </remarks>
         public delegate double spssSysmisValDelegate();
+
         public static spssSysmisValDelegate spssSysmisValImpl;
 
         /// <summary>
@@ -3210,6 +3346,7 @@ namespace Spss
         /// using the same file handle because both procedures read a new case from the data file.
         /// </remarks>
         protected delegate ReturnCode spssWholeCaseInDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string caseRec);
+
         protected static spssWholeCaseInDelegate spssWholeCaseInImpl;
 
         /// <summary>
@@ -3236,10 +3373,12 @@ namespace Spss
         /// new case to the data file.
         /// </remarks>
         protected delegate ReturnCode spssWholeCaseOutDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string caseRec);
+
         protected static spssWholeCaseOutDelegate spssWholeCaseOutImpl;
 
         /// <summary>
-        /// Constructor for <see cref="SpssThinWrapper"/> class.  Not to be used.
+        /// Initializes a new instance of the <see cref="SpssThinWrapper"/> class.
+        /// Not to be used.
         /// </summary>
         /// <remarks>
         /// This class is a static class, and should not be instantiated.
@@ -3255,19 +3394,18 @@ namespace Spss
 
         /// <summary>
         /// Allow only a single thread to enter.
-        /// 
+        ///
         /// <seealso href="http://archive.msdn.microsoft.com/DynamicDllLoading/Wiki/Print.aspx?title=Home&amp;version=5&amp;action=Print"/>
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal static void LoadSpssDll()
         {
-            String dllPath = String.Empty;
+            string dllPath = string.Empty;
 
-            //SW: original change had a call to Environment.Is64BitOperatingSystem
+            // SW: original change had a call to Environment.Is64BitOperatingSystem
             //    decided to exclude this to retain compatibility with .Net 3.5 for now
             //    similarly call to Environment.Is64BitProcess change to an IntPtr.Size
             //    check
-
             switch (IntPtr.Size)
             {
                 case 8:
@@ -3288,7 +3426,7 @@ namespace Spss
                 return;
             }
 
-            //Temporary add the x86 or x64 directory to the dll loading path so the corresponding icu*.dll files also load correctly.
+            // Temporary add the x86 or x64 directory to the dll loading path so the corresponding icu*.dll files also load correctly.
             SetDllDirectory(Path.GetDirectoryName(dllPath));
 
             spssDllHandle = LoadLibrary(dllPath);
@@ -3298,7 +3436,7 @@ namespace Spss
                 throw new DllNotFoundException(string.Format("{0} not found.", dllPath));
             }
 
-            //Revert the dll loading path to normal.
+            // Revert the dll loading path to normal.
             SetDllDirectory(null);
 
             spssCloseAppendImpl = (spssCloseAppendDelegate)GetSpssDelegate("spssCloseAppend", typeof(spssCloseAppendDelegate));
@@ -3345,7 +3483,8 @@ namespace Spss
             spssGetVarHandleImpl = (spssGetVarHandleDelegate)GetSpssDelegate("spssGetVarHandle", typeof(spssGetVarHandleDelegate));
             spssGetVariableSetsImpl = (spssGetVariableSetsDelegate)GetSpssDelegate("spssGetVariableSets", typeof(spssGetVariableSetsDelegate));
             spssGetVarInfoImpl = (spssGetVarInfoDelegate)GetSpssDelegate("spssGetVarInfo", typeof(spssGetVarInfoDelegate));
-            //! TODO Check if delegate is ok
+
+            // ! TODO Check if delegate is ok
             spssGetVarLabelImplImpl = (spssGetVarLabelDelegate)GetSpssDelegate("spssGetVarLabel", typeof(spssGetVarLabelDelegate));
             spssGetVarLabelLongImpl = (spssGetVarLabelLongDelegate)GetSpssDelegate("spssGetVarLabelLong", typeof(spssGetVarLabelLongDelegate));
             spssGetVarMeasureLevelImpl = (spssGetVarMeasureLevelDelegate)GetSpssDelegate("spssGetVarMeasureLevel", typeof(spssGetVarMeasureLevelDelegate));
@@ -3393,9 +3532,9 @@ namespace Spss
             spssWholeCaseOutImpl = (spssWholeCaseOutDelegate)GetSpssDelegate("spssWholeCaseOut", typeof(spssWholeCaseOutDelegate));
         }
 
-        private static IntPtr spssDllHandle = IntPtr.Zero;
-
         private static readonly object _lock = new object();
+
+        private static IntPtr spssDllHandle = IntPtr.Zero;
 
         internal static Delegate GetSpssDelegate(string procName, Type delegateType)
         {

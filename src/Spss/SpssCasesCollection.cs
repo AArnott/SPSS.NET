@@ -1,3 +1,5 @@
+// Copyright (c) Andrew Arnott. All rights reserved.
+
 namespace Spss
 {
     using System;
@@ -6,7 +8,7 @@ namespace Spss
     using System.Linq;
 
     /// <summary>
-    /// Manages the cases in an SPSS data file.  
+    /// Manages the cases in an SPSS data file.
     /// Supports reading, writing, and appending data.
     /// </summary>
     public sealed class SpssCasesCollection : IEnumerable<SpssCase>
@@ -30,11 +32,11 @@ namespace Spss
         }
 
         /// <summary>
-        /// Gets a value indicating whether the set of cases is read only.  
+        /// Gets a value indicating whether the set of cases is read only.
         /// If no cases can be added, changed or removed, IsReadOnly is true.
         /// <seealso cref="IsAppendOnly"/>
         /// </summary>
-        public bool IsReadOnly => Document.AccessMode == SpssFileAccess.Read;
+        public bool IsReadOnly => this.Document.AccessMode == SpssFileAccess.Read;
 
         /// <summary>
         /// Gets a value indicating whether the set of cases can only be appended to.
@@ -51,16 +53,16 @@ namespace Spss
         /// <summary>
         /// Gets the file handle of the SPSS data document whose cases are being managed.
         /// </summary>
-        internal Int32 FileHandle => this.Document.Handle;
+        internal int FileHandle => this.Document.Handle;
 
         /// <summary>
-        /// The number of cases in the document.
+        /// Gets the number of cases in the document.
         /// </summary>
         public int Count
         {
             get
             {
-                Int32 casecount = 0;
+                int casecount = 0;
 
                 // New documents aren't allowed to query cases count, and appended docs
                 // report the # of cases there were when the file was first opened.
@@ -85,22 +87,26 @@ namespace Spss
 
             set
             {
-                if (IsAppendOnly)
+                if (this.IsAppendOnly)
                 {
                     throw new InvalidOperationException("Not available while in Append mode.");
                 }
+
                 if (value < 0)
                 {
                     throw new ArgumentOutOfRangeException("Position", value, "Must be a non-negative integer.");
                 }
-                if (value >= Count)
+
+                if (value >= this.Count)
                 {
                     throw new ArgumentOutOfRangeException("Position", value, "Must be less than the number of cases in the file.");
                 }
-                if (value == position)
+
+                if (value == this.position)
                 {
                     return; // nothing to do!
                 }
+
                 SpssException.ThrowOnFailure(SpssSafeWrapper.spssSeekNextCase(this.FileHandle, value), "spssSeekNextCase");
                 SpssException.ThrowOnFailure(SpssSafeWrapper.spssReadCaseRecord(this.FileHandle), "spssReadCaseRecord");
                 this.position = value;
@@ -130,23 +136,23 @@ namespace Spss
         /// <code>
         /// using( SpssDataDocument doc = SpssDataDocument.Open("mydata.sav", SpssFileAccess.Append) )
         /// {
-        ///		SpssCase Case = doc.Cases.New();
-        ///		Case["var1"] = 5;
-        ///		Case["var2"] = 3;
-        ///		Case["name"] = "Andrew";
-        ///		Case.Commit();
-        ///	}
+        ///     SpssCase Case = doc.Cases.New();
+        ///     Case["var1"] = 5;
+        ///     Case["var2"] = 3;
+        ///     Case["name"] = "Andrew";
+        ///     Case.Commit();
+        /// }
         /// </code>
         /// </example>
         public SpssCase New()
         {
-            if (!IsAppendOnly)
+            if (!this.IsAppendOnly)
             {
                 throw new InvalidOperationException("Only available in append mode.");
             }
 
-            position = Count;
-            return new SpssCase(this, position);
+            this.position = this.Count;
+            return new SpssCase(this, this.position);
         }
 
         /// <summary>
@@ -177,6 +183,7 @@ namespace Spss
                 {
                     throw new NotSupportedException("SPSS variable type " + var.GetType().Name + " is not supported.");
                 }
+
                 dt.Columns.Add(dc);
             }
 
@@ -187,6 +194,7 @@ namespace Spss
                 {
                     row[var.Name] = spssCase.GetDBValue(var.Name);
                 }
+
                 dt.Rows.Add(row);
             }
 
@@ -198,7 +206,7 @@ namespace Spss
         /// </summary>
         IEnumerator<SpssCase> IEnumerable<SpssCase>.GetEnumerator()
         {
-            if (IsAppendOnly)
+            if (this.IsAppendOnly)
             {
                 throw new InvalidOperationException("Not available in append-only mode.");
             }

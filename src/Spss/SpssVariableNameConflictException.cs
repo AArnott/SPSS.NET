@@ -1,37 +1,47 @@
-using System;
-using System.Runtime.Serialization;
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
+    using System;
+    using System.Runtime.Serialization;
+
     /// <summary>
-    /// An exception thrown when a variable has a name that conflicts with 
+    /// An exception thrown when a variable has a name that conflicts with
     /// the name of another variable in the same <see cref="SpssVariablesCollection"/>.
     /// </summary>
     [Serializable]
     public class SpssVariableNameConflictException : ApplicationException
     {
         #region Construction
+
         /// <summary>
-        /// Creates an instance of the <see cref="SpssVariableNameConflictException"/> class,
+        /// Initializes a new instance of the <see cref="SpssVariableNameConflictException"/> class
         /// for deserialization.
         /// </summary>
-        public SpssVariableNameConflictException() { }
+        public SpssVariableNameConflictException()
+        {
+        }
+
         /// <summary>
-        /// Creates an instance of the <see cref="SpssVariableNameConflictException"/> class,
+        /// Initializes a new instance of the <see cref="SpssVariableNameConflictException"/> class
         /// for deserialization.
         /// </summary>
         protected SpssVariableNameConflictException(SerializationInfo info, StreamingContext context)
             : base(info, context)
-        { }
+        {
+        }
+
         /// <summary>
-        /// Creates an instance of the <see cref="SpssVariableNameConflictException"/> class,
+        /// Initializes a new instance of the <see cref="SpssVariableNameConflictException"/> class
         /// for leaving a custom message.
         /// </summary>
         public SpssVariableNameConflictException(string message, Exception innerException)
             : base(message, innerException)
-        { }
+        {
+        }
+
         /// <summary>
-        /// Creates an instance of the <see cref="SpssVariableNameConflictException"/> class.
+        /// Initializes a new instance of the <see cref="SpssVariableNameConflictException"/> class.
         /// </summary>
         /// <param name="newVarName">
         /// The new name of the variable being changed, which caused the conflict.
@@ -47,7 +57,7 @@ namespace Spss
         }
 
         /// <summary>
-        /// Creates an instance of the <see cref="SpssVariableNameConflictException"/> class.
+        /// Initializes a new instance of the <see cref="SpssVariableNameConflictException"/> class
         /// Thrown when a variable is being added that conflicts with another variable.
         /// </summary>
         /// <param name="addedVarName">
@@ -61,15 +71,18 @@ namespace Spss
 
         #region Attributes
         private readonly string oldVarName;
+
         /// <summary>
-        /// The original variable name that was acceptable, if applicable.
+        /// Gets the original variable name that was acceptable, if applicable.
         /// </summary>
-        public string OldVarName => oldVarName;
+        public string OldVarName => this.oldVarName;
+
         private readonly string newVarName;
+
         /// <summary>
-        /// The new name of the variable being changed, which caused the conflict.
+        /// Gets the new name of the variable being changed, which caused the conflict.
         /// </summary>
-        public string NewVarName => newVarName;
+        public string NewVarName => this.newVarName;
         #endregion
     }
 }

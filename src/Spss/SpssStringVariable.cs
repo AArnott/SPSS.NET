@@ -1,9 +1,4 @@
-//-----------------------------------------------------------------------
-// <copyright file="SpssStringVariable.cs" company="Andrew Arnott">
-//     Copyright (c) Andrew Arnott. All rights reserved.
-//     Copyright (c) Brigham Young University
-// </copyright>
-//-----------------------------------------------------------------------
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
@@ -21,7 +16,7 @@ namespace Spss
         private int length = -1;
 
         /// <summary>
-        /// Creates an instance of the <see cref="SpssStringVariable"/> class,
+        /// Initializes a new instance of the <see cref="SpssStringVariable"/> class
         /// for use when defining a new variable.
         /// </summary>
         public SpssStringVariable()
@@ -31,7 +26,7 @@ namespace Spss
         }
 
         /// <summary>
-        /// Creates an instance of the <see cref="SpssStringVariable"/> class,
+        /// Initializes a new instance of the <see cref="SpssStringVariable"/> class
         /// for use in loading variables from an existing SPSS data file.
         /// </summary>
         /// <param name="variables">The containing collection.</param>
@@ -57,26 +52,29 @@ namespace Spss
         }
 
         /// <summary>
-        /// Gets the maximum length a string in this variable can be.
+        /// Gets or sets the maximum length a string in this variable can be.
         /// </summary>
         public int Length
         {
             get
             {
-                return length >= 0 ? length : ColumnWidth;
+                return this.length >= 0 ? this.length : this.ColumnWidth;
             }
 
             set
             {
-                VerifyNotCommittedVariable();
-                if (value < 0) throw new ArgumentOutOfRangeException("Length", value, "Must be a non-negative number.");
+                this.VerifyNotCommittedVariable();
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException("Length", value, "Must be a non-negative number.");
+                }
 
-                length = value;
+                this.length = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets the missing values for this variable.
+        /// Gets the missing values for this variable.
         /// </summary>
         /// <value>The missing values.</value>
         /// <remarks>
@@ -87,7 +85,7 @@ namespace Spss
         /// <summary>
         /// Gets the SPSS type for the variable.
         /// </summary>
-        public override int SpssType => Length;
+        public override int SpssType => this.Length;
 
         /// <summary>
         /// Gets or sets the data value of this variable within a specific case.
@@ -97,20 +95,28 @@ namespace Spss
             get
             {
                 string v;
-                SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueChar(FileHandle, Handle, out v), "spssGetValueChar");
+                SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueChar(this.FileHandle, this.Handle, out v), "spssGetValueChar");
                 return v;
             }
+
             set
             {
-                if (value == null) value = string.Empty;
-                if (value.Length > Length)
-                    throw new ArgumentOutOfRangeException("Value", value, "String too long for variable " + Name + ".  Maximum length is: " + Length);
-                SpssSafeWrapper.spssSetValueChar(FileHandle, Handle, value);
+                if (value == null)
+                {
+                    value = string.Empty;
+                }
+
+                if (value.Length > this.Length)
+                {
+                    throw new ArgumentOutOfRangeException("Value", value, "String too long for variable " + this.Name + ".  Maximum length is: " + this.Length);
+                }
+
+                SpssSafeWrapper.spssSetValueChar(this.FileHandle, this.Handle, value);
             }
         }
 
         /// <summary>
-        /// The set of value labels (response values and labels) that are defined.
+        /// Gets the set of value labels (response values and labels) that are defined.
         /// </summary>
         public IDictionary<string, string> ValueLabels => this.valueLabels;
 
@@ -121,7 +127,10 @@ namespace Spss
         {
             base.Update();
 
-            if (!IsInCollection) return; // we'll get to do this later
+            if (!this.IsInCollection)
+            {
+                return; // we'll get to do this later
+            }
 
             this.valueLabels.Update();
             string[] missingValues = new string[3];
@@ -141,7 +150,7 @@ namespace Spss
         public override SpssVariable Clone()
         {
             SpssStringVariable other = new SpssStringVariable();
-            CloneTo(other);
+            this.CloneTo(other);
             return other;
         }
 
@@ -150,8 +159,11 @@ namespace Spss
             base.CloneTo(spssVar);
             SpssStringVariable other = spssVar as SpssStringVariable;
             if (other == null)
-                throw new ArgumentException("Must be of type " + GetType().Name + ".", "other");
-            other.Length = Length;
+            {
+                throw new ArgumentException("Must be of type " + this.GetType().Name + ".", "other");
+            }
+
+            other.Length = this.Length;
             this.valueLabels.CopyTo(other.valueLabels);
         }
 

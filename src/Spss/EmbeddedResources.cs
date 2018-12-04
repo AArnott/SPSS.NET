@@ -1,10 +1,4 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="EmbeddedResources.cs" company="Andrew Arnott">
-//     Copyright (c) Andrew Arnott. All rights reserved.
-//     Copyright (c) Brigham Young University
-//     This file comes from the Nerdbank.Tools.dll assembly.
-// </copyright>
-//-----------------------------------------------------------------------
+﻿// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
@@ -28,18 +22,21 @@ namespace Spss
             {
                 throw new ArgumentNullException("filename");
             }
+
             if (namespacePrefix == null)
             {
                 namespacePrefix = string.Empty;
             }
+
             if (filename.Substring(0, 1) != "/")
             {
                 filename = "/" + filename;
             }
+
             string manifestName = filename.Replace('/', '.');
             int pathEndsAt = filename.LastIndexOf('/');
             manifestName = manifestName.Substring(0, pathEndsAt).Replace(' ', '_') + manifestName.Substring(pathEndsAt);
-            return (namespacePrefix + manifestName);
+            return namespacePrefix + manifestName;
         }
 
         public static CultureInfo GetCultureFromManifestName(string manifestName, out string newManifestName)
@@ -51,6 +48,7 @@ namespace Spss
             {
                 return defaultCulture;
             }
+
             try
             {
                 CultureInfo culture = CultureInfo.GetCultureInfo(m.Groups["culture"].Value);
@@ -71,6 +69,7 @@ namespace Spss
             {
                 return GetLocalizedManifestResourceStream(manifestName, baseAssembly);
             }
+
             return GetLocalizedManifestResourceStream(manifestName, baseAssembly, culture);
         }
 
@@ -81,10 +80,12 @@ namespace Spss
             {
                 throw new ArgumentNullException("filename");
             }
+
             if (assembly == null)
             {
                 assembly = Assembly.GetCallingAssembly();
             }
+
             StreamReader reader = new StreamReader(GetLocalizedManifestResourceStream(filename, namespacePrefix, assembly));
             try
             {
@@ -94,6 +95,7 @@ namespace Spss
             {
                 reader.Close();
             }
+
             return str;
         }
 
@@ -103,10 +105,12 @@ namespace Spss
             {
                 throw new ArgumentNullException("manifestName");
             }
+
             if (baseAssembly == null)
             {
                 throw new ArgumentNullException("baseAssembly");
             }
+
             Stream stream = null;
             CultureInfo culture = Thread.CurrentThread.CurrentUICulture;
             stream = GetLocalizedManifestResourceStreamIfExists(manifestName, baseAssembly, culture);
@@ -114,10 +118,12 @@ namespace Spss
             {
                 stream = GetLocalizedManifestResourceStreamIfExists(manifestName, baseAssembly, culture.Parent);
             }
+
             if (stream == null)
             {
                 stream = GetFileStreamFromAssembly(manifestName, baseAssembly);
             }
+
             return stream;
         }
 
@@ -127,14 +133,17 @@ namespace Spss
             {
                 throw new ArgumentNullException("manifestName");
             }
+
             if (baseAssembly == null)
             {
                 throw new ArgumentNullException("baseAssembly");
             }
+
             if (culture == null)
             {
                 throw new ArgumentNullException("culture");
             }
+
             try
             {
                 return baseAssembly.GetSatelliteAssembly(culture).GetManifestResourceStream(manifestName);
@@ -151,15 +160,18 @@ namespace Spss
             {
                 throw new ArgumentNullException("manifestName");
             }
+
             if (assembly == null)
             {
                 throw new ArgumentNullException("assembly");
             }
+
             Stream fileStream = assembly.GetManifestResourceStream(manifestName);
             if (fileStream == null)
             {
                 throw new ArgumentOutOfRangeException("manifestName", manifestName, "The embedded file could not be found in the assembly " + assembly.FullName + ".  Check to see that the file's Build Action attribute in the project is set to \"Embedded Resource\".");
             }
+
             return fileStream;
         }
 
@@ -169,19 +181,23 @@ namespace Spss
             {
                 throw new ArgumentNullException("manifestName");
             }
+
             if (baseAssembly == null)
             {
                 throw new ArgumentNullException("baseAssembly");
             }
+
             if (culture == null)
             {
                 throw new ArgumentNullException("culture");
             }
+
             Stream stream = baseAssembly.GetSatelliteAssembly(culture).GetManifestResourceStream(manifestName);
             if ((stream == null) && manifestName.Contains("_"))
             {
                 stream = baseAssembly.GetSatelliteAssembly(culture).GetManifestResourceStream(manifestName.Replace('_', ' '));
             }
+
             return stream;
         }
     }

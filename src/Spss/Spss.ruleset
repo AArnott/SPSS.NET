@@ -69,62 +69,30 @@
     <Rule Id="CA2242" Action="Warning" />
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
-    <Rule Id="SA1513" Action="Hidden" />
     <Rule Id="SA1600" Action="Hidden" />
-    <Rule Id="SA1005" Action="Hidden" />
-    <Rule Id="SA1101" Action="Hidden" />
-    <Rule Id="SA1210" Action="Hidden" />
     <Rule Id="SA1300" Action="Hidden" />
-    <Rule Id="SA1514" Action="Hidden" />
-    <Rule Id="SA1515" Action="Hidden" />
-    <Rule Id="SA1516" Action="Hidden" />
     <Rule Id="SA1611" Action="Hidden" />
     <Rule Id="SA1201" Action="Hidden" />
-    <Rule Id="SA1200" Action="Hidden" />
     <Rule Id="SA1124" Action="Hidden" />
-    <Rule Id="SA1027" Action="Hidden" />
-    <Rule Id="SA1028" Action="Hidden" />
-    <Rule Id="SA1206" Action="Hidden" />
-    <Rule Id="SA1503" Action="Hidden" />
     <Rule Id="SA1401" Action="Hidden" />
     <Rule Id="SA1307" Action="Hidden" />
-    <Rule Id="SA1642" Action="Hidden" />
-    <Rule Id="SA1649" Action="Hidden" />
-    <Rule Id="SA1636" Action="Hidden" />
-    <Rule Id="SA1633" Action="Hidden" />
-    <Rule Id="SA1623" Action="Hidden" />
     <Rule Id="SA1615" Action="Hidden" />
-    <Rule Id="SA1502" Action="Hidden" />
     <Rule Id="SA1312" Action="Hidden" />
     <Rule Id="SA1313" Action="Hidden" />
     <Rule Id="SA1405" Action="Hidden" />
     <Rule Id="SA1310" Action="Hidden" />
     <Rule Id="SA1117" Action="Hidden" />
-    <Rule Id="SA1119" Action="Hidden" />
-    <Rule Id="SA1004" Action="Hidden" />
-    <Rule Id="SA1112" Action="Hidden" />
     <Rule Id="SA1116" Action="Hidden" />
-    <Rule Id="SA1121" Action="Hidden" />
     <Rule Id="SA1202" Action="Hidden" />
     <Rule Id="SA1306" Action="Hidden" />
-    <Rule Id="SA1407" Action="Hidden" />
-    <Rule Id="SA1507" Action="Hidden" />
-    <Rule Id="SA1512" Action="Hidden" />
-    <Rule Id="SA1616" Action="Hidden" />
-    <Rule Id="SA1624" Action="Hidden" />
-    <Rule Id="SA1617" Action="Hidden" />
     <Rule Id="SA1303" Action="Hidden" />
     <Rule Id="SA1601" Action="Hidden" />
     <Rule Id="SA1614" Action="Hidden" />
-    <Rule Id="SA1008" Action="Hidden" />
     <Rule Id="SA1108" Action="Hidden" />
     <Rule Id="SA1609" Action="Hidden" />
     <Rule Id="SA1610" Action="Hidden" />
     <Rule Id="SA1309" Action="Hidden" />
-    <Rule Id="SA1520" Action="Hidden" />
-    <Rule Id="SA1214" Action="Hidden" />
     <Rule Id="SA1608" Action="Hidden" />
     <Rule Id="SA1618" Action="Hidden" />
-    <Rule Id="SA1128" Action="Hidden" />
   </Rules>
 </RuleSet>
