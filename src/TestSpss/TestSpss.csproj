@@ -3,6 +3,8 @@
     <RootNamespace>Spss.Testing</RootNamespace>
     <TargetFramework>net46</TargetFramework>
     <CodeAnalysisRuleSet>TestSpss.ruleset</CodeAnalysisRuleSet>
+    <Platforms>x86;x64</Platforms>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spss\Spss.csproj" />

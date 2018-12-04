@@ -39,8 +39,15 @@ steps:
   condition: and(succeeded(), ne(variables['system.pullrequest.isfork'], true))
 
 - task: DotNetCoreCLI@2
-  displayName: Test
+  displayName: Test x86
   inputs:
     command: test
     projects: src/TestSpss
-    arguments: -c $(BuildConfiguration) --no-build -v n
+    arguments: -c $(BuildConfiguration) --no-restore /p:platform=x86 -v n
+
+- task: DotNetCoreCLI@2
+  displayName: Test x64
+  inputs:
+    command: test
+    projects: src/TestSpss
+    arguments: -c $(BuildConfiguration) --no-restore /p:platform=x64 -v n
