@@ -967,9 +967,7 @@ namespace Spss
         /// <remarks>
         /// This function is called to return the memory allocated by <see cref="spssGetDateVariablesDelegate"/>.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeDateVariablesDelegate(int* dateInfo);
-        [CLSCompliant(false)]
         protected static spssFreeDateVariablesDelegate spssFreeDateVariablesImpl;
 
         /// <summary>
@@ -984,9 +982,7 @@ namespace Spss
         /// <remarks>
         /// This function releases the memory which was acquired by <see cref="spssGetMultRespDefsDelegate"/>.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeMultRespDefsDelegate(char* mrespDefs);
-        [CLSCompliant(false)]
         protected static spssFreeMultRespDefsDelegate spssFreeMultRespDefsImpl;
 
         /// <summary>
@@ -1009,9 +1005,7 @@ namespace Spss
         /// This function frees the two arrays and the value and label strings allocated on the heap
         /// by <see cref="spssGetVarCValueLabelsDelegate"/>.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeVarCValueLabelsDelegate(char** values, char** labels, int numLabels);
-        [CLSCompliant(false)]
         protected static spssFreeVarCValueLabelsDelegate spssFreeVarCValueLabelsImpl;
 
         /// <summary>
@@ -1026,9 +1020,7 @@ namespace Spss
         /// <remarks>
         /// This function is called to return the memory allocated by <see cref="spssGetVariableSetsDelegate"/>.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeVariableSetsDelegate(char* varSets);
-        [CLSCompliant(false)]
         protected static spssFreeVariableSetsDelegate spssFreeVariableSetsImpl;
 
         /// <summary>
@@ -1051,9 +1043,7 @@ namespace Spss
         /// This function frees the two arrays and the name strings allocated on the heap by
         /// <see cref="spssGetVarNamesDelegate"/>.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeVarNamesDelegate(char** varNames, int* varTypes, int numVars);
-        [CLSCompliant(false)]
         protected static spssFreeVarNamesDelegate spssFreeVarNamesImpl;
 
         /// <summary>
@@ -1076,9 +1066,7 @@ namespace Spss
         /// This function frees the two arrays and the value and label strings allocated on the heap
         /// by <see cref="spssGetVarCValueLabelsDelegate"/>.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssFreeVarNValueLabelsDelegate(double* values, char** labels, int numLabels);
-        [CLSCompliant(false)]
         protected static spssFreeVarNValueLabelsDelegate spssFreeVarNValueLabels;
 
         /// <summary>
@@ -1175,9 +1163,7 @@ namespace Spss
         /// comprise the "fixed" information, followed by a sequence of one or more three-element
         /// groups.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetDateVariablesDelegate(int handle, out int numofElements, out int* dateInfo);
-        [CLSCompliant(false)]
         protected static spssGetDateVariablesDelegate spssGetDateVariablesImpl;
 
         /// <summary>
@@ -1389,9 +1375,7 @@ namespace Spss
         /// *mrespDefs is set to NULL, and the function returns the warning code
         /// <see cref="ReturnCode.SPSS_NO_MULTRESP"/>.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetMultRespDefsDelegate(int handle, out char* mrespDefs);
-        [CLSCompliant(false)]
         protected static spssGetMultRespDefsDelegate spssGetMultRespDefsImpl;
 
         /// <summary>
@@ -1784,9 +1768,7 @@ namespace Spss
         /// The two arrays and the value and label strings are allocated on the heap. When they
         /// are no longer needed, <see cref="spssFreeVarCValueLabelsDelegate"/> should be called to free the memory.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetVarCValueLabelsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out char** values, out char** labels, out int numLabels);
-        [CLSCompliant(false)]
         protected static spssGetVarCValueLabelsDelegate spssGetVarCValueLabelsImpl;
 
         /// <summary>
@@ -1841,9 +1823,7 @@ namespace Spss
         /// on the heap, the caller should free
         /// it by calling <see cref="spssFreeVariableSetsDelegate"/> when it is no longer needed.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetVariableSetsDelegate(int handle, out char* varSets);
-        [CLSCompliant(false)]
         protected static spssGetVariableSetsDelegate spssGetVariableSetsImpl;
 
         /// <summary>
@@ -2123,9 +2103,7 @@ namespace Spss
         /// The two arrays and the label strings are allocated on the heap. When they are no longer
         /// needed, <see cref="spssFreeVarNValueLabelsDelegate"/> should be called to free the memory.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetVarNValueLabelsDelegate(int handle, [MarshalAs(UnmanagedType.VBByRefStr)] ref string varName, out double* values, out char** labels, out int numLabels);
-        [CLSCompliant(false)]
         protected static spssGetVarNValueLabelsDelegate spssGetVarNValueLabelsImpl;
 
         /// <summary>
@@ -2193,9 +2171,7 @@ namespace Spss
         /// The two arrays and the variable name strings are allocated on the heap. When they
         /// are no longer needed, <see cref="spssFreeVarNamesDelegate"/> should be called to free the memory.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssGetVarNamesDelegate(int handle, out int numVars, out char** varNames, out int* varTypes);
-        [CLSCompliant(false)]
         protected static spssGetVarNamesDelegate spssGetVarNamesImpl;
 
         /// <summary>
@@ -2536,9 +2512,7 @@ namespace Spss
         /// is done on the input array, this function should be used with caution and is
         /// recommended only for copying Trends information from one file to another.
         /// </remarks>
-        [CLSCompliant(false)]
         unsafe protected delegate ReturnCode spssSetDateVariablesDelegate(int handle, int numofElements, int* dateInfo);
-        [CLSCompliant(false)]
         protected static spssSetDateVariablesDelegate spssSetDateVariablesImpl;
 
         /// <summary>

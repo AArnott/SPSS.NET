@@ -6,7 +6,6 @@ namespace Spss
     /// <summary>
     /// Very thin SpssSafeWrapper class for functions exposed by spssio32.dll.
     /// </summary>
-    [CLSCompliant(false)]
     public class SpssSafeWrapper : SpssThinWrapper
     {
         /// <summary>
