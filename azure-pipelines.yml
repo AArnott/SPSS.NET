@@ -31,10 +31,11 @@ steps:
 - script: dotnet restore src
   displayName: Restore packages
 
-- script: |
-    dotnet build src --no-restore -c $(BuildConfiguration)
-    dotnet pack src --no-build -c $(BuildConfiguration) -o "$(Build.ArtifactStagingDirectory)/deployables"
+- script: dotnet build src --no-restore -c $(BuildConfiguration)
   displayName: Build
+
+- script: dotnet pack src --no-build -c $(BuildConfiguration) -o "$(Build.ArtifactStagingDirectory)/deployables"
+  displayName: Pack
 
 - task: PublishBuildArtifacts@1
   inputs:

@@ -1,4 +1,4 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -15,8 +15,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spss", "Spss\Spss.csproj", "{230E956E-FB2D-448E-AD4A-E90CB4BE2092}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSpss", "TestSpss\TestSpss.csproj", "{87954EEF-2A60-444B-A1D0-1E94C2C663F1}"
-EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "SimpleDemo", "SimpleDemo\SimpleDemo.vbproj", "{7D996EAE-1C78-4E18-954F-882BE7AA6E99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,14 +40,6 @@ Global
 		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|x64.Build.0 = Release|x86
 		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|x86.ActiveCfg = Release|x86
 		{87954EEF-2A60-444B-A1D0-1E94C2C663F1}.Release|x86.Build.0 = Release|x86
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|x64.Build.0 = Debug|Any CPU
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Debug|x86.Build.0 = Debug|Any CPU
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|x64.ActiveCfg = Release|Any CPU
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|x64.Build.0 = Release|Any CPU
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|x86.ActiveCfg = Release|Any CPU
-		{7D996EAE-1C78-4E18-954F-882BE7AA6E99}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
