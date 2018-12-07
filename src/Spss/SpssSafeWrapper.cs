@@ -1439,48 +1439,45 @@ namespace Spss
         /// Value labels already defined for any of the given variable(s), if any, are discarded
         /// (if the labels are shared with other variables, they remain associated).
         /// </remarks>
-        public static ReturnCode spssSetVarCValueLabels(int handle, string[] varNames, string[] values, string[] labels)
+        public static unsafe ReturnCode spssSetVarCValueLabels(int handle, string[] varNames, string[] values, string[] labels)
         {
-            unsafe
+            char** _vars = stackalloc char*[varNames.Length],
+                _values = stackalloc char*[values.Length],
+                _labels = stackalloc char*[labels.Length];
+
+            for (int i = 0; i < varNames.Length; i++)
             {
-                char** _vars = stackalloc char*[varNames.Length],
-                    _values = stackalloc char*[values.Length],
-                    _labels = stackalloc char*[labels.Length];
-
-                for (int i = 0; i < varNames.Length; i++)
-                {
-                    _vars[i] = (char*)Marshal.StringToHGlobalAnsi(varNames[i]);
-                }
-
-                for (int i = 0; i < varNames.Length; i++)
-                {
-                    _values[i] = (char*)Marshal.StringToHGlobalAnsi(values[i]);
-                }
-
-                for (int i = 0; i < labels.Length; i++)
-                {
-                    _labels[i] = (char*)Marshal.StringToHGlobalAnsi(labels[i]);
-                }
-
-                ReturnCode result = SpssThinWrapper.spssSetVarCValueLabelsImpl(handle, _vars, varNames.Length, _values, _labels, labels.Length);
-
-                for (int i = 0; i < varNames.Length; i++)
-                {
-                    Marshal.FreeHGlobal((IntPtr)_vars[i]);
-                }
-
-                for (int i = 0; i < values.Length; i++)
-                {
-                    Marshal.FreeHGlobal((IntPtr)_values[i]);
-                }
-
-                for (int i = 0; i < labels.Length; i++)
-                {
-                    Marshal.FreeHGlobal((IntPtr)_labels[i]);
-                }
-
-                return result;
+                _vars[i] = (char*)Marshal.StringToHGlobalAnsi(varNames[i]);
             }
+
+            for (int i = 0; i < varNames.Length; i++)
+            {
+                _values[i] = (char*)Marshal.StringToHGlobalAnsi(values[i]);
+            }
+
+            for (int i = 0; i < labels.Length; i++)
+            {
+                _labels[i] = (char*)Marshal.StringToHGlobalAnsi(labels[i]);
+            }
+
+            ReturnCode result = SpssThinWrapper.spssSetVarCValueLabelsImpl(handle, _vars, varNames.Length, _values, _labels, labels.Length);
+
+            for (int i = 0; i < varNames.Length; i++)
+            {
+                Marshal.FreeHGlobal((IntPtr)_vars[i]);
+            }
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                Marshal.FreeHGlobal((IntPtr)_values[i]);
+            }
+
+            for (int i = 0; i < labels.Length; i++)
+            {
+                Marshal.FreeHGlobal((IntPtr)_labels[i]);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -1655,41 +1652,38 @@ namespace Spss
         /// are discarded (if the labels are shared with other variables,
         /// they remain associated with those variables).
         /// </remarks>
-        public static ReturnCode spssSetVarNValueLabels(int handle, string[] varNames, double[] values, string[] labels)
+        public static unsafe ReturnCode spssSetVarNValueLabels(int handle, string[] varNames, double[] values, string[] labels)
         {
-            unsafe
+            char** _vars = stackalloc char*[varNames.Length],
+                _labels = stackalloc char*[labels.Length];
+
+            for (int i = 0; i < varNames.Length; i++)
             {
-                char** _vars = stackalloc char*[varNames.Length],
-                    _labels = stackalloc char*[labels.Length];
-
-                for (int i = 0; i < varNames.Length; i++)
-                {
-                    _vars[i] = (char*)Marshal.StringToHGlobalAnsi(varNames[i]);
-                }
-
-                for (int i = 0; i < labels.Length; i++)
-                {
-                    _labels[i] = (char*)Marshal.StringToHGlobalAnsi(labels[i]);
-                }
-
-                ReturnCode result;
-                fixed (double* _values = values)
-                {
-                    result = SpssThinWrapper.spssSetVarNValueLabelsImpl(handle, _vars, varNames.Length, _values, _labels, labels.Length);
-                }
-
-                for (int i = 0; i < varNames.Length; i++)
-                {
-                    Marshal.FreeHGlobal((IntPtr)_vars[i]);
-                }
-
-                for (int i = 0; i < labels.Length; i++)
-                {
-                    Marshal.FreeHGlobal((IntPtr)_labels[i]);
-                }
-
-                return result;
+                _vars[i] = (char*)Marshal.StringToHGlobalAnsi(varNames[i]);
             }
+
+            for (int i = 0; i < labels.Length; i++)
+            {
+                _labels[i] = (char*)Marshal.StringToHGlobalAnsi(labels[i]);
+            }
+
+            ReturnCode result;
+            fixed (double* _values = values)
+            {
+                result = SpssThinWrapper.spssSetVarNValueLabelsImpl(handle, _vars, varNames.Length, _values, _labels, labels.Length);
+            }
+
+            for (int i = 0; i < varNames.Length; i++)
+            {
+                Marshal.FreeHGlobal((IntPtr)_vars[i]);
+            }
+
+            for (int i = 0; i < labels.Length; i++)
+            {
+                Marshal.FreeHGlobal((IntPtr)_labels[i]);
+            }
+
+            return result;
         }
 
         /// <summary>
