@@ -17,8 +17,6 @@
 [Rr]eleases/
 x64/
 x86/
-build/
-bld/
 [Bb]in/
 [Oo]bj/
 
@@ -60,6 +58,7 @@ artifacts/
 *.tmp
 *.tmp_proj
 *.log
+*.binlog
 *.vspscc
 *.vssscc
 .builds
@@ -164,7 +163,6 @@ AppPackages/
 
 # Others
 ClientBin/
-[Ss]tyle[Cc]op.*
 ~$*
 *~
 *.dbmdl

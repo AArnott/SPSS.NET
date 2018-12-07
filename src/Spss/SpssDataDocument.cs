@@ -1,9 +1,4 @@
-//-----------------------------------------------------------------------
-// <copyright file="SpssDataDocument.cs" company="Andrew Arnott">
-//     Copyright (c) Andrew Arnott. All rights reserved.
-//     Copyright (c) Brigham Young University
-// </copyright>
-//-----------------------------------------------------------------------
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
@@ -70,6 +65,7 @@ namespace Spss
             {
                 this.IsCompressed = true;
             }
+
             this.IsAuthoringDictionary = true;
             this.Variables = new SpssVariablesCollection(this);
             this.Cases = new SpssCasesCollection(this);
@@ -103,13 +99,7 @@ namespace Spss
         /// <summary>
         /// Gets a value indicating whether this document has been closed.
         /// </summary>
-        public bool IsClosed
-        {
-            get
-            {
-                return this.Handle.IsClosed;
-            }
-        }
+        public bool IsClosed => this.Handle.IsClosed;
 
         /// <summary>
         /// Gets or sets a value indicating whether the SPSS file is compressed on disk.
@@ -149,13 +139,7 @@ namespace Spss
         /// Setting a numeric variable to this value is equivalent in purpose
         /// to setting DBNull.Value in a database.
         /// </remarks>
-        protected internal static double SystemMissingValue
-        {
-            get
-            {
-                return SpssThinWrapper.spssSysmisValImpl();
-            }
-        }
+        protected internal static double SystemMissingValue => SpssThinWrapper.spssSysmisValImpl();
 
         /// <summary>
         /// Gets the SPSS file handle for the open document.
@@ -169,7 +153,7 @@ namespace Spss
         /// The filename of the existing document to open.
         /// </param>
         /// <param name="access">
-        /// <see cref="FileAccess.Read"/> for read only access, or 
+        /// <see cref="FileAccess.Read"/> for read only access, or
         /// <see cref="FileAccess.Write"/> for append access.
         /// </param>
         /// <returns>
@@ -185,6 +169,7 @@ namespace Spss
             {
                 throw new ArgumentOutOfRangeException("access", access, "Use Create method to create a new file.");
             }
+
             return new SpssDataDocument(filename, access);
         }
 
@@ -203,11 +188,12 @@ namespace Spss
             {
                 throw new InvalidOperationException("File to create already exists.");
             }
+
             return new SpssDataDocument(filename, SpssFileAccess.Create);
         }
 
         /// <summary>
-        /// Creates a new SPSS data document, initializing its dictionary 
+        /// Creates a new SPSS data document, initializing its dictionary
         /// by copying the dictionary from an existing SPSS data file.
         /// </summary>
         /// <param name="filename">
@@ -225,10 +211,12 @@ namespace Spss
             {
                 throw new InvalidOperationException("File to create already exists.");
             }
+
             if (!File.Exists(copyDictionaryFromFileName))
             {
                 throw new FileNotFoundException("File to copy does not exist.", copyDictionaryFromFileName);
             }
+
             using (SpssDataDocument read = SpssDataDocument.Open(copyDictionaryFromFileName, SpssFileAccess.Read))
             {
                 SpssDataDocument toReturn = new SpssDataDocument(filename, SpssFileAccess.Create);
@@ -244,7 +232,7 @@ namespace Spss
         }
 
         /// <summary>
-        /// Closes the SAV that is open for reading or writing.  
+        /// Closes the SAV that is open for reading or writing.
         /// If no file is open, close() simply returns.
         /// </summary>
         public void Close()
@@ -290,6 +278,7 @@ namespace Spss
             {
                 dataRows = table.Rows;
             }
+
             foreach (DataRow row in dataRows)
             {
                 SpssCase caseRow = this.Cases.New();
@@ -297,6 +286,7 @@ namespace Spss
                 {
                     caseRow.SetDBValue(this.Variables.GenerateColumnName(table.Columns[col].ColumnName), row[col]);
                 }
+
                 caseRow.Commit();
             }
         }

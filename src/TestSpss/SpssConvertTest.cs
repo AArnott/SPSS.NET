@@ -1,30 +1,32 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Data;
-using System.IO;
-using Xunit;
-using DeploymentItemAttribute = Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute;
+﻿// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss.Testing
 {
+    using System;
+    using System.CodeDom.Compiler;
+    using System.Data;
+    using System.IO;
+    using Xunit;
+    using DeploymentItemAttribute = Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute;
+
     [DeploymentItem("x86", "x86")]
     [DeploymentItem("x64", "x64")]
     public class SpssConvertTest
     {
         public SpssConvertTest()
         {
-            tblTest = new DataTable();
-            DataColumn cID = tblTest.Columns.Add("ID", typeof(int));
-            DataColumn cStr = tblTest.Columns.Add("str", typeof(string));
-            DataColumn cDate = tblTest.Columns.Add("date", typeof(DateTime));
-            DataColumn cFloat = tblTest.Columns.Add("float", typeof(float));
+            this.tblTest = new DataTable();
+            DataColumn cID = this.tblTest.Columns.Add("ID", typeof(int));
+            DataColumn cStr = this.tblTest.Columns.Add("str", typeof(string));
+            DataColumn cDate = this.tblTest.Columns.Add("date", typeof(DateTime));
+            DataColumn cFloat = this.tblTest.Columns.Add("float", typeof(float));
 
             const int cIDv = 3;
             const string cStrv = "hello";
             DateTime cDatev = DateTime.Now;
             const float cFloatv = 3.553F;
             object[] values = { cIDv, cStrv, cDatev, cFloatv };
-            tblTest.Rows.Add(values);
+            this.tblTest.Rows.Add(values);
         }
 
         private DataTable tblTest;
@@ -74,7 +76,7 @@ namespace Spss.Testing
             using (System.CodeDom.Compiler.TempFileCollection tfc = new System.CodeDom.Compiler.TempFileCollection())
             {
                 SAVfilename = tfc.AddExtension("sav", true);
-                SpssConvert.ToFile(tblTest, tblTest.Select(), SAVfilename, FillInMetaData);
+                SpssConvert.ToFile(this.tblTest, this.tblTest.Select(), SAVfilename, this.FillInMetaData);
                 Console.WriteLine("The file with metadata is stored at: " + SAVfilename);
             }
         }

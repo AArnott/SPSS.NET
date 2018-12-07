@@ -1,13 +1,15 @@
+// Copyright (c) Andrew Arnott. All rights reserved.
+
 namespace Spss
 {
     using System;
-    using System.IO;
-    using System.Data;
     using System.Collections;
-    using System.Diagnostics;
-    using System.Globalization;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.IO;
 
     /// <summary>
     /// Class to manage the metadata of variables in an <see cref="SpssDataDocument">SPSS data document</see>.
@@ -35,7 +37,7 @@ namespace Spss
 
             this.Document = document;
 
-            InitializeVariablesList();
+            this.InitializeVariablesList();
         }
 
         /// <summary>
@@ -43,30 +45,30 @@ namespace Spss
         /// </summary>
         public SpssVariable this[string varName]
         {
-            get { return variablesLookup[varName]; }
+            get { return this.variablesLookup[varName]; }
         }
 
         /// <summary>
-        /// The SPSS data document whose variables are being managed.
+        /// Gets the SPSS data document whose variables are being managed.
         /// </summary>
         public SpssDataDocument Document { get; private set; }
 
         /// <summary>
-        /// The file handle of the SPSS data document whose variables are being managed.
+        /// Gets the file handle of the SPSS data document whose variables are being managed.
         /// </summary>
-        private Int32 FileHandle
-        {
-            get { return this.Document.Handle; }
-        }
+        private int FileHandle => this.Document.Handle;
 
         /// <summary>
         /// Gets a value indicating whether a variable has been added to this document.
         /// </summary>
         public bool Contains(SpssVariable variable)
         {
-            if (variable == null) throw new ArgumentNullException("variable");
+            if (variable == null)
+            {
+                throw new ArgumentNullException("variable");
+            }
 
-            return variables.Contains(variable);
+            return this.variables.Contains(variable);
         }
 
         /// <summary>
@@ -81,9 +83,11 @@ namespace Spss
         public bool Contains(string varName)
         {
             if (varName == null || varName.Length == 0)
+            {
                 throw new ArgumentNullException("varName");
+            }
 
-            return variablesLookup.Contains(varName);
+            return this.variablesLookup.Contains(varName);
         }
 
         /// <summary>
@@ -94,8 +98,12 @@ namespace Spss
         /// </returns>
         public int IndexOf(SpssVariable variable)
         {
-            if (variable == null) throw new ArgumentNullException("variable");
-            return variables.IndexOf(variable);
+            if (variable == null)
+            {
+                throw new ArgumentNullException("variable");
+            }
+
+            return this.variables.IndexOf(variable);
         }
 
         /// <summary>
@@ -106,8 +114,12 @@ namespace Spss
         /// </returns>
         public int IndexOf(string varName)
         {
-            if (varName == null || varName.Length == 0) throw new ArgumentNullException("varName");
-            return IndexOf(variablesLookup[varName]);
+            if (varName == null || varName.Length == 0)
+            {
+                throw new ArgumentNullException("varName");
+            }
+
+            return this.IndexOf(this.variablesLookup[varName]);
         }
 
         /// <summary>
@@ -115,29 +127,31 @@ namespace Spss
         /// </summary>
         public void Insert(int index, SpssVariable variable)
         {
-            if (variable == null) throw new ArgumentNullException("variable");
-            EnsureAuthoringDictionary();
+            if (variable == null)
+            {
+                throw new ArgumentNullException("variable");
+            }
+
+            this.EnsureAuthoringDictionary();
             variable.AddToCollection(this);
-            variablesLookup.Add(variable);
-            variables.Insert(index, variable);
+            this.variablesLookup.Add(variable);
+            this.variables.Insert(index, variable);
         }
 
         /// <summary>
         /// Adds a variable to the document.
         /// </summary>
-        /// <returns>
-        /// The index of the newly added variable.
-        /// </returns>
         public void Add(SpssVariable variable)
         {
             if (variable == null)
             {
                 throw new ArgumentNullException("variable");
             }
-            EnsureAuthoringDictionary();
+
+            this.EnsureAuthoringDictionary();
             variable.AddToCollection(this);
-            variablesLookup.Add(variable);
-            variables.Add(variable);
+            this.variablesLookup.Add(variable);
+            this.variables.Add(variable);
         }
 
         /// <summary>
@@ -145,8 +159,12 @@ namespace Spss
         /// </summary>
         public bool Remove(SpssVariable variable)
         {
-            if (variable == null) throw new ArgumentNullException("variable");
-            EnsureAuthoringDictionary();
+            if (variable == null)
+            {
+                throw new ArgumentNullException("variable");
+            }
+
+            this.EnsureAuthoringDictionary();
             try
             {
                 variable.RemoveFromCollection(this);
@@ -155,8 +173,9 @@ namespace Spss
             {
                 return false;
             }
-            variables.Remove(variable);
-            variablesLookup.Remove(variable.Name);
+
+            this.variables.Remove(variable);
+            this.variablesLookup.Remove(variable.Name);
             return true;
         }
 
@@ -165,8 +184,15 @@ namespace Spss
         /// </summary>
         public void CopyTo(SpssVariablesCollection other, int index)
         {
-            if (other == null) throw new ArgumentNullException("other");
-            if (other == this) throw new ArgumentException("Must be a different variables collection.", "other");
+            if (other == null)
+            {
+                throw new ArgumentNullException("other");
+            }
+
+            if (other == this)
+            {
+                throw new ArgumentException("Must be a different variables collection.", "other");
+            }
 
             throw new NotImplementedException();
         }
@@ -179,7 +205,7 @@ namespace Spss
         /// The DataTable whose list of columns are the ones we want to copy.
         /// </param>
         /// <param name="fillInMetadataCallback">
-        /// The callback method to use to retrieve the additional metadata 
+        /// The callback method to use to retrieve the additional metadata
         /// to put into the SPSS data document, that is not included in a DataTable.
         /// Optional.
         /// </param>
@@ -196,7 +222,9 @@ namespace Spss
                         ((SpssStringVariable)var).Length = (column.MaxLength < 0 || column.MaxLength > SpssSafeWrapper.SPSS_MAX_LONGSTRING) ? SpssSafeWrapper.SPSS_MAX_LONGSTRING : column.MaxLength;
                     }
                     else if (column.DataType == typeof(DateTime))
+                    {
                         var = new SpssDateVariable();
+                    }
                     else
                     {
                         var = new SpssNumericVariable();
@@ -207,8 +235,8 @@ namespace Spss
                         }
                     }
 
-                    var.Name = GenerateColumnName(column.ColumnName);
-                    Add(var);
+                    var.Name = this.GenerateColumnName(column.ColumnName);
+                    this.Add(var);
 
                     // Provide opportunity for callback function to fill in variable-specific metadata
                     if (fillInMetadataCallback != null)
@@ -239,7 +267,7 @@ namespace Spss
         /// </param>
         public void ImportSchema(DataTable table)
         {
-            ImportSchema(table, null);
+            this.ImportSchema(table, null);
         }
 
         /// <summary>
@@ -247,7 +275,7 @@ namespace Spss
         /// </summary>
         internal void Commit()
         {
-            EnsureAuthoringDictionary();
+            this.EnsureAuthoringDictionary();
 
             // Write the variables we have been caching into the data file.
             foreach (SpssVariable var in this)
@@ -257,7 +285,7 @@ namespace Spss
         }
 
         /// <summary>
-        /// Comes up with a variable name guaranteed to be short enough 
+        /// Comes up with a variable name guaranteed to be short enough
         /// to fit within the limits of SPSS.
         /// </summary>
         /// <param name="colName">
@@ -269,7 +297,7 @@ namespace Spss
         /// the shorter variable name.
         /// </returns>
         /// <remarks>
-        /// The shortening algorithm takes the first and last several characters of the 
+        /// The shortening algorithm takes the first and last several characters of the
         /// variable name and concatenates them together such that the resulting
         /// string is exactly the allowed length for a variable name.
         /// The process is not guaranteed to produce a unique variable name.
@@ -277,7 +305,10 @@ namespace Spss
         internal string GenerateColumnName(string colName)
         {
             if (colName.Length > SpssThinWrapper.SPSS_MAX_VARNAME)
-                colName = colName.Substring(0, SpssThinWrapper.SPSS_MAX_VARNAME / 2) + colName.Substring(colName.Length - SpssThinWrapper.SPSS_MAX_VARNAME / 2);
+            {
+                colName = colName.Substring(0, SpssThinWrapper.SPSS_MAX_VARNAME / 2) + colName.Substring(colName.Length - (SpssThinWrapper.SPSS_MAX_VARNAME / 2));
+            }
+
             return colName;
         }
 
@@ -287,31 +318,32 @@ namespace Spss
         /// </summary>
         internal void ColumnNameUpdated(SpssVariable variable, string oldName)
         {
-            variablesLookup.Remove(oldName);
-            variablesLookup.Add(variable);
+            this.variablesLookup.Remove(oldName);
+            this.variablesLookup.Add(variable);
         }
 
         private void EnsureAuthoringDictionary()
         {
-            Document.EnsureAuthoringDictionary();
+            this.Document.EnsureAuthoringDictionary();
         }
 
         private void InitializeVariablesList()
         {
-            Debug.Assert(FileHandle >= 0, "Must be working with an open file.");
+            Debug.Assert(this.FileHandle >= 0, "Must be working with an open file.");
             int initialSize;
-            SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetNumberofVariables(FileHandle, out initialSize), "spssGetNumberofVariables");
-            variables = new List<SpssVariable>(initialSize);
-            variablesLookup = new SpssVariableKeyedCollection();
+            SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetNumberofVariables(this.FileHandle, out initialSize), "spssGetNumberofVariables");
+            this.variables = new List<SpssVariable>(initialSize);
+            this.variablesLookup = new SpssVariableKeyedCollection();
 
             string[] varNames;
             int[] varTypes;
-            ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNames(FileHandle, out varNames, out varTypes), "spssGetVarNames", ReturnCode.SPSS_INVALID_FILE);
+            ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNames(this.FileHandle, out varNames, out varTypes), "spssGetVarNames", ReturnCode.SPSS_INVALID_FILE);
             if (result == ReturnCode.SPSS_INVALID_FILE)
             {
                 // brand new file
                 return;
             }
+
             Debug.Assert(varNames.Length == varTypes.Length);
             for (int i = 0; i < varNames.Length; i++)
             {
@@ -326,8 +358,8 @@ namespace Spss
         /// </summary>
         public SpssVariable this[int index]
         {
-            get { return variables[index]; }
-            set { variables[index] = value; }
+            get { return this.variables[index]; }
+            set { this.variables[index] = value; }
         }
 
         #endregion
@@ -352,7 +384,6 @@ namespace Spss
 
         #region IList<SpssVariable> Members
 
-
         public void RemoveAt(int index)
         {
             throw new NotImplementedException();
@@ -364,22 +395,16 @@ namespace Spss
 
         public void Clear()
         {
-            EnsureAuthoringDictionary();
+            this.EnsureAuthoringDictionary();
             while (this.variables.Count > 0)
             {
                 this.Remove(this.variables[0]);
             }
         }
 
-        public int Count
-        {
-            get { return this.variables.Count; }
-        }
+        public int Count => this.variables.Count;
 
-        public bool IsReadOnly
-        {
-            get { return !this.Document.IsAuthoringDictionary; }
-        }
+        public bool IsReadOnly => !this.Document.IsAuthoringDictionary;
 
         #endregion
 

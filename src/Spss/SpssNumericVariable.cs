@@ -1,8 +1,10 @@
+// Copyright (c) Andrew Arnott. All rights reserved.
+
 namespace Spss
 {
     using System;
-    using System.Diagnostics;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
 
     /// <summary>
@@ -24,7 +26,7 @@ namespace Spss
         private int printDecimal;
 
         /// <summary>
-        /// Creates an instance of the <see cref="SpssNumericVariable"/> class,
+        /// Initializes a new instance of the <see cref="SpssNumericVariable"/> class
         /// for use when defining a new variable.
         /// </summary>
         public SpssNumericVariable()
@@ -37,7 +39,7 @@ namespace Spss
         }
 
         /// <summary>
-        /// Creates an instance of the <see cref="SpssNumericVariable"/> class,
+        /// Initializes a new instance of the <see cref="SpssNumericVariable"/> class
         /// for use in loading variables from an existing SPSS data file.
         /// </summary>
         /// <param name="variables">The containing collection.</param>
@@ -67,7 +69,7 @@ namespace Spss
         }
 
         /// <summary>
-        /// Gets or sets the missing values for this variable.
+        /// Gets the missing values for this variable.
         /// </summary>
         /// <value>The missing values.</value>
         /// <remarks>
@@ -80,13 +82,7 @@ namespace Spss
         /// <summary>
         /// Gets the SPSS type for the variable.
         /// </summary>
-        public override int SpssType
-        {
-            get
-            {
-                return 0; // 0 = numeric to SPSS
-            }
-        }
+        public override int SpssType => 0; // 0 = numeric to SPSS
 
         public virtual FormatTypeCode WriteFormat
         {
@@ -197,18 +193,15 @@ namespace Spss
         }
 
         /// <summary>
-        /// The set of value labels (response values and labels) that are defined.
+        /// Gets the set of value labels (response values and labels) that are defined.
         /// </summary>
-        public IDictionary<double, string> ValueLabels
-        {
-            get { return this.valueLabels; }
-        }
+        public IDictionary<double, string> ValueLabels => this.valueLabels;
 
         /// <summary>
         /// Gets or sets the data value of this variable within a specific case.
         /// </summary>
         /// <remarks>
-        /// Null values are translated to and from 
+        /// Null values are translated to and from
         /// <see cref="SpssDataDocument.SystemMissingValue"/> transparently.
         /// </remarks>
         internal new double? Value
@@ -216,16 +209,23 @@ namespace Spss
             get
             {
                 double v;
-                SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumericImpl(FileHandle, Handle, out v), "spssGetValueNumeric");
+                SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetValueNumericImpl(this.FileHandle, this.Handle, out v), "spssGetValueNumeric");
                 if (v == SpssDataDocument.SystemMissingValue)
+                {
                     return null;
+                }
+
                 return v;
             }
 
             set
             {
-                if (!value.HasValue) value = SpssDataDocument.SystemMissingValue;
-                SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetValueNumeric(FileHandle, Handle, value.Value), "spssSetValueNumeric");
+                if (!value.HasValue)
+                {
+                    value = SpssDataDocument.SystemMissingValue;
+                }
+
+                SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetValueNumeric(this.FileHandle, this.Handle, value.Value), "spssSetValueNumeric");
             }
         }
 
@@ -236,7 +236,7 @@ namespace Spss
         {
             base.Update();
 
-            if (!IsInCollection)
+            if (!this.IsInCollection)
             {
                 return; // we'll get to do this later
             }
@@ -252,14 +252,14 @@ namespace Spss
                 missingValues[1],
                 missingValues[2]), "spssSetVarNMissingValues");
 
-            SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarPrintFormat(FileHandle, Name, this.PrintFormat, this.PrintDecimal, this.PrintWidth), "spssSetVarPrintFormat");
-            SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarWriteFormat(FileHandle, Name, this.WriteFormat, this.WriteDecimal, this.WriteWidth), "spssSetVarWriteFormat");
+            SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarPrintFormat(this.FileHandle, this.Name, this.PrintFormat, this.PrintDecimal, this.PrintWidth), "spssSetVarPrintFormat");
+            SpssException.ThrowOnFailure(SpssSafeWrapper.spssSetVarWriteFormat(this.FileHandle, this.Name, this.WriteFormat, this.WriteDecimal, this.WriteWidth), "spssSetVarWriteFormat");
         }
 
         public override SpssVariable Clone()
         {
             SpssNumericVariable other = new SpssNumericVariable();
-            CloneTo(other);
+            this.CloneTo(other);
             return other;
         }
 
@@ -269,8 +269,9 @@ namespace Spss
             SpssNumericVariable other = spssVar as SpssNumericVariable;
             if (other == null)
             {
-                throw new ArgumentException("Must be of type " + GetType().Name + ".", "other");
+                throw new ArgumentException("Must be of type " + this.GetType().Name + ".", "other");
             }
+
             other.PrintDecimal = this.PrintDecimal;
             other.PrintFormat = this.PrintFormat;
             other.PrintWidth = this.PrintWidth;

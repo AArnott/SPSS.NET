@@ -1,16 +1,18 @@
-using System;
-using System.Diagnostics;
-using System.Collections;
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
+    using System;
+    using System.Collections;
+    using System.Diagnostics;
+
     /// <summary>
     /// A collection of value labels for a <see cref="SpssStringVariable"/>.
     /// </summary>
     public class SpssStringVariableValueLabelsDictionary : SpssVariableValueLabelsDictionary<string>
     {
         /// <summary>
-        /// Creates an instance of the <see cref="SpssStringVariableValueLabelsDictionary"/> class.
+        /// Initializes a new instance of the <see cref="SpssStringVariableValueLabelsDictionary"/> class.
         /// </summary>
         public SpssStringVariableValueLabelsDictionary(SpssVariable variable)
             : base(variable, StringComparer.Ordinal)
@@ -18,10 +20,11 @@ namespace Spss
         }
 
         #region Attributes
+
         /// <summary>
-        /// The variable hosting this collection.
+        /// Gets the variable hosting this collection.
         /// </summary>
-        protected new SpssStringVariable Variable { get { return (SpssStringVariable)base.Variable; } }
+        protected new SpssStringVariable Variable => (SpssStringVariable)base.Variable;
 
         /// <summary>
         /// Gets a value indicating whether this string variable can have value labels.
@@ -31,16 +34,11 @@ namespace Spss
         /// <see cref="SpssThinWrapper.SPSS_MAX_SHORTSTRING"/> characters
         /// in length..
         /// </remarks>
-        public bool Applies
-        {
-            get
-            {
-                return Variable.Length <= SpssSafeWrapper.SPSS_MAX_SHORTSTRING;
-            }
-        }
+        public bool Applies => this.Variable.Length <= SpssSafeWrapper.SPSS_MAX_SHORTSTRING;
         #endregion
 
         #region Operations
+
         /// <summary>
         /// Adds a value label.
         /// </summary>
@@ -52,7 +50,11 @@ namespace Spss
         /// </param>
         public override void Add(string value, string label)
         {
-            if (!Applies) throw new InvalidOperationException("Cannot add value labels to a long string variable.");
+            if (!this.Applies)
+            {
+                throw new InvalidOperationException("Cannot add value labels to a long string variable.");
+            }
+
             base.Add(value, label);
         }
 
@@ -62,7 +64,9 @@ namespace Spss
         protected internal override void Update()
         {
             foreach (var pair in this)
-                SpssSafeWrapper.spssSetVarCValueLabel(FileHandle, Variable.Name, pair.Key, pair.Value);
+            {
+                SpssSafeWrapper.spssSetVarCValueLabel(this.FileHandle, this.Variable.Name, pair.Key, pair.Value);
+            }
         }
 
         /// <summary>
@@ -70,17 +74,20 @@ namespace Spss
         /// </summary>
         protected override void LoadFromSpssFile()
         {
-            if (!Applies) return;
+            if (!this.Applies)
+            {
+                return;
+            }
 
             string[] values;
             string[] labels;
-            ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarCValueLabels(FileHandle, Variable.Name, out values, out labels), "spssGetVarCValueLabels", ReturnCode.SPSS_NO_LABELS);
+            ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarCValueLabels(this.FileHandle, this.Variable.Name, out values, out labels), "spssGetVarCValueLabels", ReturnCode.SPSS_NO_LABELS);
             if (result == ReturnCode.SPSS_OK)
             { // ReturnCode.SPSS_NO_LABELS is nothing special -- just no labels to add
                 Debug.Assert(values.Length == labels.Length);
                 for (int i = 0; i < values.Length; i++)
                 {
-                    Add(values[i], labels[i]);
+                    this.Add(values[i], labels[i]);
                 }
             }
         }

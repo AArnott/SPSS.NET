@@ -1,18 +1,12 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="SpssVariableKeyedCollection.cs" company="Andrew Arnott">
-//     Copyright (c) Andrew Arnott. All rights reserved.
-//     Copyright (c) Brigham Young University
-//     Copyright (c) Intereffective
-// </copyright>
-//-----------------------------------------------------------------------
+﻿// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Text;
-    using System.Collections.ObjectModel;
 
     internal class SpssVariableKeyedCollection : KeyedCollection<string, SpssVariable>
     {

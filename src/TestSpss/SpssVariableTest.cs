@@ -1,11 +1,13 @@
-using System;
-using System.Linq;
-using System.Diagnostics;
-using Xunit;
-using DeploymentItemAttribute = Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute;
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss.Testing
 {
+    using System;
+    using System.Diagnostics;
+    using System.Linq;
+    using Xunit;
+    using DeploymentItemAttribute = Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute;
+
     [DeploymentItem("x86", "x86")]
     [DeploymentItem("x64", "x64")]
     public class SpssVariableTest
@@ -65,6 +67,7 @@ namespace Spss.Testing
             Assert.NotNull(var.Label);
             Assert.Equal(string.Empty, var.Label);
         }
+
         [Fact]
         public void SetStringValueLabels()
         {
@@ -76,16 +79,19 @@ namespace Spss.Testing
             Assert.Equal("hi", var.ValueLabels["H"]);
             Assert.Equal(3, var.ValueLabels.Count);
         }
+
         [Fact]
         public void GetLongStringValueLabels()
         {
             using (SpssDataDocument docRead = SpssDataDocument.Open(TestBase.GoodFilename, SpssFileAccess.Read))
             {
                 SpssStringVariable var = (SpssStringVariable)docRead.Variables["longStr"];
+
                 // long strings can never have value labels
                 Assert.Equal(0, var.ValueLabels.Count);
             }
         }
+
         [Fact]
         public void SetNumericValueLabels()
         {
@@ -115,6 +121,7 @@ namespace Spss.Testing
                 Assert.Throws<ArgumentOutOfRangeException>(() => row["charLabels"] = new string('a', var.Length + 1));
             }
         }
+
         [Fact]
         public void SetMissingValueNumeric()
         {
@@ -133,6 +140,7 @@ namespace Spss.Testing
                 Assert.Equal(double.NaN, val);
             }
         }
+
         [Fact]
         public void SetMissingValueNumericByNull()
         {
@@ -151,6 +159,7 @@ namespace Spss.Testing
                 Assert.False(val.HasValue);
             }
         }
+
         [Fact]
         public void SetMissingValueDateByNull()
         {
@@ -169,6 +178,7 @@ namespace Spss.Testing
                 Assert.False(val.HasValue);
             }
         }
+
         [Fact]
         public void ReadDecimalPlaces()
         {
@@ -179,6 +189,7 @@ namespace Spss.Testing
                 Assert.Equal(2, var.WriteDecimal);
             }
         }
+
         [Fact]
         public void ReadLabel()
         {
@@ -188,6 +199,7 @@ namespace Spss.Testing
                 Assert.Equal("on butter", var.Label);
             }
         }
+
         [Fact]
         public void ReadNullLabel()
         {
@@ -197,6 +209,7 @@ namespace Spss.Testing
                 Assert.Equal(string.Empty, var.Label);
             }
         }
+
         [Fact]
         public void ReadNullValueLabels()
         {

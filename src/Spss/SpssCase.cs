@@ -1,9 +1,4 @@
-//-----------------------------------------------------------------------
-// <copyright file="SpssCase.cs" company="Andrew Arnott">
-//     Copyright (c) Andrew Arnott. All rights reserved.
-//     Copyright (c) Brigham Young University
-// </copyright>
-//-----------------------------------------------------------------------
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
@@ -14,13 +9,13 @@ namespace Spss
     /// Allows for reading/writing variable data on a per-case basis.
     /// </summary>
     /// <remarks>
-    /// In SPSS a case is analogous to a <see cref="System.Data.DataRow"/> 
+    /// In SPSS a case is analogous to a <see cref="System.Data.DataRow"/>
     /// in ADO.NET.
     /// </remarks>
     public class SpssCase
     {
         /// <summary>
-        /// Creates an instance of the <see cref="SpssCase"/> class.
+        /// Initializes a new instance of the <see cref="SpssCase"/> class.
         /// </summary>
         protected internal SpssCase(SpssCasesCollection cases, int position)
         {
@@ -36,7 +31,7 @@ namespace Spss
         }
 
         /// <summary>
-        /// The index of the row within the data file.
+        /// Gets the index of the row within the data file.
         /// </summary>
         public int Position { get; private set; }
 
@@ -48,13 +43,7 @@ namespace Spss
         /// <summary>
         /// Gets the variables in the document.
         /// </summary>
-        protected SpssVariablesCollection Variables
-        {
-            get
-            {
-                return Cases.Document.Variables;
-            }
-        }
+        protected SpssVariablesCollection Variables => this.Cases.Document.Variables;
 
         /// <summary>
         /// Gets or sets the value of some variable on this row.
@@ -98,7 +87,7 @@ namespace Spss
         /// <remarks>
         /// This method should be called after a new row has had all its values set.
         /// After calling this method, variable values may not be changed.
-        /// Without calling this method, the row is never actually written to the 
+        /// Without calling this method, the row is never actually written to the
         /// data file.
         /// </remarks>
         /// <example>
@@ -106,12 +95,12 @@ namespace Spss
         /// <code>
         /// using( SpssDataDocument doc = SpssDataDocument.Open("mydata.sav", SpssFileAccess.Append) )
         /// {
-        ///		SpssCase Case = doc.Cases.New();
-        ///		Case["var1"] = 5;
-        ///		Case["var2"] = 3;
-        ///		Case["name"] = "Andrew";
-        ///		Case.Commit();
-        ///	}
+        ///     SpssCase Case = doc.Cases.New();
+        ///     Case["var1"] = 5;
+        ///     Case["var2"] = 3;
+        ///     Case["name"] = "Andrew";
+        ///     Case.Commit();
+        /// }
         /// </code>
         /// </example>
         public void Commit()
@@ -121,6 +110,7 @@ namespace Spss
             {
                 throw new InvalidOperationException("Not available when in read-only mode.");
             }
+
             SpssSafeWrapper.spssCommitCaseRecordImpl(this.Cases.FileHandle);
             this.Cases.OnCaseCommitted();
         }
@@ -129,14 +119,16 @@ namespace Spss
         /// Clears every variable of data for this row.
         /// </summary>
         /// <remarks>
-        /// Remarkably, this operation is necessary for every new row, in order to 
+        /// Remarkably, this operation is necessary for every new row, in order to
         /// prevent garbage from being placed into SPSS for the values that are never
         /// explicitly set otherwise.
         /// </remarks>
         public void ClearData()
         {
-            foreach (SpssVariable var in Cases.Document.Variables)
+            foreach (SpssVariable var in this.Cases.Document.Variables)
+            {
                 this[var.Name] = null;
+            }
         }
 
         public object GetDBValue(string varName)

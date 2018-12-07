@@ -1,22 +1,23 @@
-using System;
-using System.Runtime.InteropServices;
+// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
+    using System;
+    using System.Runtime.InteropServices;
+
     /// <summary>
     /// Very thin SpssSafeWrapper class for functions exposed by spssio32.dll.
     /// </summary>
-    [CLSCompliant(false)]
     public class SpssSafeWrapper : SpssThinWrapper
     {
         /// <summary>
-        /// Creates an instance of the <see cref="SpssSafeWrapper"/> class.
+        /// Initializes a new instance of the <see cref="SpssSafeWrapper"/> class.
         /// </summary>
         protected SpssSafeWrapper()
         {
         }
 
-        // These lengths were extracted from the SPSS documentation 
+        // These lengths were extracted from the SPSS documentation
         // rather than any header file.
         public const int SPSS_GUID_LENGTH = 256;
         public const int SPSS_SYSTEM_STRING_LENGTH = 41;
@@ -26,12 +27,12 @@ namespace Spss
 
         #region veg
 
-        public static Int32 SPSS_STRING(Int32 size)
+        public static int SPSS_STRING(int size)
         {
             return size;
         }
 
-        public const Int32 SPSS_NUMERIC = 0;
+        public const int SPSS_NUMERIC = 0;
 
         #endregion veg
 
@@ -63,6 +64,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssOpenReadImpl(ref fileName, out handle);
         }
+
         /// <summary>
         /// Creates an empty SPSS file.
         /// </summary>
@@ -87,6 +89,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssOpenWriteImpl(ref fileName, out handle);
         }
+
         /// <summary>
         /// Reports the name of the case weight variable.
         /// </summary>
@@ -103,7 +106,7 @@ namespace Spss
         /// <see cref="ReturnCode.SPSS_INVALID_CASEWGT"/>.
         /// </returns>
         /// <remarks>
-        /// This function reports the name of the case weight variable. 
+        /// This function reports the name of the case weight variable.
         /// </remarks>
         public static ReturnCode spssGetCaseWeightVar(int handle, out string varName)
         {
@@ -112,6 +115,7 @@ namespace Spss
             varName = (result == ReturnCode.SPSS_OK) ? varName.Substring(0, varName.IndexOf('\0')) : null;
             return result;
         }
+
         /// <summary>
         /// Retrieves the first block of SPSS Data Entry information from a data file.
         /// </summary>
@@ -146,6 +150,7 @@ namespace Spss
             data = (result == ReturnCode.SPSS_OK) ? data.Substring(0, len) : null;
             return result;
         }
+
         /// <summary>
         /// Gets the Data Entry GUID from a data file.
         /// </summary>
@@ -164,12 +169,13 @@ namespace Spss
         /// Data Entry for Windows maintains a GUID in character form as a uniqueness indicator.
         /// Two files have identical dictionaries and DEW information if they have the same
         /// GUID. Note that the spssOpenWriteCopy function will not copy the source file’s
-        /// GUID. spssGetDEWGUID allows the client to read a file’s GUID, if any. 
+        /// GUID. spssGetDEWGUID allows the client to read a file’s GUID, if any.
         /// </remarks>
         public static ReturnCode spssGetDEWGUID(int handle, out string asciiGUID)
         {
             asciiGUID = new string(' ', SPSS_GUID_LENGTH + 1);
             ReturnCode result = SpssThinWrapper.spssGetDEWGUIDImpl(handle, ref asciiGUID);
+
             // Although we search for a null terminator, the documentation
             // tells us that the GUID is always SPSS_GUID_LENGTH, so we COULD
             // just terminate the string there to trim off the null terminator that is
@@ -177,6 +183,7 @@ namespace Spss
             asciiGUID = (result == ReturnCode.SPSS_OK) ? asciiGUID.Substring(0, asciiGUID.IndexOf('\0')) : null;
             return result;
         }
+
         /// <summary>
         /// Retrieves the next block of SPSS Data Entry information from a data file.
         /// </summary>
@@ -211,6 +218,7 @@ namespace Spss
             data = (result == ReturnCode.SPSS_OK) ? data.Substring(0, len) : null;
             return result;
         }
+
         /// <summary>
         /// Gets the file label of a data file.
         /// </summary>
@@ -225,7 +233,7 @@ namespace Spss
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>.
         /// </returns>
         /// <remarks>
-        /// This function retrieves the file label of the SPSS data file associated with 
+        /// This function retrieves the file label of the SPSS data file associated with
         /// <paramref>handle</paramref> into the <paramref>id</paramref> parameter.
         /// </remarks>
         public static ReturnCode spssGetIdString(int handle, out string id)
@@ -235,6 +243,7 @@ namespace Spss
             id = (result == ReturnCode.SPSS_OK) ? id.Substring(0, id.IndexOf('\0')) : null;
             return result;
         }
+
         /// <summary>
         /// Gets information on the running version of SPSS, and the hosting computer.
         /// </summary>
@@ -265,6 +274,7 @@ namespace Spss
             ReturnCode result = SpssThinWrapper.spssGetReleaseInfoImpl(handle, relInfo);
             return result;
         }
+
         /// <summary>
         /// Gets the name of the system that created a data file.
         /// </summary>
@@ -288,6 +298,7 @@ namespace Spss
             sysName = (result == ReturnCode.SPSS_OK) ? sysName.Substring(0, sysName.IndexOf('\0')) : null;
             return result;
         }
+
         /// <summary>
         /// Gets the data created by TextSmart.
         /// </summary>
@@ -311,6 +322,7 @@ namespace Spss
             textInfo = (result == ReturnCode.SPSS_OK) ? textInfo.Substring(0, textInfo.IndexOf('\0')) : null;
             return result;
         }
+
         /// <summary>
         /// Gets the creation date of a data file, as recorded in the file itself.
         /// </summary>
@@ -329,7 +341,7 @@ namespace Spss
         /// </returns>
         /// <remarks>
         /// This function returns the creation date of the file as recorded in the file itself. The creation
-        /// date is a 9-byte string in dd mmm yy format (27 Feb 96). The creation time is a 
+        /// date is a 9-byte string in dd mmm yy format (27 Feb 96). The creation time is a
         /// 8-byte oypcbi in hh:mm:ss format (13:12:15).
         /// </remarks>
         public static ReturnCode spssGetTimeStamp(int handle, out string fileDate, out string fileTime)
@@ -341,6 +353,7 @@ namespace Spss
             fileTime = (result == ReturnCode.SPSS_OK) ? fileTime.Substring(0, fileTime.IndexOf('\0')) : null;
             return result;
         }
+
         /// <summary>
         /// Gets the string value of a variable.
         /// </summary>
@@ -363,7 +376,7 @@ namespace Spss
         /// </returns>
         /// <remarks>
         /// This function gets the value of a string variable for the current case, which is the case
-        /// read by the most recent call to <see cref="SpssThinWrapper.spssReadCaseRecordDelegate"/>. 
+        /// read by the most recent call to <see cref="SpssThinWrapper.spssReadCaseRecordDelegate"/>.
         /// </remarks>
         public static ReturnCode spssGetValueChar(int handle, double varHandle, out string value)
         {
@@ -404,6 +417,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssGetVarAlignmentImpl(handle, ref varName, out alignment);
         }
+
         /// <summary>
         /// Gets the missing values of a short string variable.
         /// </summary>
@@ -428,17 +442,17 @@ namespace Spss
         /// <returns>
         /// <see cref="ReturnCode.SPSS_OK"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
-        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, 
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>,
         /// <see cref="ReturnCode.SPSS_STR_EXP"/>, or
         /// <see cref="ReturnCode.SPSS_SHORTSTR_EXP"/>.
         /// </returns>
         /// <remarks>
         /// This function reports the missing values of a short string variable. The value of
-        /// <paramref>missingFormat</paramref> will indicate 
+        /// <paramref>missingFormat</paramref> will indicate
         /// the number of missing values. The
         /// appropriate number of missing values is copied to the <paramref>missingVal1</paramref>,
-        /// <paramref>missingVal2</paramref>, and <paramref>missingVal3</paramref> parameters. 
+        /// <paramref>missingVal2</paramref>, and <paramref>missingVal3</paramref> parameters.
         /// </remarks>
         public static ReturnCode spssGetVarCMissingValues(int handle, string varName, out MissingValueFormatCode missingFormat, out string missingVal1, out string missingVal2, out string missingVal3)
         {
@@ -448,19 +462,35 @@ namespace Spss
             ReturnCode result = SpssThinWrapper.spssGetVarCMissingValuesImpl(handle, ref varName, out missingFormat,
                 ref missingVal1, ref missingVal2, ref missingVal3);
             if (missingFormat < MissingValueFormatCode.SPSS_THREE_MISSVAL)
+            {
                 missingVal3 = null;
+            }
             else
+            {
                 missingVal3 = (result == ReturnCode.SPSS_OK) ? missingVal3.Substring(0, missingVal3.IndexOf('\0')) : null;
+            }
+
             if (missingFormat < MissingValueFormatCode.SPSS_TWO_MISSVAL)
+            {
                 missingVal2 = null;
+            }
             else
+            {
                 missingVal2 = (result == ReturnCode.SPSS_OK) ? missingVal2.Substring(0, missingVal2.IndexOf('\0')) : null;
+            }
+
             if (missingFormat < MissingValueFormatCode.SPSS_ONE_MISSVAL)
+            {
                 missingVal1 = null;
+            }
             else
+            {
                 missingVal1 = (result == ReturnCode.SPSS_OK) ? missingVal1.Substring(0, missingVal1.IndexOf('\0')) : null;
+            }
+
             return result;
         }
+
         /// <summary>
         /// Gets the width of a variable.
         /// </summary>
@@ -488,6 +518,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssGetVarColumnWidthImpl(handle, ref varName, out columnWidth);
         }
+
         /// <summary>
         /// Gets the name and type of a variable.
         /// </summary>
@@ -513,7 +544,7 @@ namespace Spss
         /// <remarks>
         /// This function gets the name and type of one of the variables present in a data file. It
         /// serves the same purpose as <see cref="spssGetVarNames"/> but returns the information one variable
-        /// at a time and, therefore, can be passed to a Visual Basic program. 
+        /// at a time and, therefore, can be passed to a Visual Basic program.
         /// The type code is an integer in the range 0–255, 0 indicating a numeric
         /// variable and a positive value indicating a string variable of that size.
         /// </remarks>
@@ -524,6 +555,7 @@ namespace Spss
             varName = (result == ReturnCode.SPSS_OK) ? varName.Substring(0, varName.IndexOf('\0')) : null;
             return result;
         }
+
         /// <summary>
         /// Gets the handle for a named variable.
         /// </summary>
@@ -547,13 +579,14 @@ namespace Spss
         /// <remarks>
         /// This function returns a handle for a variable, which can then be used to read or write
         /// (depending on how the file was opened) values of the variable. If handle is associated
-        /// with an output file, the dictionary must be written with <see cref="SpssThinWrapper.spssCommitHeaderDelegate"/> 
+        /// with an output file, the dictionary must be written with <see cref="SpssThinWrapper.spssCommitHeaderDelegate"/>
         /// before variable handles can be obtained via spssGetVarHandle.
         /// </remarks>
         public static ReturnCode spssGetVarHandle(int handle, string varName, out double varHandle)
         {
             return SpssThinWrapper.spssGetVarHandleImpl(handle, ref varName, out varHandle);
         }
+
         /// <summary>
         /// Gets the variable label for some named variable.
         /// </summary>
@@ -568,13 +601,13 @@ namespace Spss
         /// </param>
         /// <returns>
         /// <see cref="ReturnCode.SPSS_OK"/>,
-        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>, 
+        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, or
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>.
         /// </returns>
         /// <remarks>
-        /// This function copies the label of variable <paramref>varName</paramref> into 
+        /// This function copies the label of variable <paramref>varName</paramref> into
         /// <paramref>varLabel</paramref>.  To get labels more than 120 characters long, use
         /// the spssGetVarLabelLong function.
         /// </remarks>
@@ -615,6 +648,7 @@ namespace Spss
             measureLevel = (MeasurementLevelCode)measureLevelInt;
             return status;
         }
+
         /// <summary>
         /// Gets the missing values of a numeric variable.
         /// </summary>
@@ -639,22 +673,22 @@ namespace Spss
         /// <returns>
         /// <see cref="ReturnCode.SPSS_OK"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
-        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, 
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>, or
         /// <see cref="ReturnCode.SPSS_NUME_EXP"/>.
         /// </returns>
         /// <remarks>
         /// This function reports the missing values of a numeric variable. The value of
-        /// <paramref>missingFormat</paramref> determines the interpretation of 
+        /// <paramref>missingFormat</paramref> determines the interpretation of
         /// <paramref>missingVal1</paramref>, <paramref>missingVal2</paramref>, and
-        /// <paramref>missingVal3</paramref>. If missingFormat is SPSS_MISS_RANGE, 
+        /// <paramref>missingVal3</paramref>. If missingFormat is SPSS_MISS_RANGE,
         /// <paramref>missingVal1</paramref> and <paramref>missingVal2</paramref>
-        /// represent the upper and lower limits, respectively, of the range, and 
-        /// <paramref>missingVal3</paramref> is not used. If missingFormat is 
-        /// SPSS_MISS_RANGEANDVAL, <paramref>missingVal1</paramref> and 
-        /// <paramref>missingVal2</paramref> represent the range and 
-        /// <paramref>missingVal3</paramref> is the discrete missing value. 
-        /// If missingFormat is neither of the above, it will be in the range 
+        /// represent the upper and lower limits, respectively, of the range, and
+        /// <paramref>missingVal3</paramref> is not used. If missingFormat is
+        /// SPSS_MISS_RANGEANDVAL, <paramref>missingVal1</paramref> and
+        /// <paramref>missingVal2</paramref> represent the range and
+        /// <paramref>missingVal3</paramref> is the discrete missing value.
+        /// If missingFormat is neither of the above, it will be in the range
         /// 0–3, indicating the number of discrete missing
         /// values present. (The macros SPSS_NO_MISSVAL, SPSS_ONE_MISSVAL,
         /// SPSS_TWO_MISSVAL, and SPSS_THREE_MISSVAL may be used as synonyms for 0–3.)
@@ -663,6 +697,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssGetVarNMissingValuesImpl(handle, ref varName, out missingFormat, out missingVal1, out missingVal2, out missingVal3);
         }
+
         /// <summary>
         /// Gets the value label for a variable.
         /// </summary>
@@ -690,7 +725,7 @@ namespace Spss
         /// <see cref="ReturnCode.SPSS_EXC_STRVALUE"/>.
         /// </returns>
         /// <remarks>
-        /// This function gets the value label for a given value of a short string variable. 
+        /// This function gets the value label for a given value of a short string variable.
         /// </remarks>
         public static ReturnCode spssGetVarCValueLabel(int handle, string varName, string value, out string label)
         {
@@ -700,6 +735,7 @@ namespace Spss
             label = (result == ReturnCode.SPSS_OK) ? label.Substring(0, len) : null;
             return result;
         }
+
         /// <summary>
         /// Gets the value label for a given value of a numeric variable.
         /// </summary>
@@ -718,14 +754,14 @@ namespace Spss
         /// <returns>
         /// <see cref="ReturnCode.SPSS_OK"/>,
         /// <see cref="ReturnCode.SPSS_NO_LABELS"/>,
-        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>, 
+        /// <see cref="ReturnCode.SPSS_NO_LABEL"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
-        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, 
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>, or
         /// <see cref="ReturnCode.SPSS_NUME_EXP"/>.
         /// </returns>
         /// <remarks>
-        /// This function gets the value label for a given value of a numeric variable. 
+        /// This function gets the value label for a given value of a numeric variable.
         /// </remarks>
         public static ReturnCode spssGetVarNValueLabel(int handle, string varName, double value, out string label)
         {
@@ -733,9 +769,13 @@ namespace Spss
             label = new string(' ', SPSS_MAX_VALLABEL + 1); // leave room for null terminator
             ReturnCode result = spssGetVarNValueLabelLong(handle, ref varName, value, ref label, label.Length, out len);
             if (result == ReturnCode.SPSS_OK)
+            {
                 label = label.Substring(0, len);
+            }
             else
+            {
                 label = null;
+            }
 
             return result;
         }
@@ -767,13 +807,14 @@ namespace Spss
         /// </returns>
         /// <remarks>
         /// This function reports the print format of a variable. Format type, number of decimal
-        /// places, and field width are returned as <paramref>printType</paramref>, 
+        /// places, and field width are returned as <paramref>printType</paramref>,
         /// <paramref>printDec</paramref>, and <paramref>printWid</paramref>, respectively.
         /// </remarks>
         public static ReturnCode spssGetVarPrintFormat(int handle, string varName, out FormatTypeCode printType, out int printDec, out int printWidth)
         {
             return SpssThinWrapper.spssGetVarPrintFormatImpl(handle, ref varName, out printType, out printDec, out printWidth);
         }
+
         /// <summary>
         /// Gets the write format of a variable.
         /// </summary>
@@ -808,6 +849,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssGetVarWriteFormatImpl(handle, ref varName, out writeType, out writeDec, out writeWidth);
         }
+
         /// <summary>
         /// Opens an SPSS file for appending cases.
         /// </summary>
@@ -836,6 +878,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssOpenAppendImpl(ref fileName, out handle);
         }
+
         /// <summary>
         /// Creates a new SPSS data file, with a dictionary copied from an existing file.
         /// </summary>
@@ -870,6 +913,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssOpenWriteCopyImpl(ref fileName, ref dictFileName, out handle);
         }
+
         /// <summary>
         /// Sets the case weight variable in a data file.
         /// </summary>
@@ -897,6 +941,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetCaseWeightVarImpl(handle, ref varName);
         }
+
         /// <summary>
         /// Sets the Trends date variable information.
         /// </summary>
@@ -922,10 +967,11 @@ namespace Spss
         /// is done on the input array, this function should be used with caution and is
         /// recommended only for copying Trends information from one file to another.
         /// </remarks>
-        unsafe public static ReturnCode spssSetDateVariables(int handle, int[] dateInfo)
+        public static unsafe ReturnCode spssSetDateVariables(int handle, int[] dateInfo)
         {
             return SpssThinWrapper.spssSetDateVariablesImpl(handle, dateInfo.Length, (int*)Marshal.UnsafeAddrOfPinnedArrayElement(dateInfo, 0));
         }
+
         /// <summary>
         /// Sets the first block of Data Entry information.
         /// </summary>
@@ -955,6 +1001,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetDEWFirstImpl(handle, ref data, data.Length);
         }
+
         /// <summary>
         /// Sets the unique Data Entry uniqueness GUID.
         /// </summary>
@@ -979,6 +1026,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetDEWGUIDImpl(handle, ref asciiGUID);
         }
+
         /// <summary>
         /// Sets the next block of information for Data Entry.
         /// </summary>
@@ -1008,6 +1056,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetDEWNextImpl(handle, ref data, data.Length);
         }
+
         /// <summary>
         /// Sets the file label of a data file.
         /// </summary>
@@ -1015,7 +1064,7 @@ namespace Spss
         /// Handle to the data file.
         /// </param>
         /// <param name="id">
-        /// File label. The length of the string should not exceed 
+        /// File label. The length of the string should not exceed
         /// <see cref="SpssThinWrapper.SPSS_MAX_IDSTRING"/> characters.
         /// </param>
         /// <returns>
@@ -1117,6 +1166,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetValueCharImpl(handle, varHandle, ref value);
         }
+
         /// <summary>
         /// Sets the alignment of a variable.
         /// </summary>
@@ -1145,6 +1195,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetVarAlignmentImpl(handle, ref varName, alignment);
         }
+
         /// <summary>
         /// Sets missing values for a short string variable.
         /// </summary>
@@ -1194,6 +1245,7 @@ namespace Spss
             return SpssThinWrapper.spssSetVarCMissingValuesImpl(handle, ref varName, missingFormat,
                 ref missingVal1, ref missingVal2, ref missingVal3);
         }
+
         /// <summary>
         /// Sets the column width of a variable.
         /// </summary>
@@ -1223,6 +1275,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetVarColumnWidthImpl(handle, ref varName, columnWidth);
         }
+
         /// <summary>
         /// Sets the label of a variable.
         /// </summary>
@@ -1233,7 +1286,7 @@ namespace Spss
         /// Variable name.
         /// </param>
         /// <param name="varLabel">
-        /// Variable label. The length of the string should not exceed 
+        /// Variable label. The length of the string should not exceed
         /// <see cref="SpssThinWrapper.SPSS_MAX_VARLABEL"/> characters.
         /// If varLabel is the empty string, the existing label, if any, is deleted.
         /// </param>
@@ -1274,37 +1327,37 @@ namespace Spss
         /// <description>Description</description>
         /// </listheader>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_OK"/></term>
-        ///		<description>No error</description>
+        ///     <term><see cref="ReturnCode.SPSS_OK"/></term>
+        ///     <description>No error</description>
         /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_INVALID_HANDLE"/></term>
-        ///		<description>The file handle is not valid</description>
+        ///     <term><see cref="ReturnCode.SPSS_INVALID_HANDLE"/></term>
+        ///     <description>The file handle is not valid</description>
         /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_OPEN_RDMODE"/></term>
-        ///		<description>File is open for reading, not writing</description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_OPEN_RDMODE"/></term>
+        ///     <description>File is open for reading, not writing</description>
+        /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_DICT_COMMIT"/></term>
-        ///		<description>Dictionary has already been written with <see cref="SpssThinWrapper.spssCommitHeaderDelegate"/></description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_DICT_COMMIT"/></term>
+        ///     <description>Dictionary has already been written with <see cref="SpssThinWrapper.spssCommitHeaderDelegate"/></description>
+        /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_INVALID_VARTYPE"/></term>
-        ///		<description>Invalid length code ( varLength is negative or exceeds 255)</description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_INVALID_VARTYPE"/></term>
+        ///     <description>Invalid length code ( varLength is negative or exceeds 255)</description>
+        /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_INVALID_VARNAME"/></term>
-        ///		<description>Variable name is invalid</description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_INVALID_VARNAME"/></term>
+        ///     <description>Variable name is invalid</description>
+        /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_DUP_VAR"/></term>
-        ///		<description>There is already a variable with the same name</description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_DUP_VAR"/></term>
+        ///     <description>There is already a variable with the same name</description>
+        /// </item>
         /// <item>
-        ///		<term><see cref="ReturnCode.SPSS_NO_MEMORY"/></term>
-        ///		<description>Insufficient memory</description>
-        ///	</item>
+        ///     <term><see cref="ReturnCode.SPSS_NO_MEMORY"/></term>
+        ///     <description>Insufficient memory</description>
+        /// </item>
         /// </list>
         /// </returns>
         /// <remarks>
@@ -1435,6 +1488,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetVariableSetsImpl(handle, ref varSets);
         }
+
         /// <summary>
         /// Sets the measurement level of a variable.
         /// </summary>
@@ -1463,6 +1517,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetVarMeasureLevelImpl(handle, ref varName, (int)measureLevel);
         }
+
         /// <summary>
         /// Sets the missing values for a numeric variable.
         /// </summary>
@@ -1514,6 +1569,7 @@ namespace Spss
             return SpssThinWrapper.spssSetVarNMissingValuesImpl(handle, ref varName, missingFormat,
                 missingVal1, missingVal2, missingVal3);
         }
+
         /// <summary>
         /// Changes or adds a value label to a numeric variable.
         /// </summary>
@@ -1611,7 +1667,7 @@ namespace Spss
         /// </param>
         /// <param name="printType">
         /// Print format type code (file spssdio.h defines macros of the form
-        /// <see cref="FormatTypeCode">SPSS_FMT_...</see> for all 
+        /// <see cref="FormatTypeCode">SPSS_FMT_...</see> for all
         /// valid format type codes).
         /// </param>
         /// <param name="printDec">
@@ -1674,6 +1730,7 @@ namespace Spss
         {
             return SpssThinWrapper.spssSetVarWriteFormatImpl(handle, ref varName, writeType, writeDec, writeWidth);
         }
+
         /// <summary>
         /// Reads in the raw data for an entire case.
         /// </summary>
@@ -1710,6 +1767,7 @@ namespace Spss
             caseRec = new string(' ', caseSize);
             return SpssThinWrapper.spssWholeCaseInImpl(handle, ref caseRec);
         }
+
         /// <summary>
         /// Writes out raw data as a case.
         /// </summary>
@@ -1730,7 +1788,7 @@ namespace Spss
         /// This function writes a case assembled by the caller to a data file. The case is assumed
         /// to have been constructed correctly in the buffer caseRec, and its validity is not
         /// checked. This is a fairly low-level function whose use should not be mixed with calls
-        /// to <see cref="SpssThinWrapper.spssCommitCaseRecordDelegate"/> using the same file handle 
+        /// to <see cref="SpssThinWrapper.spssCommitCaseRecordDelegate"/> using the same file handle
         /// because both procedures write a new case to the data file.
         /// </remarks>
         public static ReturnCode spssWholeCaseOut(int handle, string caseRec)
@@ -1754,27 +1812,34 @@ namespace Spss
         /// <see cref="ReturnCode.SPSS_NO_MEMORY"/>.
         /// </returns>
         /// <remarks>
-        /// This function reports the variable sets information in the data file. 
+        /// This function reports the variable sets information in the data file.
         /// </remarks>
-        unsafe public static ReturnCode spssGetVariableSets(int handle, out string varSets)
+        public static unsafe ReturnCode spssGetVariableSets(int handle, out string varSets)
         {
             char* cVarSets;
             ReturnCode result = SpssThinWrapper.spssGetVariableSetsImpl(handle, out cVarSets);
             try
             {
                 if (result == ReturnCode.SPSS_OK)
+                {
                     varSets = Marshal.PtrToStringAnsi(new IntPtr(cVarSets));
+                }
                 else
+                {
                     varSets = null;
+                }
 
                 return result;
             }
             finally
             {
                 if (cVarSets != null)
+                {
                     spssFreeVariableSetsImpl(cVarSets);
+                }
             }
         }
+
         /// <summary>
         /// Reports TRENDS date variable information.
         /// </summary>
@@ -1799,7 +1864,7 @@ namespace Spss
         /// comprise the "fixed" information, followed by a sequence of one or more three-element
         /// groups.
         /// </remarks>
-        unsafe public static ReturnCode spssGetDateVariables(int handle, int[] dateInfo)
+        public static unsafe ReturnCode spssGetDateVariables(int handle, int[] dateInfo)
         {
             int* cDateInfo;
             int numofElements;
@@ -1810,7 +1875,9 @@ namespace Spss
                 {
                     dateInfo = new int[numofElements];
                     for (int i = 0; i < numofElements; i++)
+                    {
                         dateInfo[i] = cDateInfo[i];
+                    }
                 }
 
                 return result;
@@ -1818,9 +1885,12 @@ namespace Spss
             finally
             {
                 if (cDateInfo != null)
+                {
                     spssFreeDateVariablesImpl(cDateInfo);
+                }
             }
         }
+
         /// <summary>
         /// Retrieves the definitions from a data file.
         /// </summary>
@@ -1844,25 +1914,32 @@ namespace Spss
         /// *mrespDefs is set to NULL, and the function returns the warning code
         /// <see cref="ReturnCode.SPSS_NO_MULTRESP"/>.
         /// </remarks>
-        unsafe public static ReturnCode spssGetMultRespDefs(int handle, out string mrespDefs)
+        public static unsafe ReturnCode spssGetMultRespDefs(int handle, out string mrespDefs)
         {
             char* cMrespDefs;
             ReturnCode result = SpssThinWrapper.spssGetMultRespDefsImpl(handle, out cMrespDefs);
             try
             {
                 if (result == ReturnCode.SPSS_OK)
+                {
                     mrespDefs = Marshal.PtrToStringAnsi(new IntPtr(cMrespDefs));
+                }
                 else
+                {
                     mrespDefs = null;
+                }
 
                 return result;
             }
             finally
             {
                 if (cMrespDefs != null)
+                {
                     spssFreeMultRespDefsImpl(cMrespDefs);
+                }
             }
         }
+
         /// <summary>
         /// Gets a list of all response values and labels for a numeric variable.
         /// </summary>
@@ -1882,7 +1959,7 @@ namespace Spss
         /// <see cref="ReturnCode.SPSS_OK"/>,
         /// <see cref="ReturnCode.SPSS_NO_LABELS"/>,
         /// <see cref="ReturnCode.SPSS_INVALID_HANDLE"/>,
-        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>, 
+        /// <see cref="ReturnCode.SPSS_INVALID_VARNAME"/>,
         /// <see cref="ReturnCode.SPSS_VAR_NOTFOUND"/>,
         /// <see cref="ReturnCode.SPSS_NUME_EXP"/>, or
         /// <see cref="ReturnCode.SPSS_NO_MEMORY"/>.
@@ -1897,7 +1974,7 @@ namespace Spss
         /// The two arrays and the label strings are allocated on the heap. When they are no longer
         /// needed, <see cref="SpssThinWrapper.spssFreeVarNValueLabelsDelegate"/> should be called to free the memory.
         /// </remarks>
-        unsafe public static ReturnCode spssGetVarNValueLabels(int handle, string varName, out double[] values, out string[] labels)
+        public static unsafe ReturnCode spssGetVarNValueLabels(int handle, string varName, out double[] values, out string[] labels)
         {
             double* cValues;
             char** cLabels;
@@ -1917,6 +1994,7 @@ namespace Spss
                     values[i] = cValues[i];
                     labels[i] = Marshal.PtrToStringAnsi(new IntPtr(cLabels[i]));
                 }
+
                 spssFreeVarNValueLabels(cValues, cLabels, numLabels);
             }
 
@@ -1959,7 +2037,7 @@ namespace Spss
         /// The two arrays and the value and label strings are allocated on the heap. When they
         /// are no longer needed, <see cref="SpssThinWrapper.spssFreeVarCValueLabelsDelegate"/> should be called to free the memory.
         /// </remarks>
-        unsafe public static ReturnCode spssGetVarCValueLabels(int handle, string varName, out string[] values, out string[] labels)
+        public static unsafe ReturnCode spssGetVarCValueLabels(int handle, string varName, out string[] values, out string[] labels)
         {
             char** cValues;
             char** cLabels;
@@ -1980,6 +2058,7 @@ namespace Spss
                     values[i] = Marshal.PtrToStringAnsi(new IntPtr(cValues[i]));
                     labels[i] = Marshal.PtrToStringAnsi(new IntPtr(cLabels[i]));
                 }
+
                 SpssThinWrapper.spssFreeVarCValueLabelsImpl(cValues, cLabels, numLabels);
             }
 
@@ -2005,11 +2084,11 @@ namespace Spss
         /// <see cref="ReturnCode.SPSS_NO_MEMORY"/>.
         /// </returns>
         /// <remarks>
-        /// This function gets the names and types of all the variables present in a data file. 
+        /// This function gets the names and types of all the variables present in a data file.
         /// The type code is an integer in the range 0-255, 0 indicating a numeric
         /// variable and a positive value indicating a string variable of that size.
         /// </remarks>
-        unsafe public static ReturnCode spssGetVarNames(int handle, out string[] varNames, out int[] varTypes)
+        public static unsafe ReturnCode spssGetVarNames(int handle, out string[] varNames, out int[] varTypes)
         {
             int numVars;
             char** cVarNames;
@@ -2029,11 +2108,12 @@ namespace Spss
                     varNames[i] = Marshal.PtrToStringAnsi(new IntPtr(cVarNames[i]));
                     varTypes[i] = cVarTypes[i];
                 }
+
                 spssFreeVarNamesImpl(cVarNames, cVarTypes, numVars);
             }
+
             return result;
         }
-
 
         #region Obsolete, exception throwing wrappers for SPSS functions
         [Obsolete("Use spssSetVarWriteFormat instead.")]
@@ -2041,21 +2121,25 @@ namespace Spss
         {
             SpssException.ThrowOnFailure(spssSetVarWriteFormat(handle, varName, writeType, writeDec, writeWidth), "spssSetVarWriteFormat");
         }
+
         [Obsolete("Use spssSetVarPrintFormat instead.")]
         public static void SetVarPrintFormat(int handle, string varName, FormatTypeCode printType, int printDec, int printWidth)
         {
             SpssException.ThrowOnFailure(spssSetVarPrintFormat(handle, varName, printType, printDec, printWidth), "spssSetVarPrintFormat");
         }
+
         [Obsolete("Use spssSetVarName instead.")]
         public static void SetVarName(int handle, string varName, int varType)
         {
             SpssException.ThrowOnFailure(spssSetVarName(handle, varName, varType), "spssSetVarName");
         }
+
         [Obsolete("Use spssSetVarLabel instead.")]
         public static void SetVarLabel(int handle, string varName, string varLabel)
         {
             SpssException.ThrowOnFailure(spssSetVarLabel(handle, varName, varLabel), "spssSetVarLabel");
         }
+
         [Obsolete("Use spssSetVarNValueLabel instead.")]
         public static void SetVarNValueLabel(int handle, string varName, double value, string label)
         {

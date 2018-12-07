@@ -1,14 +1,17 @@
+// Copyright (c) Andrew Arnott. All rights reserved.
+
 namespace Spss
 {
     using System;
-    using System.Collections;
+    using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
 
     /// <summary>
-    /// Manages the cases in an SPSS data file.  
+    /// Manages the cases in an SPSS data file.
     /// Supports reading, writing, and appending data.
     /// </summary>
-    public sealed class SpssCasesCollection : IEnumerable
+    public sealed class SpssCasesCollection : IEnumerable<SpssCase>
     {
         private int position = -1;
 
@@ -29,30 +32,18 @@ namespace Spss
         }
 
         /// <summary>
-        /// Gets a value indicating whether the set of cases is read only.  
+        /// Gets a value indicating whether the set of cases is read only.
         /// If no cases can be added, changed or removed, IsReadOnly is true.
         /// <seealso cref="IsAppendOnly"/>
         /// </summary>
-        public bool IsReadOnly
-        {
-            get
-            {
-                return Document.AccessMode == SpssFileAccess.Read;
-            }
-        }
+        public bool IsReadOnly => this.Document.AccessMode == SpssFileAccess.Read;
 
         /// <summary>
         /// Gets a value indicating whether the set of cases can only be appended to.
         /// If no cases can be removed or changed, IsAppendOnly is true.
         /// <seealso cref="IsReadOnly"/>
         /// </summary>
-        public bool IsAppendOnly
-        {
-            get
-            {
-                return this.Document.AccessMode != SpssFileAccess.Read; // Create or Append
-            }
-        }
+        public bool IsAppendOnly => this.Document.AccessMode != SpssFileAccess.Read; // Create or Append
 
         /// <summary>
         /// Gets the SPSS data document whose cases are being managed.
@@ -62,19 +53,16 @@ namespace Spss
         /// <summary>
         /// Gets the file handle of the SPSS data document whose cases are being managed.
         /// </summary>
-        internal Int32 FileHandle
-        {
-            get { return this.Document.Handle; }
-        }
+        internal int FileHandle => this.Document.Handle;
 
         /// <summary>
-        /// The number of cases in the document.
+        /// Gets the number of cases in the document.
         /// </summary>
         public int Count
         {
             get
             {
-                Int32 casecount = 0;
+                int casecount = 0;
 
                 // New documents aren't allowed to query cases count, and appended docs
                 // report the # of cases there were when the file was first opened.
@@ -99,22 +87,26 @@ namespace Spss
 
             set
             {
-                if (IsAppendOnly)
+                if (this.IsAppendOnly)
                 {
                     throw new InvalidOperationException("Not available while in Append mode.");
                 }
+
                 if (value < 0)
                 {
                     throw new ArgumentOutOfRangeException("Position", value, "Must be a non-negative integer.");
                 }
-                if (value >= Count)
+
+                if (value >= this.Count)
                 {
                     throw new ArgumentOutOfRangeException("Position", value, "Must be less than the number of cases in the file.");
                 }
-                if (value == position)
+
+                if (value == this.position)
                 {
                     return; // nothing to do!
                 }
+
                 SpssException.ThrowOnFailure(SpssSafeWrapper.spssSeekNextCase(this.FileHandle, value), "spssSeekNextCase");
                 SpssException.ThrowOnFailure(SpssSafeWrapper.spssReadCaseRecord(this.FileHandle), "spssReadCaseRecord");
                 this.position = value;
@@ -144,23 +136,23 @@ namespace Spss
         /// <code>
         /// using( SpssDataDocument doc = SpssDataDocument.Open("mydata.sav", SpssFileAccess.Append) )
         /// {
-        ///		SpssCase Case = doc.Cases.New();
-        ///		Case["var1"] = 5;
-        ///		Case["var2"] = 3;
-        ///		Case["name"] = "Andrew";
-        ///		Case.Commit();
-        ///	}
+        ///     SpssCase Case = doc.Cases.New();
+        ///     Case["var1"] = 5;
+        ///     Case["var2"] = 3;
+        ///     Case["name"] = "Andrew";
+        ///     Case.Commit();
+        /// }
         /// </code>
         /// </example>
         public SpssCase New()
         {
-            if (!IsAppendOnly)
+            if (!this.IsAppendOnly)
             {
                 throw new InvalidOperationException("Only available in append mode.");
             }
 
-            position = Count;
-            return new SpssCase(this, position);
+            this.position = this.Count;
+            return new SpssCase(this, this.position);
         }
 
         /// <summary>
@@ -191,6 +183,7 @@ namespace Spss
                 {
                     throw new NotSupportedException("SPSS variable type " + var.GetType().Name + " is not supported.");
                 }
+
                 dt.Columns.Add(dc);
             }
 
@@ -201,6 +194,7 @@ namespace Spss
                 {
                     row[var.Name] = spssCase.GetDBValue(var.Name);
                 }
+
                 dt.Rows.Add(row);
             }
 
@@ -210,100 +204,20 @@ namespace Spss
         /// <summary>
         /// Gets the enumerator that will iterate over all cases in the data file.
         /// </summary>
-        IEnumerator IEnumerable.GetEnumerator()
+        IEnumerator<SpssCase> IEnumerable<SpssCase>.GetEnumerator()
         {
-            if (IsAppendOnly)
+            if (this.IsAppendOnly)
             {
                 throw new InvalidOperationException("Not available in append-only mode.");
             }
 
-            return new SpssCasesCollectionEnumerator(this);
+            return Enumerable.Range(0, this.Count).Select(i => this[i]).GetEnumerator();
         }
 
-        private class SpssCasesCollectionEnumerator : IEnumerator
-        {
-            private SpssCasesCollection Cases;
-
-            private int position;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="SpssCasesCollectionEnumerator"/> class.
-            /// </summary>
-            /// <param name="cases">The cases.</param>
-            internal SpssCasesCollectionEnumerator(SpssCasesCollection cases)
-            {
-                if (cases == null)
-                {
-                    throw new ArgumentNullException("cases");
-                }
-                this.Cases = cases;
-                this.Reset();
-            }
-
-            /// <summary>
-            /// Gets the current element in the collection.
-            /// </summary>
-            /// <returns>
-            /// The current element in the collection.
-            /// </returns>
-            /// <exception cref="T:System.InvalidOperationException">
-            /// The enumerator is positioned before the first element of the collection or after the last element.
-            /// </exception>
-            public SpssCase Current
-            {
-                get
-                {
-                    return this.Cases[position];
-                }
-            }
-
-            #region IEnumerator Members
-
-            /// <summary>
-            /// Advances the enumerator to the next element of the collection.
-            /// </summary>
-            /// <returns>
-            /// true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
-            /// </returns>
-            /// <exception cref="T:System.InvalidOperationException">
-            /// The collection was modified after the enumerator was created.
-            /// </exception>
-            public bool MoveNext()
-            {
-                return ++position < Cases.Count;
-            }
-
-            /// <summary>
-            /// Sets the enumerator to its initial position, which is before the first element in the collection.
-            /// </summary>
-            /// <exception cref="T:System.InvalidOperationException">
-            /// The collection was modified after the enumerator was created.
-            /// </exception>
-            public void Reset()
-            {
-                position = -1;
-            }
-
-            /// <summary>
-            /// Gets the current element in the collection.
-            /// </summary>
-            /// <value></value>
-            /// <returns>
-            /// The current element in the collection.
-            /// </returns>
-            /// <exception cref="T:System.InvalidOperationException">
-            /// The enumerator is positioned before the first element of the collection or after the last element.
-            /// </exception>
-            object System.Collections.IEnumerator.Current
-            {
-                get
-                {
-                    return this.Current;
-                }
-            }
-
-            #endregion
-        }
+        /// <summary>
+        /// Gets the enumerator that will iterate over all cases in the data file.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => ((IEnumerable<SpssCase>)this).GetEnumerator();
 
         internal void OnCaseCommitted()
         {

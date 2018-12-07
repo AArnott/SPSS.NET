@@ -1,9 +1,4 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="SpssSafeHandle.cs" company="Andrew Arnott">
-//     Copyright (c) Andrew Arnott. All rights reserved.
-//     Copyright (c) Brigham Young University
-// </copyright>
-//-----------------------------------------------------------------------
+﻿// Copyright (c) Andrew Arnott. All rights reserved.
 
 namespace Spss
 {
@@ -19,13 +14,14 @@ namespace Spss
         /// </summary>
         /// <param name="handle">The SPSS handle.</param>
         /// <param name="accessMode">The access mode the handle was opened with.</param>
-        public SpssSafeHandle(int handle, SpssFileAccess accessMode) : base(true)
+        public SpssSafeHandle(int handle, SpssFileAccess accessMode)
+            : base(true)
         {
             this.accessMode = accessMode;
             this.SetHandle(new IntPtr(handle));
         }
 
-        public static implicit operator int (SpssSafeHandle handle)
+        public static implicit operator int(SpssSafeHandle handle)
         {
             if (handle.IsInvalid)
             {
@@ -51,13 +47,13 @@ namespace Spss
             switch (this.accessMode)
             {
                 case SpssFileAccess.Read:
-                    ReturnCode result = SpssSafeWrapper.spssCloseRead(handle.ToInt32());
+                    ReturnCode result = SpssSafeWrapper.spssCloseRead(this.handle.ToInt32());
                     return result == ReturnCode.SPSS_OK;
                 case SpssFileAccess.Append:
-                    result = SpssSafeWrapper.spssCloseAppendImpl(handle.ToInt32());
+                    result = SpssSafeWrapper.spssCloseAppendImpl(this.handle.ToInt32());
                     return result == ReturnCode.SPSS_OK;
                 case SpssFileAccess.Create:
-                    result = SpssSafeWrapper.spssCloseWriteImpl(handle.ToInt32());
+                    result = SpssSafeWrapper.spssCloseWriteImpl(this.handle.ToInt32());
                     return result == ReturnCode.SPSS_OK || result == ReturnCode.SPSS_DICT_NOTCOMMIT;
                 default:
                     return false;

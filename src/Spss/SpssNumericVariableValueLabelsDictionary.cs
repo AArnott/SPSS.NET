@@ -1,8 +1,9 @@
+﻿// Copyright (c) Andrew Arnott. All rights reserved.
+
 namespace Spss
 {
     using System;
     using System.Diagnostics;
-    using System.Collections;
 
     /// <summary>
     /// A collection of value labels for a <see cref="SpssNumericVariable"/>.
@@ -25,7 +26,7 @@ namespace Spss
         {
             foreach (var pair in this)
             {
-                SpssSafeWrapper.spssSetVarNValueLabel(FileHandle, Variable.Name, pair.Key, pair.Value);
+                SpssSafeWrapper.spssSetVarNValueLabel(this.FileHandle, this.Variable.Name, pair.Key, pair.Value);
             }
         }
 
@@ -36,12 +37,14 @@ namespace Spss
         {
             double[] values;
             string[] labels;
-            ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNValueLabels(FileHandle, Variable.Name, out values, out labels), "spssGetVarNValueLabels", ReturnCode.SPSS_NO_LABELS);
+            ReturnCode result = SpssException.ThrowOnFailure(SpssSafeWrapper.spssGetVarNValueLabels(this.FileHandle, this.Variable.Name, out values, out labels), "spssGetVarNValueLabels", ReturnCode.SPSS_NO_LABELS);
             if (result == ReturnCode.SPSS_OK)
             {
                 Debug.Assert(values.Length == labels.Length);
                 for (int i = 0; i < values.Length; i++)
-                    Add(values[i], labels[i]);
+                {
+                    this.Add(values[i], labels[i]);
+                }
             }
 
             // SPSS_NO_LABELs is nothing special -- just no labels to add
