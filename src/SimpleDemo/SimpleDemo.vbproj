@@ -3,6 +3,9 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net46</TargetFramework>
     <IsPackable>false</IsPackable>
+
+    <!-- Workaround https://github.com/dotnet/roslyn/issues/30586 -->
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spss\Spss.csproj" />
