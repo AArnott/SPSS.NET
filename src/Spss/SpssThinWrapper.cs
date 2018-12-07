@@ -3024,9 +3024,8 @@ namespace Spss
         /// Value labels already defined for any of the given variable(s), if any, are discarded
         /// (if the labels are shared with other variables, they remain associated).
         /// </remarks>
-        [CLSCompliant(false)]
-        unsafe protected delegate ReturnCode spssSetVarCValueLabelsDelegate(int handle, char** varNames, int numVars, char** values, char** labels, int numLabels);
-        [CLSCompliant(false)]
+        protected unsafe delegate ReturnCode spssSetVarCValueLabelsDelegate(int handle, char** varNames, int numVars, char** values, char** labels, int numLabels);
+
         protected static spssSetVarCValueLabelsDelegate spssSetVarCValueLabelsImpl;
 
         /// <summary>
@@ -3297,12 +3296,11 @@ namespace Spss
         /// <remarks>
         /// This function defines a set of value labels for one or more numeric variables.
         /// Value labels already defined for any of the given variable(s), if any,
-        /// are discarded (if the labels are shared with other variables, 
-        /// they remain associated with those variables). 
+        /// are discarded (if the labels are shared with other variables,
+        /// they remain associated with those variables).
         /// </remarks>
-        [CLSCompliant(false)]
-        unsafe protected delegate ReturnCode spssSetVarNValueLabelsDelegate(int handle, char** varNames, int numVars, double* values, char** labels, int numLabels);
-        [CLSCompliant(false)]
+        protected unsafe delegate ReturnCode spssSetVarNValueLabelsDelegate(int handle, char** varNames, int numVars, double* values, char** labels, int numLabels);
+
         protected static spssSetVarNValueLabelsDelegate spssSetVarNValueLabelsImpl;
 
         /// <summary>
